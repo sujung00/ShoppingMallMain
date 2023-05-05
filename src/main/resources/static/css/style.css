@@ -1,0 +1,92 @@
+@charset "UTF-8";
+.header {
+	height: 50px;
+}
+
+footer {
+	height: 180px;
+}
+
+.contents {
+	min-height: 500px;
+}
+
+:root {
+	--primary-color: #4EA685;
+	--secondary-color: #57B894;
+	--black: #000000;
+	--white: #ffffff;
+	--gray: #efefef;
+	--gray-2: #757575;
+	--facebook-color: #4267B2;
+	--google-color: #DB4437;
+	--twitter-color: #1DA1F2;
+	--insta-color: #E1306C;
+}
+
+/*
+header
+*/
+.main-logo a {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1.5rem;
+	text-decoration: none;
+	color: black;
+}
+.main-logo a:hover {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1.5rem;
+	text-decoration: none;
+	color: black;
+}
+.main-nav {
+	font-family: 'NanumSquareBold';
+	font-size: 0.9rem;
+}
+.main-nav a, a:hover {
+	text-decoration: none;
+	color: black;
+}
+.log-in a, a:hover {
+	font-family: 'NanumSquareBold';
+	text-decoration: none;
+	color: black;
+	font-size: 0.9rem;
+}
+.sign-up-btn {
+	font-family: 'NanumSquareBold';
+	cursor: pointer;
+	width: 100%;
+	padding: .4rem 1.3rem;
+	border-radius: .4rem;
+	border: none;
+	background-color: black;
+	color: var(--white);
+	font-size: 0.9rem;
+	outline: none;
+}
+/*
+footer
+*/
+.footer {
+	height: 100%
+}
+.footer hr {
+	width: 80%;
+	background: black;
+}
+.footer-logo {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1.3rem;
+}
+.footer-copyright {
+	font-family: 'NanumSquareBold';
+	font-size: .8rem;
+}
+/*
+main
+*/
+.main-view img {
+	height: 100%;
+	width: 100%;
+}
