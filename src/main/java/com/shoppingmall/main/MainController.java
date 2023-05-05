@@ -8,10 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
+	/**
+	 * Main 페이지
+	 * @param model
+	 * @return
+	 */
 	// http://localhost/main/main_view
 	@RequestMapping("/main_view")
 	public String mainView(Model model) {
 		model.addAttribute("view", "main/mainView");
 		return "template/layout";
 	}
+	
 }

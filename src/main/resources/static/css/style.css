@@ -1,4 +1,10 @@
 @charset "UTF-8";
+/*
+font-family: 'NanumSquareLight';
+font-family: 'NanumSquare';
+font-family: 'NanumSquareBold';
+font-family: 'NanumSquareExtraBold';
+*/
 .header {
 	height: 50px;
 }
@@ -8,7 +14,7 @@ footer {
 }
 
 .contents {
-	min-height: 500px;
+	min-height: 200px;
 }
 
 :root {
@@ -65,6 +71,12 @@ header
 	font-size: 0.9rem;
 	outline: none;
 }
+.sign-up-btn:hover {
+	font-family: 'NanumSquareBold';
+	text-decoration: none;
+	color: white;
+	font-size: 0.9rem;
+}
 /*
 footer
 */
@@ -89,4 +101,40 @@ main
 .main-view img {
 	height: 100%;
 	width: 100%;
+}
+/*
+로그인
+*/
+.sign-box {
+	padding: 60px;
+}
+.sign-in-box div {
+	width: 100%;
+}
+.sign-text {
+	font-family: 'NanumSquareBold';
+	font-size: 1.2rem;
+}
+.sign-div input {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	width: 25%;
+	padding: 0.7rem 1rem;
+	background-color: var(--gray);
+	border-radius: .5rem;
+	border: 0.125rem solid var(--white);
+	outline: none;
+}
+.sign-btn {
+	font-family: 'NanumSquareBold';
+	font-size: 1rem;
+	cursor: pointer;
+	width: 25%;
+	padding: .6rem;
+	border-radius: .5rem;
+	border: none;
+	background-color: black;
+	color: var(--white);
+	font-size: 0.8rem;
+	outline: none;
 }

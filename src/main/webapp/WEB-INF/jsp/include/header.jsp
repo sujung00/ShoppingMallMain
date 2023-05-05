@@ -22,11 +22,11 @@
 	
 	<div class="d-flex align-items-center">
 		<div class="log-in mr-3">
-			<a href="#">Login</a>
+			<a href="/user/sign_in_view">Login</a>
 		</div>
 		<a href="#" class="d-flex align-items-center mr-3">
 			<img alt="장바구니" src="/static/img/basket.png" width="20px">
 		</a>
-		<button class="sign-up-btn">Sign Up</button>
+		<a class="btn sign-up-btn" href="/user/sign_up_view">Sign Up</a>
 	</div>
 </div>
