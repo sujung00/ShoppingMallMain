@@ -106,11 +106,18 @@ $(document).ready(function(){
 					$("#modalBody").text(data.errorMessage);
 					return;
 				}
+				else if(data.code == 301){
+					$("#signUpModal").modal();
+					$("#modalBody").text(data.errorMessage);
+					return;
+				}
 				else if(data.code == 1){
 					$("#signUpModal").modal();
-					$("#modalBody").text("회원가입이 완료 되었습니다.");
+					$("#modalBody").text(data.result);
 					
-					location.href="/user/sign_in_view";
+					$('#signUpModal').on('hidden.bs.modal', function (e) {
+					     location.href="/user/sign_in_view";
+					})
 				}
 			}
 			, error : function(request, status, error) {

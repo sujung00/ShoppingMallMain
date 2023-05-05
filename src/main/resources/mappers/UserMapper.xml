@@ -69,5 +69,32 @@
 			AND
 			`password` = #{password}
 	</select>
+	
+	<select id="selectUserByEmail" parameterType="string" resultType="com.shoppingmall.user.model.User">
+		SELECT
+			`id`
+			,`loginId`
+			,`password`
+			,`name`
+			,`email`
+			,`phoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`user`
+		WHERE
+			`email` = #{email}
+	</select>
+	
+	<select id="selectLoginIdByNameEmail" parameterType="map" resultType="string">
+		SELECT
+			`loginId`
+		FROM
+			`user`
+		WHERE
+			`name` = #{name}
+			AND
+			`email` = #{email}
+	</select>
 
 </mapper>

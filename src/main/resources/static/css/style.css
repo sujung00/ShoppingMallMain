@@ -45,15 +45,25 @@ header
 	text-decoration: none;
 	color: black;
 }
-.main-nav {
+.main-nav a {
 	font-family: 'NanumSquareBold';
 	font-size: 0.9rem;
-}
-.main-nav a, a:hover {
 	text-decoration: none;
 	color: black;
 }
-.log-in a, a:hover {
+.main-nav a:hover {
+	font-family: 'NanumSquareBold';
+	font-size: 0.9rem;
+	text-decoration: none;
+	color: black;
+}
+.log-in a {
+	font-family: 'NanumSquareBold';
+	text-decoration: none;
+	color: black;
+	font-size: 0.9rem;
+}
+.log-in a:hover {
 	font-family: 'NanumSquareBold';
 	text-decoration: none;
 	color: black;
@@ -67,15 +77,21 @@ header
 	border-radius: .4rem;
 	border: none;
 	background-color: black;
-	color: var(--white);
+	color: white;
 	font-size: 0.9rem;
 	outline: none;
 }
 .sign-up-btn:hover {
 	font-family: 'NanumSquareBold';
-	text-decoration: none;
+	cursor: pointer;
+	width: 100%;
+	padding: .4rem 1.3rem;
+	border-radius: .4rem;
+	border: none;
+	background-color: black;
 	color: white;
 	font-size: 0.9rem;
+	outline: none;
 }
 /*
 footer
@@ -108,8 +124,8 @@ main
 .sign-box {
 	padding: 60px;
 }
-.sign-in-box div {
-	width: 100%;
+.sign-box hr {
+	width: 25%;
 }
 .sign-text {
 	font-family: 'NanumSquareBold';
@@ -137,4 +153,17 @@ main
 	color: var(--white);
 	font-size: 0.8rem;
 	outline: none;
+}
+.find-id-pw {
+	width: 25%;
+}
+.find-id-pw a {
+	font-family: 'NanumSquareBold';
+	font-size: .8rem;
+	color: black;
+}
+.find-id-pw a:hover {
+	font-family: 'NanumSquareBold';
+	font-size: .8rem;
+	color: black;
 }

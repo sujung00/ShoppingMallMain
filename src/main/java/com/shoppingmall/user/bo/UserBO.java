@@ -23,4 +23,12 @@ public class UserBO {
 	public User getUserByLoginIdPassword(String loginId, String password) {
 		return userMapper.selectUserByLoginIdPassword(loginId, password);
 	}
+	
+	public User getUserByEmail(String email) {
+		return userMapper.selectUserByEmail(email);
+	}
+	
+	public String getLoginIdByNameEmail(String name, String email) {
+		return userMapper.selectLoginIdByNameEmail(name, email);
+	}
 }

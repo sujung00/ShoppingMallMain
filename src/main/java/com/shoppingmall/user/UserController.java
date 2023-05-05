@@ -35,6 +35,11 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 로그아웃 API
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/sign_out")
 	public String signOut(HttpSession session) {
 		session.removeAttribute("userId");
@@ -42,5 +47,17 @@ public class UserController {
 		session.removeAttribute("userLoginId");
 		
 		return "redirect:/main/main_view";
+	}
+	
+	@GetMapping("/find_id_view")
+	public String findIdView(Model model) {
+		model.addAttribute("view", "/user/findIdView");
+		return "template/layout";
+	}
+
+	@GetMapping("/find_pw_view")
+	public String findPWView(Model model) {
+		model.addAttribute("view", "/user/findPWView");
+		return "template/layout";
 	}
 }

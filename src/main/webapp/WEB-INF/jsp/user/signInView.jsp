@@ -10,6 +10,12 @@
 			<input type="password" placeholder="password" id="password">
 		</div>
 		<div class="d-flex justify-content-center">
+			<div class="d-flex find-id-pw">
+				<a href="/user/find_id_view" class="mx-2">아이디 찾기</a>
+				<a href="/user/find_pw_view" class="ml-2">비밀번호 찾기</a>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center">
 			<button type="button" id="signInBtn" class="sign-btn mt-3">SIGN IN</button>
 		</div>
 	</div>

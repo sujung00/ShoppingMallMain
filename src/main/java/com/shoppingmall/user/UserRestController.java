@@ -41,10 +41,18 @@ public class UserRestController {
 		Map<String, Object> result = new HashMap<>();
 		
 		// id 중복 확인
-		User user = userBO.getUserByLoginId(loginId);
-		if(user != null) {
+		User idUser = userBO.getUserByLoginId(loginId);
+		if(idUser != null) {
 			result.put("code", 300);
 			result.put("errorMessage", "이미 존재하는 아이디 입니다.");
+			
+			return result;
+		}
+		// email 중복 확인
+		User emailUser = userBO.getUserByEmail(email);
+		if(emailUser != null) {
+			result.put("code", 301);
+			result.put("errorMessage", "이미 존재하는 이메일 입니다.");
 			
 			return result;
 		}
@@ -57,7 +65,7 @@ public class UserRestController {
 		
 		if(rowCount > 0) {
 			result.put("code", 1);
-			result.put("result", "성공");
+			result.put("result", "회원가입이 완료되었습니다.");
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "회원가입에 실패했습니다. 관리자에게 문의해주세요.");
@@ -66,6 +74,13 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 로그인 API
+	 * @param loginId
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/sign_in")
 	public Map<String, Object> signIn(
 			@RequestParam("loginId") String loginId,
@@ -89,6 +104,33 @@ public class UserRestController {
 		} else {
 			result.put("code", 300);
 			result.put("errorMessage", "입력하신 아이디와 비밀번호는 등록되어 있지 않습니다.");
+		}
+		
+		return result;
+	}
+	
+	@PostMapping("/find_id")
+	public Map<String, Object> findId(
+			@RequestParam("name") String name,
+			@RequestParam("email") String email) {
+		// db select
+		String loginId = userBO.getLoginIdByNameEmail(name, email);
+		
+		// id 변환
+		int idLength = loginId.length()-2;
+		loginId = loginId.substring(0, 2);
+		for(int i = 0; i < idLength; i++) {
+			loginId += "*";
+		}
+		
+		Map<String, Object> result = new HashMap<>();
+		if(loginId != null) {
+			result.put("code", 1);
+			result.put("result", "성공");
+			result.put("loginId", loginId);
+		} else {
+			result.put("code", 300);
+			result.put("errorMessage", "등록된 아이디가 없습니다.");
 		}
 		
 		return result;
