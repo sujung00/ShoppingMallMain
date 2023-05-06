@@ -167,3 +167,66 @@ main
 	font-size: .8rem;
 	color: black;
 }
+/*
+MY TREND
+*/
+.content {
+	margin: 60px;
+	margin-left: 120px;
+}
+.mytrend-nav {
+	margin: 60px;
+	margin-left: 50px;
+}
+.mytrend-nav a {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	color: black;
+}
+.mytrend-nav a:hover {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	color: black;
+}
+.mytrned-logo {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1.1rem;
+	color: black;
+}
+.mytrend-font {
+	font-family: 'NanumSquareBold';
+	font-size: 1rem;
+	color: black;
+}
+.mytrend-font2 {
+	font-family: 'NanumSquare';
+	font-size: 1rem;
+	color: black;
+}
+.mytrend-input input {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	padding: 0.6rem 1rem;
+	background-color: var(--gray);
+	border-radius: .5rem;
+	border: solid var(--white);
+	outline: none;
+}
+.mytrend-btn {
+	font-family: 'NanumSquareBold';
+	cursor: pointer;
+	width: 100%;
+	padding: .6rem 1.3rem;
+	border-radius: .4rem;
+	border: none;
+	background-color: black;
+	color: white;
+	font-size: 0.9rem;
+	outline: none;
+}
+.content a {
+	font-family: 'NanumSquareBold';
+	text-decoration: none;
+	font-size: .9rem;
+	color: black;
+}

@@ -39,4 +39,24 @@ public class UserBO {
 	public void updateUserPassword(int userId, String password) {
 		userMapper.updateUserPassword(userId, password);
 	}
+	
+	public int updateLoginIdByUserId(String loginId, int userId) {
+		return userMapper.updateLoginIdByUserId(loginId, userId);
+	}
+	
+	public int updateNamerByUserId(String name, int userId) {
+		return userMapper.updateNamerByUserId(name, userId);
+	}
+	
+	public int updateEmailByUserId(String email, int userId) {
+		return userMapper.updateEmailByUserId(email, userId);
+	}
+	
+	public int updatePhoneNumber(String phoneNumber, int userId) {
+		return userMapper.updatePhoneNumber(phoneNumber, userId);
+	}
+	
+	public int updatePWByUserId(String password, int userId) {
+		return userMapper.updatePWByUserId(password, userId);
+	}
 }

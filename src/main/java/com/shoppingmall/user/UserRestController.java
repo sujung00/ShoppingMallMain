@@ -104,8 +104,10 @@ public class UserRestController {
 			
 			// 세션에 유저 추가
 			session.setAttribute("userId", user.getId());
-			session.setAttribute("userName", user.getName());
 			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userName", user.getName());
+			session.setAttribute("userEmail", user.getEmail());
+			session.setAttribute("userPhoneNumber", user.getPhoneNumber());
 		} else {
 			result.put("code", 300);
 			result.put("errorMessage", "입력하신 아이디와 비밀번호는 등록되어 있지 않습니다.");
@@ -147,6 +149,13 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 비밀번호 찾기 API + 메일 보내기
+	 * @param loginId
+	 * @param name
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/find_pw")
 	public Map<String, Object> findPW(
 			@RequestParam("loginId") String loginId,
@@ -171,5 +180,179 @@ public class UserRestController {
 		return result;
 	}
 	
+	@PostMapping("/check_pw")
+	public Map<String, Object> checkPW(
+			@RequestParam("password") String password,
+			HttpSession session) {
+		// password 해싱
+		String hashedPassword = EncryptUtils.md5(password);
+		
+		String loginId = (String)session.getAttribute("userLoginId");
+		
+		// db select
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+		
+		return result;
+	}
 	
+	/**
+	 * id 변경 API
+	 * @param loginId
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/update_loginid")
+	public Map<String, Object> updateLoginId(
+			@RequestParam("loginId") String loginId,
+			HttpSession session) {
+		// id 중복 확인
+		User user = userBO.getUserByLoginId(loginId);
+		Map<String, Object> result = new HashMap<>();
+		if(user != null) {
+			result.put("code", 300);
+			result.put("errorMessage", "이미 존재하는 아이디 입니다.");
+					
+			return result;
+		}
+		
+		// db update
+		int rowCount = userBO.updateLoginIdByUserId(loginId, (int)session.getAttribute("userId"));
+		
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "아이디 변경에 성공하였습니다.");
+			
+			session.setAttribute("userLoginId", loginId);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "아이디 변경에 실패하였습니다. 관리자에게 문의해주세요.");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 이름 변경 API
+	 * @param name
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/update_name")
+	public Map<String, Object> updateName(
+			@RequestParam("name") String name,
+			HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		
+		Map<String, Object> result = new HashMap<>();
+		int rowCount = userBO.updateNamerByUserId(name, userId);		
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "이름 변경에 성공하였습니다.");
+			
+			session.setAttribute("userName", name);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "이름 변경에 실패하였습니다. 관리자에게 문의해주세요.");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 이메일 변경 API
+	 * @param email
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/update_email")
+	public Map<String, Object> updateEmail(
+			@RequestParam("email") String email,
+			HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		Map<String, Object> result = new HashMap<>();
+
+		// email 중복 확인
+		User emailUser = userBO.getUserByEmail(email);
+		if(emailUser != null) {
+			result.put("code", 300);
+			result.put("errorMessage", "이미 존재하는 이메일 입니다.");
+					
+			return result;
+		}
+	
+		int rowCount = userBO.updateEmailByUserId(email, userId);
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "이메일 변경에 성공하였습니다.");
+			
+			session.setAttribute("userEmail", email);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "이메일 변경에 실패하였습니다. 관리자에게 문의해주세요.");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 전화번호 변경 API
+	 * @param phoneNumber
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/update_phonenumber")
+	public Map<String, Object> updatePhoneNumber(
+			@RequestParam("phoneNumber") String phoneNumber,
+			HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		Map<String, Object> result = new HashMap<>();
+		
+		int rowCount = userBO.updatePhoneNumber(phoneNumber, userId);
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "휴대폰 번호 변경에 성공하였습니다.");
+			
+			session.setAttribute("userPhoneNumber", phoneNumber);
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "휴대폰 번호 변경에 실패하였습니다. 관리자에게 문의해주세요.");
+		}
+		
+		return result;
+	}
+	
+	@PostMapping("/update_password")
+	public Map<String, Object> updatePassword(
+			@RequestParam("nowPassword") String nowPassword,
+			@RequestParam("password") String password,
+			HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		String hashednowPW = EncryptUtils.md5(nowPassword);
+		String hashedPW = EncryptUtils.md5(password);
+		
+		User user = userBO.getUserByLoginIdPassword(userLoginId, hashednowPW);
+		Map<String, Object> result = new HashMap<>();
+		if(user != null) {
+			//비밀번호 변경
+			int rowCount = userBO.updatePWByUserId(hashedPW, userId);
+			if(rowCount > 0) {
+				result.put("code", 1);
+				result.put("result", "비밀번호 변경에 성공하였습니다.");
+			} else {
+				result.put("code", 500);
+				result.put("result", "비밀번호 변경에 실패하였습니다. 관리자에게 문의 바랍니다.");
+				
+				return result;
+			}
+		} else {
+			result.put("code", 300);
+			result.put("result", "현재 비밀번호가 일치하지 않습니다.");
+		}
+		
+		return result;
+	}
 }

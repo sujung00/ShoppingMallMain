@@ -122,5 +122,35 @@
 		SET `password` = #{password}
 		WHERE `id` = #{userId}
 	</update>
+	
+	<update id="updateLoginIdByUserId" parameterType="map">
+		UPDATE `user`
+		SET `loginId` = #{loginId}
+		WHERE `id` = #{userId}
+	</update>
+	
+	<update id="updateNamerByUserId" parameterType="map">
+		UPDATE `user`
+		SET `name` = #{name}
+		WHERE `id` = #{userId}
+	</update>
+	
+	<update id="updateEmailByUserId" parameterType="map">
+		UPDATE `user`
+		SET `email` = #{email}
+		WHERE `id` = #{userId}
+	</update>
+	
+	<update id="updatePhoneNumber" parameterType="map">
+		UPDATE `user`
+		SET `phoneNumber` = #{phoneNumber}
+		WHERE `id` = #{userId}
+	</update>
+	
+	<update id="updatePWByUserId" parameterType="map">
+		UPDATE `user`
+		SET `password` = #{password}
+		WHERE `id` = #{userId}
+	</update>
 
 </mapper>

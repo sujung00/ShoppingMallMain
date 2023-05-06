@@ -39,4 +39,24 @@ public interface UserMapper {
 	public void updateUserPassword(
 			@Param("userId") int userId,
 			@Param("password") String password);
+	
+	public int updateLoginIdByUserId(
+			@Param("loginId") String loginId,
+			@Param("userId") int userId);
+	
+	public int updateNamerByUserId(
+			@Param("name") String name,
+			@Param("userId") int userId);
+	
+	public int updateEmailByUserId(
+			@Param("email") String email,
+			@Param("userId") int userId);
+	
+	public int updatePhoneNumber(
+			@Param("phoneNumber") String phoneNumber,
+			@Param("userId") int userId);
+	
+	public int updatePWByUserId(
+			@Param("password") String password,
+			@Param("userId") int userId);
 }

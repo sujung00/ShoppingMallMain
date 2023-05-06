@@ -37,6 +37,9 @@
 	<c:otherwise>
 		<div class="d-flex align-items-center">
 			<div class="log-in mr-3">
+				<a href="/user/profile_view">MY TREND</a>
+			</div>
+			<div class="log-in mr-3">
 				<a href="/user/sign_out">LogOut</a>
 			</div>
 			<a href="#" class="d-flex align-items-center mr-3">
