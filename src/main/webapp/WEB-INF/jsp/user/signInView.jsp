@@ -65,7 +65,9 @@ $(document).ready(function(){
 					$("#signInModal").modal();
 					$("#modalBody").text(data.errorMessage);
 					
-					location.reload();
+					$('#signInModal').on('hidden.bs.modal', function (e) {
+					     location.reload();
+					})
 				}
 			}
 			, error : function(request, status, error) {

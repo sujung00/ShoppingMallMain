@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingmall.common.EncryptUtils;
+import com.shoppingmall.user.bo.MailBO;
 import com.shoppingmall.user.bo.UserBO;
+import com.shoppingmall.user.model.Mail;
 import com.shoppingmall.user.model.User;
 
 @RequestMapping("/user")
@@ -21,6 +23,9 @@ public class UserRestController {
 
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private MailBO mailBO;
 	
 	/**
 	 * 회원가입 API
@@ -109,6 +114,12 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 아이디 찾기 API
+	 * @param name
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/find_id")
 	public Map<String, Object> findId(
 			@RequestParam("name") String name,
@@ -135,4 +146,30 @@ public class UserRestController {
 		
 		return result;
 	}
+	
+	@PostMapping("/find_pw")
+	public Map<String, Object> findPW(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("name") String name,
+			@RequestParam("email") String email) {
+		// 존재하는 계정인지 확인
+		User user = userBO.getUserByLoginIdNameEmail(loginId, name, email);
+		
+		Map<String, Object> result = new HashMap<>();
+		if(user != null) {
+			//존재하는 계정이면 등록된 이메일로 메일 보냄
+			Mail mail = mailBO.createMailAndChangePassword(user.getEmail(), user.getName());
+			mailBO.mailSend(mail);
+			
+			result.put("code", 1);
+			result.put("result", "등록된 이메일로 임시 비밀번호를 전송하였습니다.");
+		} else {
+			result.put("code", 300);
+			result.put("errorMessage", "존재하지 않는 계정입니다.");
+		}
+		
+		return result;
+	}
+	
+	
 }

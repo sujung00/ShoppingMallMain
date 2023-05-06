@@ -37,6 +37,8 @@
 <script>
 $(document).ready(function(){
 	$("#findPWBtn").on("click", function(){
+		$("#findPw").modal();
+		
 		let loginId = $("#loginId").val().trim();
 		let name = $("#name").val().trim();
 		let email = $("#email").val().trim();
@@ -60,7 +62,39 @@ $(document).ready(function(){
 			return;
 		}
 		
+		//존재하는 계정이면 => 메일 보냄
+		//존재하지 않는 계정이면 => modal로 존재하지 않는 계정이라고 띄움
 		
+		$.ajax({
+			type:"POST"
+			, url:"/user/find_pw"
+			, data:{"loginId":loginId, "name":name, "email":email}
+		
+			, success:function(data){
+				if(data.code == 1){
+					//계정 있음
+					$("#findPWModal").modal();
+					$("#modalBody").text(data.result);
+					
+					$('#findPWModal').on('hidden.bs.modal', function (e) {
+					     location.href="/user/sign_in_view";
+					})
+				} else if(data.code == 300){
+					//계정 없음
+					$("#findPWModal").modal();
+					$("#modalBody").text(data.errorMessage);
+					
+					$('#findPWModal').on('hidden.bs.modal', function (e) {
+					     location.reload();
+					})
+				}
+			}
+			, error : function(request, status, error) {
+				$("#findPWModal").modal();
+				$("#modalBody").text("비밀번호 찾기에 실패했습니다.");
+				return;
+			}
+		})
 	});
 });
 </script>

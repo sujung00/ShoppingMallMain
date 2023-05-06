@@ -30,4 +30,13 @@ public interface UserMapper {
 	public String selectLoginIdByNameEmail(
 			@Param("name") String name,
 			@Param("email") String email);
+	
+	public User selectUserByLoginIdNameEmail(
+			@Param("loginId") String loginId,
+			@Param("name") String name,
+			@Param("email") String email);
+	
+	public void updateUserPassword(
+			@Param("userId") int userId,
+			@Param("password") String password);
 }

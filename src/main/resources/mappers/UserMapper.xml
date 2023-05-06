@@ -96,5 +96,31 @@
 			AND
 			`email` = #{email}
 	</select>
+	
+	<select id="selectUserByLoginIdNameEmail" parameterType="map" resultType="com.shoppingmall.user.model.User">
+		SELECT
+			`id`
+			,`loginId`
+			,`password`
+			,`name`
+			,`email`
+			,`phoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`user`
+		WHERE
+			`loginId` = #{loginId}
+			AND
+			`name` = #{name}
+			AND
+			`email` = #{email}
+	</select>
+	
+	<update id="updateUserPassword" parameterType="map">
+		UPDATE `user`
+		SET `password` = #{password}
+		WHERE `id` = #{userId}
+	</update>
 
 </mapper>
