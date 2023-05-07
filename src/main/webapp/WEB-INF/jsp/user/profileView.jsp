@@ -7,7 +7,7 @@
 		  <a class="nav-link" href="/user/profile_view">회원정보</a>
 		  <a class="nav-link" href="#">주문/배송</a>
 		  <a class="nav-link" href="#">문의내역</a>
-		  <a class="nav-link" href="#">배송지 관리</a>
+		  <a class="nav-link" href="/address/address_view">배송지 관리</a>
 		  <a class="nav-link" href="#">예치금</a>
 		</nav>
 	</div>

@@ -180,24 +180,6 @@ public class UserRestController {
 		return result;
 	}
 	
-	@PostMapping("/check_pw")
-	public Map<String, Object> checkPW(
-			@RequestParam("password") String password,
-			HttpSession session) {
-		// password 해싱
-		String hashedPassword = EncryptUtils.md5(password);
-		
-		String loginId = (String)session.getAttribute("userLoginId");
-		
-		// db select
-		
-		Map<String, Object> result = new HashMap<>();
-		result.put("code", 1);
-		result.put("result", "성공");
-		
-		return result;
-	}
-	
 	/**
 	 * id 변경 API
 	 * @param loginId
@@ -324,6 +306,13 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 비밀번호 변경 API
+	 * @param nowPassword
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/update_password")
 	public Map<String, Object> updatePassword(
 			@RequestParam("nowPassword") String nowPassword,

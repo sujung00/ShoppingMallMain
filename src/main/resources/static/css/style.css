@@ -230,3 +230,50 @@ MY TREND
 	font-size: .9rem;
 	color: black;
 }
+.mytrend-font3 {
+	font-family: 'NanumSquare';
+	font-size: .9rem;
+	color: black;
+}
+.address-input input {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	width: 280px;
+	padding: 0.5rem 1rem;
+	background-color: var(--gray);
+	border-radius: .5rem;
+	border: 0.125rem solid var(--white);
+	outline: none;
+}
+#sample6_postcode {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	width: 75%;
+	padding: 0.5rem 1rem;
+	background-color: var(--gray);
+	border-radius: .5rem;
+	border: 0.125rem solid var(--white);
+	outline: none;
+}
+#findAddressBtn {
+	font-family: 'NanumSquareBold';
+	cursor: pointer;
+	height: 35px;
+	width: 25%;
+	border-radius: .4rem;
+	background-color: white;
+	color: black;
+	font-size: 0.8rem;
+	outline: none;
+}
+.address-div {
+	width: 500px;
+	padding: 1.5rem;
+	background-color: #efefef;
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+}
+.address-data {
+	margin-left: 100px;
+	font-family: 'NanumSquare';
+}
