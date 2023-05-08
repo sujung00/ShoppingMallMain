@@ -280,3 +280,11 @@ MY TREND
 	margin-left: 50px;
 	font-family: 'NanumSquare';
 }
+.point-div {
+	width: 500px;
+	padding: 1rem;
+	padding-left: 1.5rem;
+	background-color: #efefef;
+	font-family: 'NanumSquare';
+	font-size: .8rem;
+}

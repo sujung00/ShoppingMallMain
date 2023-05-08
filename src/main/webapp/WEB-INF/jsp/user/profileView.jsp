@@ -8,7 +8,7 @@
 		  <a class="nav-link" href="#">주문/배송</a>
 		  <a class="nav-link" href="#">문의내역</a>
 		  <a class="nav-link" href="/address/address_view">배송지 관리</a>
-		  <a class="nav-link" href="#">예치금</a>
+		  <a class="nav-link" href="/point/point_view">포인트</a>
 		</nav>
 	</div>
 	
