@@ -65,14 +65,7 @@ $(document).ready(function(){
 					$('#updateLoginIdModal').on('hidden.bs.modal', function (e) {
 					     location.href="/user/profile_view";
 					})
-				} else if(data.code == 300){
-					$("#updateLoginIdModal").modal();
-					$("#modalBody").text(data.errorMessage);
-					
-					$('#updateLoginIdModal').on('hidden.bs.modal', function (e) {
-					     location.reload();
-					})
-				} else if(data.code == 500){
+				} else {
 					$("#updateLoginIdModal").modal();
 					$("#modalBody").text(data.errorMessage);
 					

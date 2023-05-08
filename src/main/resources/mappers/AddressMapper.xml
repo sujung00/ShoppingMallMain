@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shoppingmall.address.dao.AddressMapper">
+
+	<insert id="insertAddress" parameterType="map">
+		INSERT INTO `address`
+		(
+			`userId`
+			,`name`
+			,`phoneNumber`
+			,`extraPhoneNumber`
+			,`postcode`
+			,`address`
+			,`detailedAddress`
+			,`defaultAddress`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{name}
+			, #{phoneNumber}
+			, #{extraPhoneNumber}
+			, #{postcode}
+			, #{address}
+			, #{detailedAddress}
+			, #{defaultAddress}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectAddressListByUserId" parameterType="int" resultType="com.shoppingmall.address.model.Address">
+		SELECT
+			`id`
+			,`userId`
+			,`name`
+			,`phoneNumber`
+			,`extraPhoneNumber`
+			,`postcode`
+			,`address`
+			,`detailedAddress`
+			,`defaultAddress`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`address`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+	</select>
+	
+	<select id="selectAddressByAddressId" parameterType="int" resultType="com.shoppingmall.address.model.Address">
+		SELECT
+			`id`
+			,`userId`
+			,`name`
+			,`phoneNumber`
+			,`extraPhoneNumber`
+			,`postcode`
+			,`address`
+			,`detailedAddress`
+			,`defaultAddress`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`address`
+		WHERE
+			`id` = #{addressId}
+	</select>
+	
+	<select id="selectDefaultAddressByUserId" parameterType="int" resultType="com.shoppingmall.address.model.Address">
+		SELECT
+			`id`
+			,`userId`
+			,`name`
+			,`phoneNumber`
+			,`extraPhoneNumber`
+			,`postcode`
+			,`address`
+			,`detailedAddress`
+			,`defaultAddress`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`address`
+		WHERE
+			`userId` = #{userId}
+			AND
+			`defaultAddress` = 1
+	</select>
+	
+	<update id="updateDefaultAddressByAddressId" parameterType="int">
+		UPDATE `address`
+		SET `defaultAddress` = 0
+		WHERE `id` = #{addressId}
+	</update>
+	
+	<update id="updateAddressByAdderssId" parameterType="map">
+		UPDATE `address`
+		SET
+			`name` = #{name}
+			,`phoneNumber` = #{phoneNumber}
+			,`extraPhoneNumber` = #{extraPhoneNumber}
+			,`postcode` = #{postcode}
+			,`address` = #{address}
+			,`detailedAddress` = #{detailedAddress}
+			,`defaultAddress` = #{defaultAddress}
+			,`updatedAt` = NOW()
+		WHERE `id` = #{addressId}
+	</update>
+	
+</mapper>

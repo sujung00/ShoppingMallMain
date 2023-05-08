@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="d-flex">
 	<div class="mytrend-nav">
 		<nav class="nav flex-column">
@@ -15,38 +16,38 @@
 	<div class="content">
 		<div class="mytrned-logo">배송지 정보 수정</div>
 		<div class="mt-5">
-		
+		<c:forEach items="${address}" var="ad">
 			<!-- 배송지 새로 입력 -->
 			<div id="newad" class="new-address mt-4">
 				<div>
 					<div class="mytrend-font2">이름</div>
 					<div class="mytrend-input">
-						<input type="text" id="name">
+						<input type="text" id="name" value="${ad.name}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">전화번호</div>
 					<div class="mytrend-input">
-						<input type="text" id="phoneNumber" placeholder="'-' 없이 숫자만 입력하세요.">
+						<input type="text" id="phoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${ad.phoneNumber}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">추가 연락처(선택)</div>
 					<div class="mytrend-input">
-						<input type="text" id="extraPhoneNumber" placeholder="'-' 없이 숫자만 입력하세요.">
+						<input type="text" id="extraPhoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${ad.extraPhoneNumber}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">배송지 주소</div>
 					<div class="address-input d-flex align-items-center">
-						<input type="text" id="sample6_postcode">
+						<input type="text" id="sample6_postcode" value="${ad.postcode}">
 						<button type="button" id="findAddressBtn" class="ml-2" onclick="sample6_execDaumPostcode()">찾 기</button>
 					</div>
 					<div class="address-input">
-						<input type="text" id="sample6_address">
+						<input type="text" id="sample6_address" value="${ad.address}">
 					</div>
 					<div class="address-input">
-						<input type="text" id="sample6_detailAddress">
+						<input type="text" id="sample6_detailAddress" value="${ad.detailedAddress}">
 					</div>
 				</div>
 				<div class="mt-1">
@@ -55,15 +56,30 @@
 				</div>
 				<div class="d-flex mt-3">
 					<input type="button" id="cancelBtn" value="취소" class="mytrend-btn">
-					<input type="button" id="registerAddressBtn" value="수정 완료" class="mytrend-btn ml-2">
+					<input type="button" id="registerAddressBtn" value="수정 완료" class="mytrend-btn ml-2" data-address-id="${ad.id}">
 				</div>
 			</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<div class="modal" tabindex="-1" id="addressUpdateModal">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+  	<div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+   </div>
+</div>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -109,4 +125,78 @@
             }
         }).open();
     }
+    
+    $(document).ready(function(){
+    	$("#registerAddressBtn").on("click", function(){
+    		let addressId = $(this).data("address-id");
+    		let name = $("#name").val().trim();
+			let phoneNumber = $("#phoneNumber").val().trim();
+			let extraPhoneNumber = $("#extraPhoneNumber").val().trim();
+			let postcode = $("#sample6_postcode").val();
+			let address = $("#sample6_address").val();
+			let detailedAddress = $("#sample6_detailAddress").val().trim();
+			let defaultAddress = $('#defaultAddress').is(':checked'); // true or false
+			
+			if(!name) {
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("이름을 입력해주세요.");
+				return;
+			}
+			if(!phoneNumber) {
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("전화번호를 입력해주세요.");
+				return;
+			}
+			if(phoneNumber.includes("-")){
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("-없이 숫자만 입력해주세요.");
+				return;
+			}
+			if(extraPhoneNumber.includes("-")){
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("-없이 숫자만 입력해주세요.");
+				return;
+			}
+			if(!postcode) {
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("우편번호를 입력해주세요.");
+				return;
+			}
+			if(!detailedAddress) {
+				$("#addressUpdateModal").modal();
+				$("#modalBody").text("상세 주소를 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"POST"
+				, url:"/address/address_update"
+				, data:{"addressId":addressId, "name":name, "phoneNumber":phoneNumber, "extraPhoneNumber":extraPhoneNumber,
+					"postcode":postcode, "address":address, "detailedAddress":detailedAddress, "defaultAddress":defaultAddress}
+				
+				, success:function(data) {
+					if(data.code == 1){
+						$("#addressUpdateModal").modal();
+						$("#modalBody").text(data.result);
+						
+						$('#addressUpdateModal').on('hidden.bs.modal', function (e) {
+						     location.href="/address/address_view";
+						})
+					} else {
+						$("#addressUpdateModal").modal();
+						$("#modalBody").text(data.errorMessage);
+						
+						$('#addressUpdateModal').on('hidden.bs.modal', function (e) {
+						     location.reload();
+						})
+					}
+				}
+				, error : function(request, status, error) {
+					$("#addressModal").modal();
+					$("#modalBody").text("배송지 생성에 실패했습니다.");
+					return;
+				}
+			})
+    	});
+    });
 </script>

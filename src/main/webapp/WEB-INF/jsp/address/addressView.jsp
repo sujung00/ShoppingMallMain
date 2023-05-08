@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="d-flex">
 	<div class="mytrend-nav">
 		<nav class="nav flex-column">
@@ -29,20 +30,56 @@
 			
 			<!-- 배송지 목록 -->
 			<div id="adlist" class="address-list mt-4">
-				<div class="address-div d-flex">
-					<div>
+				<div class="mytrend-font2 mb-2">기본 배송지</div>
+				<c:forEach items="${defualAddress}" var="defualAddress">
+				<c:if test="${not empty defualAddress}">
+				<button type="submit" class="address-div d-flex mb-3">
+					<div class="address-table">
 						<div>이름</div>
 						<div class="mt-1">휴대폰 번호</div>
 						<div class="mt-1">추가 연락처</div>
 						<div class="mt-1">주소</div>
 					</div>
 					<div class="address-data">
+						<div>${defualAddress.name}</div>
+						<div class="mt-1">${defualAddress.phoneNumber}</div>
+						<c:if test="${not empty defualAddress.extraPhoneNumber}">
+							<div class="mt-1">${defualAddress.extraPhoneNumber}</div>
+						</c:if>
+						<c:if test="${empty defualAddress.extraPhoneNumber}">
+							<div class="mt-1">추가 연락처가 없습니다.</div>
+						</c:if>
+						<div class="mt-1">${defualAddress.address} ${defualAddress.detailedAddress}</div>
+					</div>
+				</button>
+				</c:if>
+				</c:forEach>
+				
+				<div class="mytrend-font2 mt-4 mb-2">배송지 목록</div>
+				<c:forEach items="${addressList}" var="address">
+				<form action="/address/address_update_view" method="post">
+				<input type="hidden" name="addressId" value="${address.id}">
+				<button type="submit" class="address-div d-flex mb-3">
+					<div class="address-table">
 						<div>이름</div>
 						<div class="mt-1">휴대폰 번호</div>
 						<div class="mt-1">추가 연락처</div>
 						<div class="mt-1">주소</div>
 					</div>
-				</div>
+					<div class="address-data">
+						<div>${address.name }</div>
+						<div class="mt-1">${address.phoneNumber }</div>
+						<c:if test="${not empty address.extraPhoneNumber}">
+							<div class="mt-1">${address.extraPhoneNumber}</div>
+						</c:if>
+						<c:if test="${empty address.extraPhoneNumber}">
+							<div class="mt-1">추가 연락처가 없습니다.</div>
+						</c:if>
+						<div class="mt-1">${address.address} ${address.detailedAddress}</div>
+					</div>
+				</button>
+				</form>
+				</c:forEach>
 			</div>
 			
 			<!-- 배송지 새로 입력 -->
@@ -68,11 +105,11 @@
 				<div class="mt-2">
 					<div class="mytrend-font2">배송지 주소</div>
 					<div class="address-input d-flex align-items-center">
-						<input type="text" id="sample6_postcode">
+						<input type="text" id="sample6_postcode" readonly="readonly">
 						<button type="button" id="findAddressBtn" class="ml-2" onclick="sample6_execDaumPostcode()">찾 기</button>
 					</div>
 					<div class="address-input">
-						<input type="text" id="sample6_address">
+						<input type="text" id="sample6_address" readonly="readonly">
 					</div>
 					<div class="address-input">
 						<input type="text" id="sample6_detailAddress">
@@ -91,8 +128,22 @@
 	</div>
 </div>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<div class="modal" tabindex="-1" id="addressModal">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+  	<div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+   </div>
+</div>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -150,5 +201,81 @@
     	    	$("#adlist").addClass("d-none");
     	    }
     	});
+		
+		$("#cancelBtn").on("click", function(){
+			location.href="/address/address_view";
+		});
+		
+		$("#registerAddressBtn").on("click", function(){
+			let name = $("#name").val().trim();
+			let phoneNumber = $("#phoneNumber").val().trim();
+			let extraPhoneNumber = $("#extraPhoneNumber").val().trim();
+			let postcode = $("#sample6_postcode").val();
+			let address = $("#sample6_address").val();
+			let detailedAddress = $("#sample6_detailAddress").val().trim();
+			let defaultAddress = $('#defaultAddress').is(':checked'); // true or false
+			
+			if(!name) {
+				$("#addressModal").modal();
+				$("#modalBody").text("이름을 입력해주세요.");
+				return;
+			}
+			if(!phoneNumber) {
+				$("#addressModal").modal();
+				$("#modalBody").text("전화번호를 입력해주세요.");
+				return;
+			}
+			if(phoneNumber.includes("-")){
+				$("#addressModal").modal();
+				$("#modalBody").text("-없이 숫자만 입력해주세요.");
+				return;
+			}
+			if(extraPhoneNumber.includes("-")){
+				$("#addressModal").modal();
+				$("#modalBody").text("-없이 숫자만 입력해주세요.");
+				return;
+			}
+			if(!postcode) {
+				$("#addressModal").modal();
+				$("#modalBody").text("우편번호를 입력해주세요.");
+				return;
+			}
+			if(!detailedAddress) {
+				$("#addressModal").modal();
+				$("#modalBody").text("상세 주소를 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"POST"
+				, url:"/address/address_create"
+				, data:{"name":name, "phoneNumber":phoneNumber, "extraPhoneNumber":extraPhoneNumber,
+					"postcode":postcode, "address":address, "detailedAddress":detailedAddress, "defaultAddress":defaultAddress}
+				
+				, success:function(data) {
+					if(data.code == 1){
+						$("#addressModal").modal();
+						$("#modalBody").text(data.result);
+						
+						$('#addressModal').on('hidden.bs.modal', function (e) {
+						     location.href="/address/address_view";
+						})
+					} else {
+						$("#addressModal").modal();
+						$("#modalBody").text(data.errorMessage);
+						
+						$('#addressModal').on('hidden.bs.modal', function (e) {
+						     location.reload();
+						})
+					}
+				}
+				, error : function(request, status, error) {
+					$("#addressModal").modal();
+					$("#modalBody").text("배송지 생성에 실패했습니다.");
+					return;
+				}
+			});
+			
+		});
     });
 </script>
