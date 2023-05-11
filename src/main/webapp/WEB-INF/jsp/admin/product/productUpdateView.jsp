@@ -39,12 +39,13 @@
 			<label for="woman">여성</label>
 		</c:if>
 	</div>
-	<button type="button" id="updateBtn" class="btn btn-dark">상품 수정</button>
+	<button type="button" id="updateBtn" class="btn btn-dark" data-product-id="${product.id}">상품 수정</button>
 </div>
 
 <script>
 $(document).ready(function(){
 	$("#updateBtn").on("click", function(){
+		let productId = $(this).data("product-id");
 		let name = $("#name").val().trim();
 		let information = $("#information").val().trim();
 		let price = $("#price").val().trim();
@@ -62,10 +63,6 @@ $(document).ready(function(){
 		}
 		if(!price){
 			alert("가격을 입력해주세요.");
-			return;
-		}
-		if(!mainImage){
-			alert("대표 이미지를 선택해주세요.");
 			return;
 		}
 		if(mainImage){
@@ -89,6 +86,7 @@ $(document).ready(function(){
 		// 이미지를 업로드 할 때는 form태그가 반드시 있어야 한다.
 		// append함수는 폼태그의 name 속성과 같다.
 		let formData = new FormData();
+		formData.append("productId", productId);
 		formData.append("name", name);
 		formData.append("information", information);
 		formData.append("price", price);
@@ -107,7 +105,7 @@ $(document).ready(function(){
 			, success:function(data){
 				if(data.code == 1){
 					alert(data.result);
-					location.href="/product/product_list_view";
+					location.href="/product_admin/product_list_view";
 				} else {
 					alert(data.errorMessage);
 					return;

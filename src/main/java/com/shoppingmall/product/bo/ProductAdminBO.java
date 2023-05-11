@@ -28,4 +28,14 @@ public class ProductAdminBO {
 	public Product getProductByProductId(int productId) {
 		return productBO.getProductByProductId(productId);
 	}
+	
+	public int updateProductByproductId(int productId, String name, String informaiton,
+			int price, MultipartFile mainImage, String detailedInfo, String gender) {
+		return productBO.updateProductByproductId(productId, name, informaiton, price, mainImage, detailedInfo, gender);
+	}
+	
+	public int deleteProductByProductId(int productId) {
+		return productBO.deleteProductByProductId(productId);
+	}
+	
 }

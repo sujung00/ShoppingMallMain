@@ -1,8 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="m-5">
 	<h2>제품 옵션 추가</h2>
 	<div class="mt-4">제품명 : ${product.name}</div>
+	<!-- 이미 존재하는 옵션 List -->
+	<c:forEach items="${poList}" var="productOption">
+	<div class="border mt-2 d-flex align-items-center">
+		<div class="mr-5">
+			<div>색상 : ${productOption.color}</div>
+			<div>사이즈 : ${productOption.size}</div>
+			<div>재고 : ${productOption.stock}</div>
+		</div>
+		<form action="/product_option/update_view" method="post">
+			<input type="hidden" name="productoptionId" value="${productOption.id}">
+			<input type="hidden" name="productId" value="${product.id}">
+			<button type="submit" id="updateBtn" class="btn btn-info">재고 수정</button>
+		</form>
+		<button type="submit" id="deleteBtn" class="btn btn-danger" data-option-id="${productOption.id}">옵션 삭제</button>
+	</div>
+	</c:forEach>
+
 	<div class="mt-4">
 		<div>색상</div>
 		<input type="text" id="color" class="form-control col-5">
@@ -47,7 +65,7 @@ $(document).ready(function(){
 			, success:function(data){
 				if(data.code == 1){
 					alert(data.result);
-					location.href="/product_admin/product_list_view"
+					location.reload();
 				} else {
 					alert(data.errorMessage);
 					return;
@@ -58,5 +76,29 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
+	$("#deleteBtn").on("click", function(){
+		let productOptionId = $(this).data("option-id");
+		
+		$.ajax({
+			type:"POST"
+			, url:"/product_option/delete"
+			, data:{"productOptionId":productOptionId}
+		
+			, success:function(data){
+				if(data.code == 1){
+					alert(data.result);
+					location.reload();
+				} else {
+					alert(data.errorMessage);
+					return;
+				}
+			}
+			, error:function(request, status, error) {
+				alert("옵션 삭제 실패");
+			}
+		})
+	});
+	
 })
 </script>

@@ -25,4 +25,77 @@
 		)
 	</insert>
 	
+	<delete id="deleteProductOptionByProductId" parameterType="int">
+		DELETE
+		FROM 
+			`productoption`
+		WHERE
+			`productId` = #{productId}
+	</delete>
+	
+	<select id="selectProductOptionListByProductId" parameterType="int" resultType="com.shoppingmall.productOption.model.ProductOption">
+		SELECT
+			`id`
+			,`productId`
+			,`color`
+			,`size`
+			,`stock`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`productoption`
+		WHERE
+			`productId` = #{productId}
+	</select>
+	
+	<select id="selectProductOptionByProductOptionId" parameterType="int" resultType="com.shoppingmall.productOption.model.ProductOption">
+		SELECT
+			`id`
+			,`productId`
+			,`color`
+			,`size`
+			,`stock`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`productoption`
+		WHERE
+			`id` = #{productOptionId}
+	</select>
+	
+	<select id="selectProductOptionByProductId" parameterType="map" resultType="com.shoppingmall.productOption.model.ProductOption">
+		SELECT
+			`id`
+			,`productId`
+			,`color`
+			,`size`
+			,`stock`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`productoption`
+		WHERE
+			`productId` = #{productId}
+			AND
+			`color` = #{color}
+			AND
+			`size` = #{size}
+	</select>
+	
+	<update id="updateStockByProductOptionId" parameterType="map">
+		UPDATE 	`productoption`
+		SET
+			`stock` = #{stock}
+		WHERE
+			`id` = #{productOptionId}
+	</update>
+	
+	<delete id="deleteProductOptionByProductOptionId" parameterType="int">
+		DELETE
+		FROM
+			`productoption`
+		WHERE
+			`id` = #{productOptionId}
+	</delete>
+	
 </mapper>

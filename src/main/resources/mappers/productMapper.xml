@@ -61,4 +61,28 @@
 			`id` = #{productId}
 	</select>
 
+	<update id="updateProductByproductId" parameterType="map">
+		UPDATE `product`
+		SET
+			`name` = #{name}
+			, `information` = #{information}
+			, `price` = #{price}
+			<if test="mainImagePath != null">
+			, `mainImagePath` = #{mainImagePath}
+			</if>
+			, `detailedInfo` = #{detailedInfo}
+			, `gender` = #{gender}
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{productId}
+	</update>
+	
+	<delete id="deleteProductByProductId" parameterType="int">
+		DELETE
+		FROM
+			`product`
+		WHERE
+			`id` = #{productId}
+	</delete>
+
 </mapper>

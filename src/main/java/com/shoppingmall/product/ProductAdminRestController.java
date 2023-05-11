@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingmall.product.bo.ProductAdminBO;
+import com.shoppingmall.productOption.bo.ProductOptionAdminBO;
 
 @RequestMapping("/product_admin")
 @RestController
@@ -18,6 +19,9 @@ public class ProductAdminRestController {
 
 	@Autowired
 	private ProductAdminBO productAdminBO;
+	
+	@Autowired
+	private ProductOptionAdminBO poaBO;
 	
 	@PostMapping("/product_create")
 	public Map<String, Object> productCreate(
@@ -44,6 +48,7 @@ public class ProductAdminRestController {
 	
 	@PostMapping("/product_update")
 	public Map<String, Object> productUpdate(
+			@RequestParam("productId") int productId,
 			@RequestParam("name") String name,
 			@RequestParam("information") String information,
 			@RequestParam("price") int price,
@@ -51,11 +56,37 @@ public class ProductAdminRestController {
 			@RequestParam("detailedInfo") String detailedInfo,
 			@RequestParam("gender") String gender){
 		// db update
-		// null로 오면 그대로
+		int rowCount = productAdminBO.updateProductByproductId(productId, name, information, price, mainImage, detailedInfo, gender);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 1);
-		result.put("result", "상품 수정에 성공하였습니다.");
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "상품 수정에 성공하였습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "상품 수정에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+	
+	@PostMapping("/product_delete")
+	public Map<String, Object> productDelete(
+			@RequestParam("productId") int productId) {
+		// product delete
+		int rowCount = productAdminBO.deleteProductByProductId(productId);
+		// product option delete
+		poaBO.deleteProductOptionByProductId(productId);
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "상품 삭제에 성공하셨습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "상품 삭제에 실패했습니다.");
+		}
 		
 		return result;
 	}

@@ -16,7 +16,7 @@ import com.shoppingmall.productOption.bo.ProductOptionAdminBO;
 public class ProductOptionAdminRestController {
 
 	@Autowired
-	private ProductOptionAdminBO pdaBO;
+	private ProductOptionAdminBO poaBO;
 	
 	@PostMapping("/create")
 	public Map<String, Object> create(
@@ -25,7 +25,7 @@ public class ProductOptionAdminRestController {
 			@RequestParam("size") String size,
 			@RequestParam("stock") int stock) {
 		// db insert
-		int rowCount = pdaBO.addProductOption(productId, color, size, stock);
+		int rowCount = poaBO.addProductOption(productId, color, size, stock);
 		Map<String, Object> result = new HashMap<>();
 		if(rowCount > 0) {
 			result.put("code", 1);
@@ -35,7 +35,42 @@ public class ProductOptionAdminRestController {
 			result.put("errorMessage", "제품 옵션 추가에 실패했습니다.");
 		}
 		
+		return result;
+	}
+	
+	@PostMapping("/update")
+	public Map<String, Object> update(
+			@RequestParam("productOptionId") int productOptionId,
+			@RequestParam("stock") int stock){
+		// db update
+		int rowCount = poaBO.updateStockByProductOptionId(productOptionId, stock);		
 		
+		Map<String, Object> result = new HashMap<>();
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "재고 수정에 성공했습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "옵션 수정에 실패했습니다.");
+		}
+		
+		return result;
+	}
+	
+	@PostMapping("/delete")
+	public Map<String, Object> delete(
+			@RequestParam("productOptionId") int productOptionId) {
+		// db delete
+		int rowCount = poaBO.deleteProductOptionByProductOptionId(productOptionId);
+		
+		Map<String, Object> result = new HashMap<>();
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "옵션 삭제에 성공했습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "옵션 삭제에 실패했습니다.");
+		}
 		
 		return result;
 	}

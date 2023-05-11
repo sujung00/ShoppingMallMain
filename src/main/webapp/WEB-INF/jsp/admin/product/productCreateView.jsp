@@ -96,7 +96,7 @@ $(document).ready(function(){
 			, success:function(data){
 				if(data.code == 1){
 					alert(data.result);
-					location.href="/product/product_list_view";
+					location.href="/product_admin/product_list_view";
 				} else {
 					alert(data.errorMessage);
 					return;

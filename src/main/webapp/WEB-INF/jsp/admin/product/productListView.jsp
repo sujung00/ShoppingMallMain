@@ -4,7 +4,7 @@
 <div class="m-5">
 	<h2>제품 관리</h2>
 	<div>
-		<a type="button" href="/admin/product/product_create_view" class="btn btn-warning">제품 등록</a>
+		<a type="button" href="/product_admin/product_create_view" class="btn btn-warning">제품 등록</a>
 	</div>
 	<div class="mt-5 d-flex">
 		<c:forEach items="${productList}" var="product">
@@ -20,8 +20,32 @@
 				<input type="hidden" name="productId" value="${product.id}">
 				<button type="submit" class="btn btn-info">상품 수정</button>
 			</form>
-			<a href="#" class="btn btn-info">상품 삭제</a>
+			<button type="submit" class="deleteBtn btn btn-danger" data-product-id="${product.id}">상품 삭제</button>
 		</div>
 		</c:forEach>
 	</div>
 </div>
+
+<script>
+$(document).ready(function(){
+	$(".deleteBtn").on("click", function(){
+		let productId = $(this).data("product-id");
+		
+		$.ajax({
+			type:"POST"
+			, url:"/product_admin/product_delete"
+			, data:{"productId":productId}
+			
+			, success:function(data){
+				if(data.code == 1){
+					alert(data.result);
+					location.reload();
+				} else {
+					alert(data.errorMessage);
+					return;
+				}
+			}
+		})
+	});
+});
+</script>
