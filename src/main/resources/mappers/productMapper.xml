@@ -4,7 +4,7 @@
  
 <mapper namespace="com.shoppingmall.product.dao.ProductMapper">
 
-	<insert id="insertProduct" parameterType="map">
+	<insert id="insertProduct" parameterType="map" useGeneratedKeys="true" keyProperty="product.id">
 		INSERT INTO `product`
 		(
 			`name`
@@ -18,12 +18,12 @@
 		)
 		VALUES
 		(
-			#{name}
-			, #{information}
-			, #{price}
+			#{product.name}
+			, #{product.information}
+			, #{product.price}
 			, #{mainImagePath}
-			, #{detailedInfo}
-			, #{gender}
+			, #{product.detailedInfo}
+			, #{product.gender}
 			, NOW()
 			, NOW()
 		)
@@ -84,5 +84,24 @@
 		WHERE
 			`id` = #{productId}
 	</delete>
+	
+	<select id="selectNewProductList" resultType="com.shoppingmall.product.model.Product">
+		SELECT
+			`id`
+			,`name`
+			,`information`
+			,`price`
+			,`mainImagePath`
+			,`detailedInfo`
+			,`gender`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`product`
+		WHERE
+		<![CDATA[
+			DATE(`createdAt`) > DATE(SUBDATE(NOW(), INTERVAL 10 DAY));
+		]]>
+	</select>
 
 </mapper>

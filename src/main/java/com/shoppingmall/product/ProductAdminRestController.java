@@ -1,6 +1,7 @@
 package com.shoppingmall.product;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingmall.product.bo.ProductAdminBO;
+import com.shoppingmall.product.bo.ProductImageBO;
+import com.shoppingmall.product.model.Product;
 import com.shoppingmall.productOption.bo.ProductOptionAdminBO;
 
 @RequestMapping("/product_admin")
@@ -23,6 +26,9 @@ public class ProductAdminRestController {
 	@Autowired
 	private ProductOptionAdminBO poaBO;
 	
+	@Autowired
+	private ProductImageBO productImageBO;
+	
 	@PostMapping("/product_create")
 	public Map<String, Object> productCreate(
 			@RequestParam("name") String name,
@@ -30,9 +36,22 @@ public class ProductAdminRestController {
 			@RequestParam("price") int price,
 			@RequestParam("mainImage") MultipartFile mainImage,
 			@RequestParam("detailedInfo") String detailedInfo,
-			@RequestParam("gender") String gender){
+			@RequestParam("gender") String gender,
+			@RequestParam("productImages") List<MultipartFile> files){
 		// db insert
-		int rowCount = productAdminBO.addProduct(name, information, price, mainImage, detailedInfo, gender);
+		Product product = new Product();
+		product.setName(name);
+		product.setInformation(information);
+		product.setPrice(price);
+		product.setDetailedInfo(detailedInfo);
+		product.setGender(gender);
+		int rowCount = productAdminBO.addProduct(product, mainImage);
+
+		int productId = product.getId();
+		// 이미지 insert
+		for(int i = 0; i < files.size(); i++) {
+			productImageBO.addProductImage(productId, name, files.get(i));
+		}
 		
 		Map<String, Object> result = new HashMap<>();
 		if(rowCount > 0) {
@@ -54,9 +73,10 @@ public class ProductAdminRestController {
 			@RequestParam("price") int price,
 			@RequestParam(value="mainImage", required=false) MultipartFile mainImage,
 			@RequestParam("detailedInfo") String detailedInfo,
-			@RequestParam("gender") String gender){
+			@RequestParam("gender") String gender,
+			@RequestParam("productImages") List<MultipartFile> files){
 		// db update
-		int rowCount = productAdminBO.updateProductByproductId(productId, name, information, price, mainImage, detailedInfo, gender);
+		int rowCount = productAdminBO.updateProductByproductId(productId, name, information, price, mainImage, detailedInfo, gender, files);
 		
 		Map<String, Object> result = new HashMap<>();
 		if(rowCount > 0) {

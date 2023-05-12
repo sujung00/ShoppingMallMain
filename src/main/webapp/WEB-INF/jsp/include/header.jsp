@@ -10,7 +10,7 @@
 				</div>
 				<nav class="main-nav d-flex align-items-center">
 					<ul class="nav">
-						<li class="nav-item"><a href="#" class="nav-link">상품관리</a></li>
+						<li class="nav-item"><a href="/product_admin/product_list_view" class="nav-link">상품관리</a></li>
 						<li><a href="#" class="nav-link">주문관리</a></li>
 						<li><a href="#" class="nav-link">문의사항</a></li>
 					</ul>
@@ -45,9 +45,9 @@
 				</div>
 				<nav class="main-nav d-flex align-items-center">
 					<ul class="nav">
-						<li class="nav-item"><a href="#" class="nav-link">신제품</a></li>
-						<li><a href="#" class="nav-link">여성</a></li>
-						<li><a href="#" class="nav-link">남성</a></li>
+						<li class="nav-item"><a href="/product/new_product_view" class="nav-link">신제품</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">여성</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">남성</a></li>
 					</ul>
 				</nav>
 			</div>
