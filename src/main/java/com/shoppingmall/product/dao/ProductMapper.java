@@ -12,12 +12,8 @@ import com.shoppingmall.product.model.Product;
 public interface ProductMapper {
 
 	public int insertProduct(
-			@Param("name") String name,
-			@Param("information") String information,
-			@Param("price") int price,
-			@Param("mainImagePath") String mainImagePath,
-			@Param("detailedInfo") String detailedInfo,
-			@Param("gender") String gender);
+			@Param("product") Product product,
+			@Param("mainImagePath") String mainImagePath);
 	
 	public List<Product> selectProductList();
 	
@@ -33,4 +29,6 @@ public interface ProductMapper {
 			@Param("gender") String gender);
 	
 	public int deleteProductByProductId(int productId);
+	
+	public List<Product> selectNewProductList();
 }

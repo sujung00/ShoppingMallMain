@@ -21,6 +21,10 @@
 		<input type="file" id="mainImage" accept=".jpg, .jpeg, .png, .gif">
 	</div>
 	<div>
+		<div>상세 이미지</div>
+		<input type="file" name="productImages" id="productImages" accept=".jpg, .jpeg, .png, .gif" multiple="multiple">
+	</div>
+	<div>
 		<div>상세 설명</div>
 		<textarea rows="5" cols="50" id="detailedInfo">${product.detailedInfo}</textarea>
 	</div>
@@ -44,6 +48,24 @@
 
 <script>
 $(document).ready(function(){
+	var inputFileList = new Array();
+	
+	$("input[name=productImages]").on("change", function(e){
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		
+		// 업로드 된 파일 유효성 체크
+		if(filesArr.length > 5) {
+			alert("이미지는 최대 5개까지 업로드 가능합니다.");
+			$("input[name=productImages]").val("");
+			return;
+		}
+		
+		filesArr.forEach(function(f) { 
+		　　　　inputFileList.push(f);    // 이미지 파일을 배열에 담는다.
+		});
+	});
+	
 	$("#updateBtn").on("click", function(){
 		let productId = $(this).data("product-id");
 		let name = $("#name").val().trim();
@@ -93,6 +115,9 @@ $(document).ready(function(){
 		formData.append("mainImage", $('#mainImage')[0].files[0]);
 		formData.append("detailedInfo", detailedInfo);
 		formData.append("gender", gender);
+		for(let i = 0; i < inputFileList.length; i++){
+			formData.append("productImages", inputFileList[i]);
+		}
 		
 		$.ajax({
 			type:"POST"

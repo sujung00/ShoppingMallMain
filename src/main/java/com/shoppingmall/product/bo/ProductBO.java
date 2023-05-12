@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shoppingmall.common.FileManagerService;
 import com.shoppingmall.product.dao.ProductMapper;
 import com.shoppingmall.product.model.Product;
+import com.shoppingmall.product.model.ProductImage;
 
 @Service
 public class ProductBO {
@@ -20,18 +21,20 @@ public class ProductBO {
 	private ProductMapper productMapper;
 	
 	@Autowired
+	private ProductImageBO productImageBO;
+	
+	@Autowired
 	private FileManagerService fileManager;
 
-	public int addProduct(String name, String information, int price,
-			MultipartFile mainImage, String detailedInfo, String gender) {
+	public int addProduct(Product product, MultipartFile mainImage) {
 		
 		String mainImgaePath = null;
 		if (mainImage != null) {
 			// 서버에 이미지 업로드 후 imagPath 받아옴
-			mainImgaePath = fileManager.saveFile(name, mainImage);
+			mainImgaePath = fileManager.saveFile(product.getName(), mainImage);
 		}
 		
-		return productMapper.insertProduct(name, information, price, mainImgaePath, detailedInfo, gender);
+		return productMapper.insertProduct(product, mainImgaePath);
 	}
 	
 	public List<Product> getProductList(){
@@ -43,7 +46,7 @@ public class ProductBO {
 	}
 	
 	public int updateProductByproductId(int productId, String name, String informaiton,
-			int price, MultipartFile mainImage, String detailedInfo, String gender) {
+			int price, MultipartFile mainImage, String detailedInfo, String gender, List<MultipartFile> files) {
 		Product product = getProductByProductId(productId);
 		if(product == null) {
 			logger.warn("[update product] product is null. productId:{}", productId);
@@ -60,11 +63,27 @@ public class ProductBO {
 				fileManager.deleteFile(product.getMainImagePath());
 			}
 		}
+		List<ProductImage> productImageList = productImageBO.getProductImageList(productId);
+		if(files != null) {
+			String productImagePath = null;
+			for(int i = 0; i < files.size(); i++) {
+				productImagePath = fileManager.saveFile(name, files.get(i));
+			}
+			if(productImagePath != null && !productImageList.isEmpty()) {
+				for(int i = 0; i < productImageList.size(); i++) {
+					fileManager.deleteFile(productImageList.get(i).getImagePath());
+				}
+			}
+		}
 		
 		return productMapper.updateProductByproductId(productId, name, informaiton, price, mainImgaePath, detailedInfo, gender);
 	}
 	
 	public int deleteProductByProductId(int productId) {
 		return productMapper.deleteProductByProductId(productId);
+	}
+	
+	public List<Product> getNewProductList(){
+		return productMapper.selectNewProductList();
 	}
 }

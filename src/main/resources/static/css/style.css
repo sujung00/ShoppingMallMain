@@ -288,3 +288,15 @@ MY TREND
 	font-family: 'NanumSquare';
 	font-size: .8rem;
 }
+/*
+제품 LIST
+*/
+.product-logo {
+	font-family: 'NanumSquareBold';
+	font-size: 1.5rem;
+}
+.product-btn {
+	border: none;
+	background-color: white;
+	text-align: left;
+}

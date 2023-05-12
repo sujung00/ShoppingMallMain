@@ -15,10 +15,8 @@ public class ProductAdminBO {
 	@Autowired
 	private ProductBO productBO;
 	
-	public int addProduct(String name, String information, int price,
-			MultipartFile mainImage, String detailedInfo, String gender) {
-		
-		return productBO.addProduct(name, information, price, mainImage, detailedInfo, gender);
+	public int addProduct(Product product, MultipartFile mainImage) {
+		return productBO.addProduct(product, mainImage);
 	}
 	
 	public List<Product> getProductList(){
@@ -30,8 +28,8 @@ public class ProductAdminBO {
 	}
 	
 	public int updateProductByproductId(int productId, String name, String informaiton,
-			int price, MultipartFile mainImage, String detailedInfo, String gender) {
-		return productBO.updateProductByproductId(productId, name, informaiton, price, mainImage, detailedInfo, gender);
+			int price, MultipartFile mainImage, String detailedInfo, String gender, List<MultipartFile> files) {
+		return productBO.updateProductByproductId(productId, name, informaiton, price, mainImage, detailedInfo, gender, files);
 	}
 	
 	public int deleteProductByProductId(int productId) {

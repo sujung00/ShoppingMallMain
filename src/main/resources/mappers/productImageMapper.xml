@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shoppingmall.product.dao.ProductImageMapper">
+
+	<insert id="insertProductImage" parameterType="map">
+		INSERT INTO `productimage`
+		(
+			`productId`
+			`imagePath`
+			`createdAt`
+			`updatedAt`
+		)
+		VALUES
+		(
+			#{productId}
+			, #{productImagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+	<select id="selectProductImageList" parameterType="int" resultType="com.shoppingmall.product.model.ProductImage">
+		SELECT
+			`id`
+			,`productId`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`productimage`
+		WHERE
+			`productId` = #{productId}
+	</select>
+	
+</mapper>
