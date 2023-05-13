@@ -8,9 +8,9 @@
 		INSERT INTO `productimage`
 		(
 			`productId`
-			`imagePath`
-			`createdAt`
-			`updatedAt`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
 		)
 		VALUES
 		(
