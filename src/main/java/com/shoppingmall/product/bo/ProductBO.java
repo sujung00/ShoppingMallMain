@@ -31,7 +31,7 @@ public class ProductBO {
 		String mainImgaePath = null;
 		if (mainImage != null) {
 			// 서버에 이미지 업로드 후 imagPath 받아옴
-			mainImgaePath = fileManager.saveFile(product.getName(), mainImage);
+			mainImgaePath = fileManager.saveFile(product.getName()+"(main)", mainImage);
 		}
 		
 		return productMapper.insertProduct(product, mainImgaePath);
@@ -55,7 +55,7 @@ public class ProductBO {
 		String mainImgaePath = null;
 		if (mainImage != null) {
 			// 서버에 이미지 업로드 후 imagPath 받아옴
-			mainImgaePath = fileManager.saveFile(name, mainImage);
+			mainImgaePath = fileManager.saveFile(name+"(main)", mainImage);
 			
 			// 기존 이미지 제거
 			if (mainImgaePath != null && product.getMainImagePath() != null) {
@@ -63,16 +63,10 @@ public class ProductBO {
 				fileManager.deleteFile(product.getMainImagePath());
 			}
 		}
-		List<ProductImage> productImageList = productImageBO.getProductImageList(productId);
 		if(files != null) {
-			String productImagePath = null;
+			productImageBO.deleteProductImage(productId);
 			for(int i = 0; i < files.size(); i++) {
-				productImagePath = fileManager.saveFile(name, files.get(i));
-			}
-			if(productImagePath != null && !productImageList.isEmpty()) {
-				for(int i = 0; i < productImageList.size(); i++) {
-					fileManager.deleteFile(productImageList.get(i).getImagePath());
-				}
+				productImageBO.updateProductImage(productId, name, files.get(i));
 			}
 		}
 		

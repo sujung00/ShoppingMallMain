@@ -15,4 +15,6 @@ public interface ProductImageMapper {
 			@Param("productImagePath") String productImagePath);
 	
 	public List<ProductImage> selectProductImageList(int productId);
+	
+	public void deleteProductImage(int productId);
 }

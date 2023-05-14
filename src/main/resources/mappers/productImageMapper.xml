@@ -8,15 +8,9 @@
 		INSERT INTO `productimage`
 		(
 			`productId`
-<<<<<<< HEAD
 			,`imagePath`
 			,`createdAt`
 			,`updatedAt`
-=======
-			`imagePath`
-			`createdAt`
-			`updatedAt`
->>>>>>> 1322a6f214527f9979b81a25fdd68f03271a2c87
 		)
 		VALUES
 		(
@@ -39,5 +33,12 @@
 		WHERE
 			`productId` = #{productId}
 	</select>
+	
+	<delete id="deleteProductImage" parameterType="int">
+		DELETE
+		FROM `productimage`
+		WHERE
+			`productId` = #{productId}
+	</delete>
 	
 </mapper>

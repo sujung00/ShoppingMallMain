@@ -74,11 +74,7 @@ public class ProductAdminRestController {
 			@RequestParam(value="mainImage", required=false) MultipartFile mainImage,
 			@RequestParam("detailedInfo") String detailedInfo,
 			@RequestParam("gender") String gender,
-<<<<<<< HEAD
 			@RequestParam(value="productImages", required=false) List<MultipartFile> files){
-=======
-			@RequestParam("productImages") List<MultipartFile> files){
->>>>>>> 1322a6f214527f9979b81a25fdd68f03271a2c87
 		// db update
 		int rowCount = productAdminBO.updateProductByproductId(productId, name, information, price, mainImage, detailedInfo, gender, files);
 		

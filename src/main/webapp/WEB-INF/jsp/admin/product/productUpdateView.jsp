@@ -64,7 +64,7 @@ $(document).ready(function(){
 		filesArr.forEach(function(f) { 
 		　　　　inputFileList.push(f);    // 이미지 파일을 배열에 담는다.
 		});
-	});
+	})
 	
 	$("#updateBtn").on("click", function(){
 		let productId = $(this).data("product-id");
