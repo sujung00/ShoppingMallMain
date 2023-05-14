@@ -98,4 +98,26 @@
 			`id` = #{productOptionId}
 	</delete>
 	
+	<select id="selectColorByProductId" parameterType="int" resultType="String">
+		SELECT
+			`color`
+		FROM
+			`productoption`
+		WHERE
+			`productId` = #{productId}
+		GROUP BY `color`
+	</select>
+	
+	<select id="selectSizeByProductIdColor" parameterType="map" resultType="String">
+		SELECT
+			`size`
+		FROM
+			`productoption`
+		WHERE
+			`productId` = #{productId}
+		AND
+			`color` = #{color}
+		GROUP BY `size`
+	</select>
+	
 </mapper>

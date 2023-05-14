@@ -19,6 +19,11 @@ public class ProductAdminController {
 	@Autowired
 	private ProductAdminBO productAdminBO;
 
+	/**
+	 * ADMIN - 제품 목록 페이지
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/product_list_view")
 	public String productListView(Model model) {
 		List<Product> productList = productAdminBO.getProductList();
@@ -28,12 +33,23 @@ public class ProductAdminController {
 		return "template/layout";
 	}
 	
+	/**
+	 * ADMIN - 제품 등록 페이지
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/product_create_view")
 	public String productCreateView(Model model) {
 		model.addAttribute("view", "/admin/product/productCreateView");
 		return "template/layout";
 	}
 	
+	/**
+	 * ADMIN - 제품 수정 페이지
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/product_update_view")
 	public String productUpdateView(
 			@RequestParam("productId") int productId,

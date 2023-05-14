@@ -18,8 +18,6 @@ footer {
 }
 
 :root {
-	--primary-color: #4EA685;
-	--secondary-color: #57B894;
 	--black: #000000;
 	--white: #ffffff;
 	--gray: #efefef;
@@ -235,6 +233,11 @@ MY TREND
 	font-size: .9rem;
 	color: black;
 }
+.mytrend-font4 {
+	font-family: 'NanumSquare';
+	font-size: .8rem;
+	color: black;
+}
 .address-input input {
 	font-family: 'NanumSquareBold';
 	font-size: .9rem;
@@ -299,4 +302,49 @@ MY TREND
 	border: none;
 	background-color: white;
 	text-align: left;
+}
+/*
+제품 상세
+*/
+.product-detail {
+	width: 350px;
+}
+.font1 {
+	font-family: 'NanumSquareBold';
+	font-size: .95rem;
+	color: black;
+}
+.font2 {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1rem;
+	color: black;
+}
+.input-group-text {
+	background-color: black;
+	color: white;
+}
+.font3 {
+	font-family: 'NanumSquare';
+	font-size: 1rem;
+	color: white;
+}
+.font4 {
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1.2rem;
+	color: black;
+}
+.review-btn {
+	font-family: 'NanumSquareBold';
+	cursor: pointer;
+	width: 100%;
+	padding: .4rem 1.3rem;
+	border-radius: .4rem;
+	border: none;
+	background-color: #efefef;
+	color: black;
+	font-size: 0.9rem;
+	outline: none;
+}
+.review {
+	background-color: #efefef;
 }

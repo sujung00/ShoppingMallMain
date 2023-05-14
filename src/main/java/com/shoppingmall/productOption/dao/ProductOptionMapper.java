@@ -32,4 +32,10 @@ public interface ProductOptionMapper {
 			@Param("stock") int stock);
 	
 	public int deleteProductOptionByProductOptionId(int productOptionId);
+	
+	public List<String> selectColorByProductId(int productId);
+	
+	public List<String> selectSizeByProductIdColor(
+			@Param("productId") int productId,
+			@Param("color") String color);
 }

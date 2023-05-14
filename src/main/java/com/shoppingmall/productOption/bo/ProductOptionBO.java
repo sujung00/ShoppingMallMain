@@ -41,4 +41,12 @@ public class ProductOptionBO {
 	public int deleteProductOptionByProductOptionId(int productOptionId) {
 		return productOptionMapper.deleteProductOptionByProductOptionId(productOptionId);
 	}
+	
+	public List<String> getColorByProductId(int productId){
+		return productOptionMapper.selectColorByProductId(productId);
+	}
+	
+	public List<String> getSizeByProductIdColor(int productId, String color){
+		return productOptionMapper.selectSizeByProductIdColor(productId, color);
+	}
 }

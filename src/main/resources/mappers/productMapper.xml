@@ -102,6 +102,43 @@
 		<![CDATA[
 			DATE(`createdAt`) > DATE(SUBDATE(NOW(), INTERVAL 10 DAY));
 		]]>
+		ORDER BY `id` DESC
+	</select>
+	
+	<select id="selectWomanProductList" resultType="com.shoppingmall.product.model.Product">
+		SELECT
+			`id`
+			,`name`
+			,`information`
+			,`price`
+			,`mainImagePath`
+			,`detailedInfo`
+			,`gender`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`product`
+		WHERE
+			`gender` = 'woman'
+		ORDER BY `id` DESC
+	</select>
+	
+	<select id="selectManProductList" resultType="com.shoppingmall.product.model.Product">
+		SELECT
+			`id`
+			,`name`
+			,`information`
+			,`price`
+			,`mainImagePath`
+			,`detailedInfo`
+			,`gender`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`product`
+		WHERE
+			`gender` = 'man'
+		ORDER BY `id` DESC
 	</select>
 
 </mapper>

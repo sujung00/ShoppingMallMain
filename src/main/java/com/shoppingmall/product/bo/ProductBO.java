@@ -80,4 +80,12 @@ public class ProductBO {
 	public List<Product> getNewProductList(){
 		return productMapper.selectNewProductList();
 	}
+	
+	public List<Product> getWomanProductList(){
+		return productMapper.selectWomanProductList();
+	}
+	
+	public List<Product> getManProductList(){
+		return productMapper.selectManProductList();
+	}
 }
