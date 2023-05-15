@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.shoppingmall.basket.dao.BasketMapper">
+	
+	<insert id="insertBasket" parameterType="int">
+		INSERT INTO `basket`
+		(
+			`userId`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectBasketByUserId" parameterType="int" resultType="com.shoppingmall.basket.model.Basket">
+		SELECT
+			`id`
+			,`userId`
+			,`createdAt`
+			,`updatedAt`
+		FROM `basket`
+		WHERE
+			`userId` = #{userId}
+	</select>
+	
+</mapper>

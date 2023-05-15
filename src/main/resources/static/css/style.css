@@ -348,3 +348,16 @@ MY TREND
 .review {
 	background-color: #efefef;
 }
+.more-btn {
+	border: none;
+}
+/*
+장바구니
+*/
+.basket-div {
+	width: 450px;
+	background: #efefef;
+}
+.order-div {
+	width: 400px;
+}

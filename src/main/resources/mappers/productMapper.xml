@@ -100,7 +100,7 @@
 			`product`
 		WHERE
 		<![CDATA[
-			DATE(`createdAt`) > DATE(SUBDATE(NOW(), INTERVAL 10 DAY));
+			DATE(`createdAt`) > DATE(SUBDATE(NOW(), INTERVAL 10 DAY))
 		]]>
 		ORDER BY `id` DESC
 	</select>

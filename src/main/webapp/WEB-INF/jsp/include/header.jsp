@@ -59,9 +59,7 @@
 						<div class="log-in mr-3">
 							<a href="/user/sign_in_view">Login</a>
 						</div>
-						<a href="#" class="d-flex align-items-center mr-3"> <img
-							alt="장바구니" src="/static/img/basket.png" width="20px">
-						</a> <a class="btn sign-up-btn" href="/user/sign_up_view">Sign Up</a>
+						<a class="btn sign-up-btn" href="/user/sign_up_view">Sign Up</a>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -72,8 +70,8 @@
 						<div class="log-in mr-3">
 							<a href="/user/sign_out">LogOut</a>
 						</div>
-						<a href="#" class="d-flex align-items-center mr-3"> <img
-							alt="장바구니" src="/static/img/basket.png" width="20px">
+						<a href="/basket/basket_view" class="d-flex align-items-center mr-3"> 
+							<img alt="장바구니" src="/static/img/basket.png" width="20px">
 						</a>
 					</div>
 				</c:otherwise>

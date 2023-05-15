@@ -26,10 +26,10 @@
 			<div class="mytrend-font3 my-3">${product.price}원</div>
 			<div class="input-group my-4">
 				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01">COLOR</label>
+					<label class="input-group-text" for="colorOption">COLOR</label>
 				</div>
-				<select class="custom-select" id="colorOption">
-					<option selected class="mytrend-font3">Choose...</option>
+				<select name="colorOption" class="custom-select" id="colorOption" data-product-id="${product.id}">
+					<option value="0" selected class="mytrend-font3">Choose...</option>
 					<c:forEach items="${colorList}" var="color">
 						<option value="${color}" class="mytrend-font3">${color}</option>
 					</c:forEach>
@@ -38,17 +38,23 @@
 
 			<div class="input-group my-4">
 				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01">SIZE</label>
+					<label class="input-group-text" for="sizeOption">SIZE</label>
 				</div>
-				<select class="custom-select" id="sizeOption">
+				<select name="sizeOption" class="custom-select" id="sizeOption" disabled>
 					<!-- color에 따른 size -->
-					<option selected class="mytrend-font3">Choose...</option>
-					<c:forEach items="${blackSizeList}" var="size">
-						<option value="${size}" class="mytrend-font3">${size}</option>
-					</c:forEach>
+					<option selected class="mytrend-font3">Choose the color first...</option>
 				</select>
 			</div>
-			<button type="button" id="basketBtn" class="btn w-100 sign-up-btn my-3">장바구니 담기</button>
+			
+			<div class="input-group my-4">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="count">COUNT</label>
+				</div>
+				<input type="number" id="count" value="1" class="form-control">
+			</div>
+			
+			<button type="button" id="basketBtn" class="btn w-100 sign-up-btn my-3" data-product-id="${product.id}" data-user-id="${userId}">장바구니 담기</button>
+			
 			<form action="/review/create" method="post">
 			<input type="hidden" name="productId" value="${product.id}">
 				<button type="submit" id="reviewWriteBtn" class="btn w-100 review-btn">리뷰 쓰기</button>
@@ -82,8 +88,117 @@
 				</div>
 			</div>
 			<div class="d-flex align-items-center">
-				<img alt="리뷰 이미지" src="/static/img/more-icon.png" width="20px" height="20px">
+				<button type="button" id="reviewMoreBtn" data-toggle="modal" data-target="#reviewModal" class="more-btn">
+					<img alt="리뷰 이미지" src="/static/img/more-icon.png" width="20px" height="20px">
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="modal" tabindex="-1" id="reviewModal">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+  	<div class="modal-content">
+      <div class="modal-body d-flex justify-content-around">
+      	<button type="button" id="reviewUpdateBtn" class="btn font1">수정 하기</button>
+      	<button type="button" id="reviewDeleteBtn" class="btn font1">삭제 하기</button>
+      </div>
+    </div>
+   </div>
+</div>
+
+<div class="modal" tabindex="-1" id="detailModal">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+  	<div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+   </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$("#colorOption").change(function(){
+		let productId = $(this).data("product-id");
+		let color = $("#colorOption option:selected").val();
+		
+		$.ajax({
+			type:"POST"
+			, url:"/product/get_size"
+			, data:{"productId":productId, "color":color}
+		
+			, success:function(data){
+				if(data.code == 1){
+					// disable 풀기
+					$("#sizeOption").attr("disabled", false);
+					// size select option 초기화
+					$("#sizeOption option").remove();
+					// size select option 추가
+					$("#sizeOption").append("<option value='0' selected class='mytrend-font3'>Choose...</option>");
+					for(i = 0; i < data.sizeList.length; i++){
+						let size = data.sizeList[i];
+						$("#sizeOption").append("<option value='" + size + "' class='mytrend-font3'>" + size + "</option>");
+					}
+				}
+			}
+			, error : function(request, status, error) {
+				$("#detailModal").modal();
+				$("#modalBody").text("사이즈를 가져오는데 실패했습니다.");
+				return;
+			}
+		})
+	});
+	
+	$("#basketBtn").on("click", function(){
+		let userId = $(this).data("user-id");
+		let productId = $(this).data("product-id");
+		let color = $("#colorOption option:selected").val();
+		let size = $("#sizeOption option:selected").val();
+		let count = $("#count").val();
+		
+		if(!userId){
+			$("#detailModal").modal();
+			$("#modalBody").text("로그인 후 이용 가능합니다.");
+			return;
+		}
+		if(color == 0){
+			$("#detailModal").modal();
+			$("#modalBody").text("색상을 선택해주세요.");
+			return;
+		}
+		if(size == 0){
+			$("#detailModal").modal();
+			$("#modalBody").text("사이즈를 선택해주세요.");
+			return;
+		}
+		if(count == 0){
+			$("#detailModal").modal();
+			$("#modalBody").text("수량을 선택해주세요.");
+			return;
+		}
+		
+		$.ajax({
+			type:"POST"
+			, url:"/basket/add_basket"
+			, data:{"userId":userId, "productId":productId, "color":color, "size":size, "count":count}
+			
+			, success:function(data){
+				if(data.code == 1){
+					location.href="/basket/basket_view";
+				}
+			}
+			, error : function(request, status, error) {
+				$("#detailModal").modal();
+				$("#modalBody").text("장바구니 담기에 실패했습니다.");
+				return;
+			}
+		})
+	});
+});
+</script>

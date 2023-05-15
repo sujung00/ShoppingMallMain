@@ -50,20 +50,14 @@ public class ProductController {
 		// 상품 가져오기
 		Product product = productBO.getProductByProductId(productId);
 		
-		// 상품 옵션 가져오기
-		// 색상
+		// 상품 옵션(색상) 가져오기
 		List<String> colorList = productOptionBO.getColorByProductId(productId);
-		// 컬러 별 사이즈
-		List<String> sizeList = null;
-		for(int i = 0; i < colorList.size(); i++) {
-			sizeList = productOptionBO.getSizeByProductIdColor(productId, colorList.get(i));
-			model.addAttribute(colorList.get(i) + "SizeList", sizeList);
-		}
 		
 		// 상품 상세 이미지 가져오기
 		List<ProductImage> productImageList = productImageBO.getProductImageList(productId);
 		
 		// 제품 리뷰 가져오기
+		
 		
 		model.addAttribute("product", product);
 		model.addAttribute("colorList", colorList);

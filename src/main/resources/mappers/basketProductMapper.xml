@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.shoppingmall.basket.dao.BasketProductMapper">
+
+	<select id="selectBasketProductByBasketId" parameterType="map" resultType="com.shoppingmall.basket.model.BasketProduct">
+		SELECT
+			`id`
+			,`userId`
+			,`basketId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`createdAt`
+			,`updatedAt`
+		FROM `basketproduct`
+		WHERE
+			`basketId` = #{basketId}
+			AND 
+			`productId` #{productId}
+			AND
+			`optionId` = #{optionId}
+	</select>
+	
+	<insert id="insertBasketProduct" parameterType="map">
+		INSERT INTO `basketproduct`
+		(
+			`userId`
+			`basketId`
+			`productId`
+			`optionId`
+			`count`
+			`createdAt`
+			`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{basketId}
+			, #{productId}
+			, #{optionId}
+			, #{count}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+	<update id="updateBasketProduct" parameterType="map">
+		UPDATE
+		SET
+			`count` #{count}
+		WHERE
+			`id` = #{basketProductId}
+	</update>
+
+</mapper>
