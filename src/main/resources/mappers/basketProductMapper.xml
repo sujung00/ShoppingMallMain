@@ -14,11 +14,12 @@
 			,`count`
 			,`createdAt`
 			,`updatedAt`
-		FROM `basketproduct`
+		FROM 
+			`basketproduct`
 		WHERE
 			`basketId` = #{basketId}
 			AND 
-			`productId` #{productId}
+			`productId` = #{productId}
 			AND
 			`optionId` = #{optionId}
 	</select>
@@ -27,12 +28,12 @@
 		INSERT INTO `basketproduct`
 		(
 			`userId`
-			`basketId`
-			`productId`
-			`optionId`
-			`count`
-			`createdAt`
-			`updatedAt`
+			,`basketId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`createdAt`
+			,`updatedAt`
 		)
 		VALUES
 		(
@@ -47,11 +48,51 @@
 	</insert>
 
 	<update id="updateBasketProduct" parameterType="map">
-		UPDATE
+		UPDATE `basketproduct`
 		SET
-			`count` #{count}
+			`count` = #{count}
 		WHERE
 			`id` = #{basketProductId}
 	</update>
+	
+	<select id="selectBasketListByBasketId" parameterType="int" resultType="com.shoppingmall.basket.model.BasketProduct">
+		SELECT
+			`id`
+			,`userId`
+			,`basketId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`basketproduct`
+		WHERE
+			`basketId` = #{basketId}
+	</select>
+	
+	<delete id="deleteBasketProductByBasketProductId" parameterType="int">
+		DELETE
+		FROM
+			`basketproduct`
+		WHERE
+			`id` = #{basketProductId}
+	</delete>
+	
+	<select id="selectBasketProductByBasketProductId" parameterType="int" resultType="com.shoppingmall.basket.model.BasketProduct">
+		SELECT
+			`id`
+			,`userId`
+			,`basketId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`basketproduct`
+		WHERE
+			`id` = #{basketProductId}
+	</select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.shoppingmall.basket.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +25,10 @@ public interface BasketProductMapper {
 	public void updateBasketProduct(
 			@Param("basketProductId") int basketProductId,
 			@Param("count") int count);
+	
+	public List<BasketProduct> selectBasketListByBasketId(int basketId);
+	
+	public int deleteBasketProductByBasketProductId(int basketProductId);
+	
+	public BasketProduct selectBasketProductByBasketProductId(int basketProductId);
 }

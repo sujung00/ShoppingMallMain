@@ -59,4 +59,8 @@ public class UserBO {
 	public int updatePWByUserId(String password, int userId) {
 		return userMapper.updatePWByUserId(password, userId);
 	}
+	
+	public User getUserByUserId(int userId) {
+		return userMapper.selectUserByUserId(userId);
+	}
 }

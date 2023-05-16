@@ -190,7 +190,12 @@ $(document).ready(function(){
 			
 			, success:function(data){
 				if(data.code == 1){
-					location.href="/basket/basket_view";
+					$("#detailModal").modal();
+					$("#modalBody").text(data.result);
+					
+					$('#detailModal').on('hidden.bs.modal', function (e) {
+						location.href="/basket/basket_view";
+					})
 				}
 			}
 			, error : function(request, status, error) {

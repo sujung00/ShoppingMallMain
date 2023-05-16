@@ -5,7 +5,7 @@
 	<div class="text-center product-logo mt-3">신상품</div>
 	<div class="mt-5 d-flex flex-wrap justify-content-between">
 		<c:forEach items="${newProductList}" var="product">
-		<form action="/product/product_detail_view" class="m-2">
+		<form method="post" action="/product/product_detail_view" class="m-2">
 		<input type="hidden" name="productId" value="${product.id}">
 			<button type="submit" class="product-btn">
 			<div class="mb-2">

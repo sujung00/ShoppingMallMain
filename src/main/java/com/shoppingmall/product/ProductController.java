@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,7 +14,6 @@ import com.shoppingmall.product.bo.ProductImageBO;
 import com.shoppingmall.product.model.Product;
 import com.shoppingmall.product.model.ProductImage;
 import com.shoppingmall.productOption.bo.ProductOptionBO;
-import com.shoppingmall.productOption.model.ProductOption;
 
 @RequestMapping("/product")
 @Controller
@@ -43,7 +43,7 @@ public class ProductController {
 		return "template/layout";
 	}
 	
-	@RequestMapping("/product_detail_view")
+	@PostMapping("/product_detail_view")
 	public String productDetailView(
 			@RequestParam("productId") int productId,
 			Model model) {

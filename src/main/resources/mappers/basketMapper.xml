@@ -8,12 +8,14 @@
 		INSERT INTO `basket`
 		(
 			`userId`
+			,`totalPrice`
 			,`createdAt`
 			,`updatedAt`
 		)
 		VALUES
 		(
 			#{userId}
+			, 0
 			, NOW()
 			, NOW()
 		)
@@ -23,11 +25,21 @@
 		SELECT
 			`id`
 			,`userId`
+			,`totalPrice`
 			,`createdAt`
 			,`updatedAt`
-		FROM `basket`
+		FROM 
+			`basket`
 		WHERE
 			`userId` = #{userId}
 	</select>
+	
+	<update id="updateTotalPrice" parameterType="map">
+		UPDATE `basket`
+		SET
+			`totalPrice` = #{totalPrice}
+		WHERE
+			`id` = #{basketId}
+	</update>
 	
 </mapper>

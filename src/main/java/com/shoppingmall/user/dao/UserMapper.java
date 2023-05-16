@@ -59,4 +59,6 @@ public interface UserMapper {
 	public int updatePWByUserId(
 			@Param("password") String password,
 			@Param("userId") int userId);
+	
+	public User selectUserByUserId(int userId);
 }

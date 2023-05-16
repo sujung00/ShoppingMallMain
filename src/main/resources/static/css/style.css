@@ -248,6 +248,16 @@ MY TREND
 	border: 0.125rem solid var(--white);
 	outline: none;
 }
+.address-input2 input{
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	background-color: var(--gray);
+	border-radius: .5rem;
+	border: 0.125rem solid var(--white);
+	outline: none;
+}
 #sample6_postcode {
 	font-family: 'NanumSquareBold';
 	font-size: .9rem;
@@ -275,6 +285,13 @@ MY TREND
 	background-color: #efefef;
 	font-family: 'NanumSquareBold';
 	font-size: .9rem;
+}
+.address-btn {
+	width: 450px;
+	padding: 1.5rem;
+	background-color: #efefef;
+	font-family: 'NanumSquareBold';
+	font-size: .85rem;
 }
 .address-table{
 	width: 100px;
@@ -360,4 +377,34 @@ MY TREND
 }
 .order-div {
 	width: 400px;
+}
+/*
+주문서
+*/
+.order-div {
+	width: 450px;
+}
+.font5 {
+	font-family: 'NanumSquare';
+	font-size: 0.9rem;
+	color: black;
+}
+.font6 {
+	font-family: 'NanumSquare';
+	font-size: 0.8rem;
+}
+.text-btn {
+	background-color: white;
+	border: none;
+	text-decoration: underline;
+}
+.text-btn:hover {
+	background-color: white;
+	border: none;
+	text-decoration: none;
+}
+.point-text {
+	font-family: 'NanumSquare';
+	font-size: 0.8rem;
+	color: red;
 }

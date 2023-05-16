@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Basket {
 	private int id;
 	private int userId;
+	private int totalPrice;
 	private Date createdAt;
 	private Date updatedAt;
 }
