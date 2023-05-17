@@ -22,7 +22,7 @@ footer {
 	--white: #ffffff;
 	--gray: #efefef;
 	--gray-2: #757575;
-	--facebook-color: #4267B2;
+	--facebook-color: rgb(0, 82, 155);
 	--google-color: #DB4437;
 	--twitter-color: #1DA1F2;
 	--insta-color: #E1306C;
@@ -407,4 +407,7 @@ MY TREND
 	font-family: 'NanumSquare';
 	font-size: 0.8rem;
 	color: red;
+}
+.address-click {
+	border: none;
 }

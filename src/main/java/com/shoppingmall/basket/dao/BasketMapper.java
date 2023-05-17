@@ -15,4 +15,6 @@ public interface BasketMapper {
 	public void updateTotalPrice(
 			@Param("basketId") int basketId,
 			@Param("totalPrice") int totalPrice);
+	
+	public Basket selectBasketByBasketId(int basketId);
 }

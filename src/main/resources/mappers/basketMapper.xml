@@ -42,4 +42,17 @@
 			`id` = #{basketId}
 	</update>
 	
+	<select id="selectBasketByBasketId" parameterType="int" resultType="com.shoppingmall.basket.model.Basket">
+		SELECT
+			`id`
+			,`userId`
+			,`totalPrice`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`basket`
+		WHERE
+			`id` = #{basketId}
+	</select>
+	
 </mapper>

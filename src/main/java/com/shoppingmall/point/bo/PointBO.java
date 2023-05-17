@@ -17,4 +17,8 @@ public class PointBO {
 	public List<Point> getPointListByUserId(int userId){
 		return pointMapeMapper.selectPointListByUserId(userId);
 	}
+	
+	public int getTotalPointByUserId(int userId) {
+		return pointMapeMapper.selectTotalPointByUserId(userId);
+	}
 }

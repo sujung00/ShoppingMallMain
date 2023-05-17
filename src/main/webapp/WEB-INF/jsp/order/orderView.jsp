@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container pt-4">
 	<div class="font2 my-3">주문서</div>
-	<div class="d-flex">
+	<div class="d-flex justify-content-between">
 		<!-- 주문서 -->
 		<div class="order-div">
 			<!-- 1. 주문 고객 정보 -->
 			<div class="font1">1. 주문 고객 정보</div>
 			<hr class="bg-dark">
-			<div class="my-2 font5">이름</div>
-			<div class="my-2 font5">전화번호</div>
-			<div class="my-2 font5">이메일</div>
+			<div class="my-2 font5">
+				<b>이름 : </b>${orderView.user.name}</div>
+			<div class="my-2 font5">
+				<b>전화번호 : </b>${orderView.user.phoneNumber}</div>
+			<div class="my-2 font5">
+				<b>이메일 : </b>${orderView.user.email}</div>
 
 			<!-- 2. 배송지 정보 정보 -->
 			<div class="font1 mt-5">2. 배송지 정보</div>
@@ -33,9 +37,9 @@
 				<!-- 배송지 목록 -->
 				<div id="adlist" class="address-list mt-2">
 					<div class="font1 mb-2">기본 배송지</div>
-					<c:forEach items="${defualAddress}" var="defualAddress">
-						<c:if test="${not empty defualAddress}">
-							<button type="submit" class="address-btn d-flex mb-3">
+					<c:forEach items="${orderView.addressList}" var="defualtAddress">
+						<c:if test="${defualtAddress.defaultAddress eq true}">
+							<button type="button" class="address-btn d-flex mb-3" data-address-id="${defualtAddress.id}">
 								<div class="address-table">
 									<div>이름</div>
 									<div class="mt-1">휴대폰 번호</div>
@@ -44,48 +48,45 @@
 								</div>
 								<div class="address-data">
 									<div>${defualAddress.name}</div>
-									<div class="mt-1">${defualAddress.phoneNumber}</div>
-									<c:if test="${not empty defualAddress.extraPhoneNumber}">
-										<div class="mt-1">${defualAddress.extraPhoneNumber}</div>
+									<div class="mt-1">${defualtAddress.phoneNumber}</div>
+									<c:if test="${not empty defualtAddress.extraPhoneNumber}">
+										<div class="mt-1">${defualtAddress.extraPhoneNumber}</div>
 									</c:if>
-									<c:if test="${empty defualAddress.extraPhoneNumber}">
+									<c:if test="${empty defualtAddress.extraPhoneNumber}">
 										<div class="mt-1">추가 연락처가 없습니다.</div>
 									</c:if>
-									<div class="mt-1">${defualAddress.address}
-										${defualAddress.detailedAddress}</div>
+									<div class="mt-1">${defualtAddress.address}
+										${defualtAddress.detailedAddress}</div>
 								</div>
 							</button>
 						</c:if>
 					</c:forEach>
 
 					<div class="mytrend-font2 mt-4 mb-2">배송지 목록</div>
-					<c:forEach items="${addressList}" var="address">
-						<form action="/address/address_update_view" method="post">
-							<input type="hidden" name="addressId" value="${address.id}">
-							<button type="submit" class="address-btn d-flex mb-3">
-								<div class="address-table">
-									<div>이름</div>
-									<div class="mt-1">휴대폰 번호</div>
-									<div class="mt-1">추가 연락처</div>
-									<div class="mt-1">주소</div>
-								</div>
-								<div class="address-data">
-									<div>${address.name }</div>
-									<div class="mt-1">${address.phoneNumber }</div>
-									<c:if test="${not empty address.extraPhoneNumber}">
-										<div class="mt-1">${address.extraPhoneNumber}</div>
-									</c:if>
-									<c:if test="${empty address.extraPhoneNumber}">
-										<div class="mt-1">추가 연락처가 없습니다.</div>
-									</c:if>
-									<div class="mt-1">${address.address}
-										${address.detailedAddress}</div>
-								</div>
-							</button>
-						</form>
+					<c:forEach items="${orderView.addressList}" var="address">
+						<button type="button" class="address-btn d-flex mb-3" data-address-id="${address.id}">
+							<div class="address-table">
+								<div>이름</div>
+								<div class="mt-1">휴대폰 번호</div>
+								<div class="mt-1">추가 연락처</div>
+								<div class="mt-1">주소</div>
+							</div>
+							<div class="address-data">
+								<div>${address.name}</div>
+								<div class="mt-1">${address.phoneNumber }</div>
+								<c:if test="${not empty address.extraPhoneNumber}">
+									<div class="mt-1">${address.extraPhoneNumber}</div>
+								</c:if>
+								<c:if test="${empty address.extraPhoneNumber}">
+									<div class="mt-1">추가 연락처가 없습니다.</div>
+								</c:if>
+								<div class="mt-1">${address.address}
+									${address.detailedAddress}</div>
+							</div>
+						</button>
 					</c:forEach>
 					<div class="d-flex mt-3">
-						<input type="button" id="registerAddressBtn" value="확인"
+						<input type="button" id="addressBtn" value="확인"
 							class="mytrend-btn">
 					</div>
 				</div>
@@ -138,14 +139,13 @@
 			</div>
 			<div class="mt-5">
 				<div class="font1">배송 시 요청사항</div>
-				<select name="colorOption" class="custom-select my-2"
-					id="colorOption">
+				<select name="colorOption" class="custom-select my-2" id="orderRequestOption">
 					<option value="0" selected class="mytrend-font3">Choose...</option>
 					<option class="mytrend-font3">배송 전 연락 바랍니다.</option>
 					<option class="mytrend-font3">부재 시, 휴대폰으로 연락주세요.</option>
 					<option class="mytrend-font3">부재 시, 경비실에 맡겨주세요.</option>
-				</select> <input type="text" placeholder="기타 내용을 입력해주세요."
-					class="form-control">
+				</select>
+				<input type="text" id="orderRequest" placeholder="기타 내용을 입력해주세요." class="form-control">
 				<div class="d-flex justify-content-end font6 text-dark">최대 30자</div>
 				<div class="font6 text-dark mt-5">주문 시 입력한 배송지는 자동으로 배송지 목록에
 					추가됩니다.</div>
@@ -157,9 +157,9 @@
 			<div>
 				<div class="font5">포인트</div>
 				<div class="d-flex align-items-center">
-					<input type="number" class="col-9 form-control"> <input
-						type="button" class="text-btn font6" value="모두사용">
-					<div class="point-text ml-1">3000원</div>
+					<input type="number" id="pointNum" class="col-9 form-control">
+					<input type="button" id="pointBtn" class="text-btn font6" value="모두사용">
+					<div id="userPoint" class="point-text ml-1">3000</div><div class="point-text">원</div>
 				</div>
 			</div>
 
@@ -190,11 +190,81 @@
 			</div>
 
 			<div class="d-flex mt-3">
-				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn">
+				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn" data-user-id="${orderView.user.id}">
 			</div>
 		</div>
 		<!-- 주문 상품 -->
-		<div class="order-div"></div>
+		<div class="order-div">
+			<div class="font1">주문상품</div>
+			<hr class="bg-dark">
+
+			<!-- 상품 -->
+			<c:forEach items="${orderView.basketViewList}" var="basketView">
+			<div class="d-flex align-items-center m-4">
+				<div>
+					<img alt="제품 이미지" src="${basketView.product.mainImagePath}" width="180px">
+				</div>
+				<div class="ml-4 w-100">
+					<div class="font1">${basketView.product.name}</div>
+					<div class="mt-1 font1">${basketView.product.price}</div>
+					<div class="mt-4 font1">색상 : ${basketView.productOption.color}</div>
+					<div class="mt-1 font1">사이즈 : ${basketView.productOption.size}</div>
+					<div class="mt-1 font1">수량 : ${basketView.basketProduct.count}</div>
+					<div class="mt-5 font2 d-flex justify-content-end">
+					${basketView.product.price*basketView.basketProduct.count}<div class="font2">원</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			</c:forEach>
+
+			<div class="d-flex justify-content-between m-3">
+				<div class="font1">총 상품 금액</div>
+				<div class="font1">${orderView.basket.totalPrice}원</div>
+			</div>
+			<c:if test="${orderView.basket.totalPrice > 300000}">
+				<div class="d-flex justify-content-between m-3">
+					<div class="font1">배송비</div>
+					<div class="font1">0원</div>
+				</div>
+				</c:if>
+				<c:if test="${orderView.basket.totalPrice <= 300000}">
+				<div class="d-flex justify-content-between m-3">
+					<div class="font1">배송비</div>
+					<div class="font1">3000원</div>
+				</div>
+				</c:if>
+			<div class="d-flex justify-content-between m-3">
+				<div class="font1 text-danger">총 할인금액</div>
+				<div class="d-flex">
+					<div class="font1 text-danger">-</div>
+					<div id="totalPoint" class="font1 text-danger">0</div>
+					<div  class="font1 text-danger">원</div>
+				</div>
+			</div>
+			<hr class="bg-dark">
+			<div class="d-flex justify-content-between m-3 mt-4">
+				<div class="font1">총 결제 금액</div>
+				<div class="d-flex">
+					<div id="totalPay" class="font1">900000</div><div class="font1">원</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" tabindex="-1" id="orderModal">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Notice</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalBody"></div>
+		</div>
 	</div>
 </div>
 
@@ -264,10 +334,6 @@
 			}
 		});
 
-		$("#cancelBtn").on("click", function() {
-			location.href = "/address/address_view";
-		});
-
 		$("#registerAddressBtn").on("click", function() {
 			let name = $("#name").val().trim();
 			let phoneNumber = $("#phoneNumber").val().trim();
@@ -278,32 +344,32 @@
 			let defaultAddress = $('#defaultAddress').is(':checked'); // true or false
 
 			if (!name) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("이름을 입력해주세요.");
 				return;
 			}
 			if (!phoneNumber) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("전화번호를 입력해주세요.");
 				return;
 			}
 			if (phoneNumber.includes("-")) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("-없이 숫자만 입력해주세요.");
 				return;
 			}
 			if (extraPhoneNumber.includes("-")) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("-없이 숫자만 입력해주세요.");
 				return;
 			}
 			if (!postcode) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("우편번호를 입력해주세요.");
 				return;
 			}
 			if (!detailedAddress) {
-				$("#addressModal").modal();
+				$("#orderModal").modal();
 				$("#modalBody").text("상세 주소를 입력해주세요.");
 				return;
 			}
@@ -324,28 +390,77 @@
 				,
 				success : function(data) {
 					if (data.code == 1) {
-						$("#addressModal").modal();
+						$("#orderModal").modal();
 						$("#modalBody").text(data.result);
 
-						$('#addressModal').on('hidden.bs.modal', function(e) {
-							location.href = "/address/address_view";
+						$('#orderModal').on('hidden.bs.modal', function(e) {
+							location.reload();
 						})
 					} else {
-						$("#addressModal").modal();
+						$("#orderModal").modal();
 						$("#modalBody").text(data.errorMessage);
 
-						$('#addressModal').on('hidden.bs.modal', function(e) {
+						$('#orderModal').on('hidden.bs.modal', function(e) {
 							location.reload();
 						})
 					}
 				},
 				error : function(request, status, error) {
-					$("#addressModal").modal();
+					$("#orderModal").modal();
 					$("#modalBody").text("배송지 생성에 실패했습니다.");
 					return;
 				}
 			});
 
+		});
+		
+		$(".address-btn").on("click", function(){
+			// 다른 button 테두리 색 검은색으로
+			$(".address-btn").removeClass("address-click");
+			// div 테두리 색 변경
+			$(this).addClass("address-click");
+		});
+		
+		var addressId = null;
+		$("#addressBtn").on("click", function(){
+			// 배송지 등록
+			addressId = $(".address-click").data("address-id");
+			if(!addressId) {
+				$("#orderModal").modal();
+				$("#modalBody").text("배송지를 선택해주세요.");
+				return;
+			}
+			$("#orderModal").modal();
+			$("#modalBody").text("배송지를 선택하였습니다.");
+			return;
+		});
+		
+		$("#pointBtn").on("click", function(){
+			let userPoint = $("#userPoint").text();
+			$("#pointNum").val(userPoint);
+			$("#totalPoint").text(userPoint);
+		});
+		$("#pointNum").change(function(){
+			$("#totalPoint").text($(this).val());
+		});
+		
+		$("#orderBtn").on("click", function(){
+			// 유저 정보
+			let userId = $(this).data("user-id");
+			// 배송 정보 - addressId
+			// 배송 시 요청
+			let orderRequetOption = $("#orderRequestOption option:selected").val();
+			if(orderRequetOption == 0){
+				orderRequetOption = "";
+			}
+			let orderRequest = orderRequetOption + $("#orderRequest").val();
+			// 포인트 사용
+			let point = $("#pointNum").val();
+			// 결제 정보
+			let payType = $('input[name="payType"]:checked').attr('id');
+			// 총 결제 금액
+			let totalPay = $("#totalPay").text();
+			alert(totalPay);
 		});
 	});
 </script>

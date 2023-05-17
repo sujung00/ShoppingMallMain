@@ -66,7 +66,10 @@
 				<div class="font1">${basket.totalPrice + 3000}원</div>
 			</div>
 			</c:if>
-			<button type="button" class="btn sign-up-btn w-100 mt-4">주문 하기</button>
+			<form action="/order/order_view" method="post">
+			<input type="hidden" name="basketId" value="${basket.id}">
+			<button type="submit" class="btn sign-up-btn w-100 mt-4">주문 하기</button>
+			</form>
 		</div>
 	</div>
 </div>

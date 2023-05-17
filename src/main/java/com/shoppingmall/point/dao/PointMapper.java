@@ -10,4 +10,6 @@ import com.shoppingmall.point.model.Point;
 public interface PointMapper {
 
 	public List<Point> selectPointListByUserId(int userId);
+	
+	public int selectTotalPointByUserId(int userId);
 }

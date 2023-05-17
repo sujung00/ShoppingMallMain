@@ -23,4 +23,8 @@ public class BasketBO {
 	public void updateTotalPrice(int basketId, int totalPrice) {
 		basketMapper.updateTotalPrice(basketId, totalPrice);
 	}
+	
+	public Basket getBasketByBasketId(int basketId) {
+		return basketMapper.selectBasketByBasketId(basketId);
+	}
 }
