@@ -27,4 +27,8 @@ public class BasketBO {
 	public Basket getBasketByBasketId(int basketId) {
 		return basketMapper.selectBasketByBasketId(basketId);
 	}
+	
+	public void deleteBasketByBasketId(int basketId) {
+		basketMapper.deleteBasketByBasketId(basketId);
+	}
 }

@@ -21,4 +21,8 @@ public class PointBO {
 	public int getTotalPointByUserId(int userId) {
 		return pointMapeMapper.selectTotalPointByUserId(userId);
 	}
+	
+	public void addPoint(int userId, int changePoint, String changeDetail, int totalPoint) {
+		pointMapeMapper.insertPoint(userId, changePoint, changeDetail, totalPoint);
+	}
 }

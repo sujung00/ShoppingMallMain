@@ -55,4 +55,11 @@
 			`id` = #{basketId}
 	</select>
 	
+	<delete id="deleteBasketByBasketId" parameterType="int">
+		DELETE
+		FROM `basket`
+		WHERE
+			`id` = #{basketId}
+	</delete>
+	
 </mapper>

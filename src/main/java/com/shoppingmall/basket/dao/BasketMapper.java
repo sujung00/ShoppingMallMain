@@ -17,4 +17,6 @@ public interface BasketMapper {
 			@Param("totalPrice") int totalPrice);
 	
 	public Basket selectBasketByBasketId(int basketId);
+	
+	public void deleteBasketByBasketId(int basketId);
 }

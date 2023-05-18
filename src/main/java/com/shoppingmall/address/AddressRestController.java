@@ -67,13 +67,13 @@ public class AddressRestController {
 		// 만약 기본배송지로 되어있는게 있다면 update 후 insert***
 		int rowCount = 0;
 		if(defaultAddress == true) {
-			List<Address> ad = addressBO.getDefaultAddressByUserId(userId);
-			if(ad.isEmpty()) {
+			Address ad = addressBO.getDefaultAddressByUserId(userId);
+			if(ad == null) {
 				// 바로 update
 				rowCount = addressBO.updateAddressByAdderssId(addressId, name, phoneNumber, extraPhoneNumber, postcode, address, datailedAddress, defaultAddress);
 			} else {
 				// ad의 addressId => 기본배송지가 아닌걸로 update 후 배송지 수정
-				addressBO.updateDefaultAddressByAddressId(ad.get(0).getId());
+				addressBO.updateDefaultAddressByAddressId(ad.getId());
 				
 				// db update
 				rowCount = addressBO.updateAddressByAdderssId(addressId, name, phoneNumber, extraPhoneNumber, postcode, address, datailedAddress, defaultAddress);

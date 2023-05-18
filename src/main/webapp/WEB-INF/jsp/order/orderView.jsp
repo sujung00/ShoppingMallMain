@@ -33,7 +33,6 @@
 					</div>
 				</div>
 
-
 				<!-- 배송지 목록 -->
 				<div id="adlist" class="address-list mt-2">
 					<div class="font1 mb-2">기본 배송지</div>
@@ -159,7 +158,7 @@
 				<div class="d-flex align-items-center">
 					<input type="number" id="pointNum" class="col-9 form-control">
 					<input type="button" id="pointBtn" class="text-btn font6" value="모두사용">
-					<div id="userPoint" class="point-text ml-1">3000</div><div class="point-text">원</div>
+					<div id="userPoint" class="point-text ml-1">${orderView.totalPoint}</div><div class="point-text">원</div>
 				</div>
 			</div>
 
@@ -190,7 +189,7 @@
 			</div>
 
 			<div class="d-flex mt-3">
-				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn" data-user-id="${orderView.user.id}">
+				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn" data-user-id="${orderView.user.id}" data-basket-id="${orderView.basket.id}">
 			</div>
 		</div>
 		<!-- 주문 상품 -->
@@ -220,7 +219,9 @@
 
 			<div class="d-flex justify-content-between m-3">
 				<div class="font1">총 상품 금액</div>
-				<div class="font1">${orderView.basket.totalPrice}원</div>
+				<div class="d-flex">
+					<div id="totalPrice" class="font1">${orderView.basket.totalPrice}</div><div class="font1">원</div>
+				</div>
 			</div>
 			<c:if test="${orderView.basket.totalPrice > 300000}">
 				<div class="d-flex justify-content-between m-3">
@@ -246,7 +247,7 @@
 			<div class="d-flex justify-content-between m-3 mt-4">
 				<div class="font1">총 결제 금액</div>
 				<div class="d-flex">
-					<div id="totalPay" class="font1">900000</div><div class="font1">원</div>
+					<div id="totalPay" class="font1"></div><div class="font1">원</div>
 				</div>
 			</div>
 		</div>
@@ -323,6 +324,11 @@
 	}
 
 	$(document).ready(function() {
+		let totalPrice = $("#totalPrice").text();
+		let userPoint = $("#totalPoint").text();
+		
+		$("#totalPay").text(totalPrice - userPoint);
+		
 		$('input[type=radio][name=addressType]').change(function() {
 			var value = $("input[type=radio][name=addressType]:checked").val();
 			if (value == "list") {
@@ -439,15 +445,37 @@
 			let userPoint = $("#userPoint").text();
 			$("#pointNum").val(userPoint);
 			$("#totalPoint").text(userPoint);
+			
+			let totalPrice = $("#totalPrice").text();
+			userPoint = $("#totalPoint").text();
+			
+			$("#totalPay").text(totalPrice - userPoint);
 		});
 		$("#pointNum").change(function(){
 			$("#totalPoint").text($(this).val());
+			
+			let totalPrice = $("#totalPrice").text();
+			let totalPoint = $("#totalPoint").text();
+			
+			$("#totalPay").text(totalPrice - totalPoint);
+			
+			let userPoint = $("#userPoint").text();
+			let usePoint = $(this).val();
+			if(parseInt(usePoint) > userPoint){
+				$("#orderModal").modal();
+				$("#modalBody").text("사용할 수 있는 최대 포인트는 " + userPoint + "포인트 입니다.");
+				
+				$("#pointNum").val("");
+				return;
+			}
 		});
 		
 		$("#orderBtn").on("click", function(){
 			// 유저 정보
 			let userId = $(this).data("user-id");
 			// 배송 정보 - addressId
+			//장바구니 정보
+			let basketId = $(this).data("basket-id");
 			// 배송 시 요청
 			let orderRequetOption = $("#orderRequestOption option:selected").val();
 			if(orderRequetOption == 0){
@@ -458,9 +486,56 @@
 			let point = $("#pointNum").val();
 			// 결제 정보
 			let payType = $('input[name="payType"]:checked').attr('id');
+			// 동의
+			let agreement = $('input[name="orderCheck"]:checked').val();
 			// 총 결제 금액
 			let totalPay = $("#totalPay").text();
-			alert(totalPay);
+			
+			if(!addressId){
+				$("#orderModal").modal();
+				$("#modalBody").text("배송지를 선택해주세요.");
+				return;
+			}
+			if(!payType){
+				$("#orderModal").modal();
+				$("#modalBody").text("결제방법을 선택해주세요.");
+				return;
+			}
+			if(!agreement){
+				$("#orderModal").modal();
+				$("#modalBody").text("주문내용 확인 후 동의부탁드립니다.");
+				return;
+			}
+			
+			$.ajax({
+				type:"POST"
+				, url:"/order/create"
+				, data:{"userId":userId, "addressId":addressId, "basketId":basketId,
+					"orderRequest":orderRequest, "point":point, "payType":payType, "totalPay":totalPay}
+				
+				, success:function(data) {
+					if(data.code == 1){
+						$("#orderModal").modal();
+						$("#modalBody").text(data.result);
+						
+						$('#orderModal').on('hidden.bs.modal', function (e) {
+						     location.href="/main/main_view"
+						})
+					} else {
+						$("#orderModal").modal();
+						$("#modalBody").text(data.errorMessage);
+						
+						$('#orderModal').on('hidden.bs.modal', function (e) {
+						     location.reload();
+						})
+					}
+				}
+				, error : function(request, status, error) {
+					$("#addressModal").modal();
+					$("#modalBody").text("배송지 생성에 실패했습니다.");
+					return;
+				}
+			});
 		});
 	});
 </script>

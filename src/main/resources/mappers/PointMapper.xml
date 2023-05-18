@@ -29,5 +29,26 @@
 			`userId` = #{userId}
 		ORDER BY `id` DESC LIMIT 1
 	</select>
+	
+	<insert id="insertPoint" parameterType="map">
+		INSERT INTO `point`
+		(
+			`userId`
+			,`changePoint`
+			,`changeDetail`
+			,`totalPoint`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{changePoint}
+			, #{changeDetail}
+			, #{totalPoint}
+			, NOW()
+			, NOW()
+		)
+	</insert>
 
 </mapper>

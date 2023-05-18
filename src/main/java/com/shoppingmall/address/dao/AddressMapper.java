@@ -24,7 +24,7 @@ public interface AddressMapper {
 	
 	public List<Address> selectAddressByAddressId(int addressId);
 	
-	public List<Address> selectDefaultAddressByUserId(int userId);
+	public Address selectDefaultAddressByUserId(int userId);
 	
 	public void updateDefaultAddressByAddressId(int addressId);
 	

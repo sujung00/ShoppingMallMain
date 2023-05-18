@@ -31,8 +31,9 @@
 			<!-- 배송지 목록 -->
 			<div id="adlist" class="address-list mt-4">
 				<div class="mytrend-font2 mb-2">기본 배송지</div>
-				<c:forEach items="${defualAddress}" var="defualAddress">
 				<c:if test="${not empty defualAddress}">
+				<form action="/address/address_update_view" method="post">
+				<input type="hidden" name="addressId" value="${defualAddress.id}">
 				<button type="submit" class="address-div d-flex mb-3">
 					<div class="address-table">
 						<div>이름</div>
@@ -52,8 +53,8 @@
 						<div class="mt-1">${defualAddress.address} ${defualAddress.detailedAddress}</div>
 					</div>
 				</button>
+				</form>
 				</c:if>
-				</c:forEach>
 				
 				<div class="mytrend-font2 mt-4 mb-2">배송지 목록</div>
 				<c:forEach items="${addressList}" var="address">

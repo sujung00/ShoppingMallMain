@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.shoppingmall.order.dao.OrderProductMapper">
+
+	<insert id="insertOrderProduct" parameterType="map">
+		INSERT INTO `orderproduct`
+		(
+			`orderId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{orderId}
+			, #{productId}
+			, #{optionId}
+			, #{count}
+			, #{state}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+</mapper>

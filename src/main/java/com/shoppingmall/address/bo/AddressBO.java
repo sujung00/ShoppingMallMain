@@ -16,6 +16,13 @@ public class AddressBO {
 
 	public int addAddress(int userId, String name, String phoneNumber, String extraPhoneNumber,
 			int postcode, String address, String detailedAddress, boolean defaultAddress) {
+		if(defaultAddress) {
+			Address defaultAd = getDefaultAddressByUserId(userId);
+			if(defaultAd != null) {
+				updateDefaultAddressByAddressId(defaultAd.getId());
+			}
+		}
+		
 		return addressMapper.insertAddress(userId, name, phoneNumber, extraPhoneNumber, postcode, address, detailedAddress, defaultAddress);
 	}
 	
@@ -27,7 +34,7 @@ public class AddressBO {
 		return addressMapper.selectAddressByAddressId(addressId);
 	}
 	
-	public List<Address> getDefaultAddressByUserId(int userId) {
+	public Address getDefaultAddressByUserId(int userId) {
 		return addressMapper.selectDefaultAddressByUserId(userId);
 	}
 	

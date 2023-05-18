@@ -31,4 +31,6 @@ public interface BasketProductMapper {
 	public int deleteBasketProductByBasketProductId(int basketProductId);
 	
 	public BasketProduct selectBasketProductByBasketProductId(int basketProductId);
+	
+	public void deleteBasketProductByBasketId(int basketId);
 }

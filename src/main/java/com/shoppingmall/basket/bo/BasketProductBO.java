@@ -121,4 +121,8 @@ public class BasketProductBO {
 	public BasketProduct getBasketProductByBasketProductId(int basketProductId) {
 		return basketProductMapper.selectBasketProductByBasketProductId(basketProductId);
 	}
+	
+	public void deleteBasketProductByBasketId(int basketId) {
+		basketProductMapper.deleteBasketProductByBasketId(basketId);
+	}
 }
