@@ -58,11 +58,11 @@ public class OrderBO {
 			productOptionBO.updateStockByProductOptionId(productOption.getId(), productOption.getStock() - basketView.getBasketProduct().getCount());
 		}
 		
-		// basketProduct delete => totalPrice 0으로 update
-		// basketProductBO.deleteBasketProductByBasketId(basketId);
+		// basketProduct delete
+		basketProductBO.deleteBasketProductByBasketId(basketId);
 		
-		// basket delete
-		basketBO.deleteBasketByBasketId(basketId);
+		// basket delete => totalPrice 0으로 update
+		basketBO.updateTotalPrice(basketId, 0);
 		
 		// 포인트 삭제 및 적립
 		int totalPoint = pointBO.getTotalPointByUserId(userId);
@@ -75,5 +75,9 @@ public class OrderBO {
 	
 	public void addOrder(Order order) {
 		orderMapper.insertOrder(order);
+	}
+	
+	public List<Order> getNewestOrderListByUserId(int userId){
+		return orderMapper.selectNewestOrderListByUserId(userId);
 	}
 }

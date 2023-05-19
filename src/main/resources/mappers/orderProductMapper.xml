@@ -26,5 +26,37 @@
 			, NOW()
 		)
 	</insert>
+	
+	<select id="selectOrderProductListByOrderId" parameterType="int" resultType="com.shoppingmall.order.model.OrderProduct">
+		SELECT
+			`id`
+			,`orderId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`orderproduct`
+		WHERE
+			`orderId` = #{orderId}
+	</select>
+	
+	<select id="selectOrderProductByOrderProductId" parameterType="int" resultType="com.shoppingmall.order.model.OrderProduct">
+		SELECT
+			`id`
+			,`orderId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`orderproduct`
+		WHERE
+			`id` = #{orderProductId}
+	</select>
 
 </mapper>

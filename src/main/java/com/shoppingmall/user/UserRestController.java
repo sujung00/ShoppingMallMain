@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shoppingmall.basket.bo.BasketBO;
 import com.shoppingmall.common.EncryptUtils;
 import com.shoppingmall.user.bo.MailBO;
 import com.shoppingmall.user.bo.UserBO;
@@ -26,6 +27,9 @@ public class UserRestController {
 	
 	@Autowired
 	private MailBO mailBO;
+	
+	@Autowired
+	private BasketBO basketBO;
 	
 	/**
 	 * 회원가입 API
@@ -66,7 +70,17 @@ public class UserRestController {
 		String hashedPassword = EncryptUtils.md5(password);
 		
 		// db insert
-		int rowCount = userBO.addUser(loginId, hashedPassword, name, email, phoneNumber);
+		User user = new User();
+		user.setLoginId(loginId);
+		user.setPassword(hashedPassword);
+		user.setName(name);
+		user.setEmail(email);
+		user.setPhoneNumber(phoneNumber);
+		int rowCount = userBO.addUser(user);
+		
+		// 장바구니 생성
+		int userId = user.getId();
+		basketBO.addBasket(userId);
 		
 		if(rowCount > 0) {
 			result.put("code", 1);

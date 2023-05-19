@@ -14,12 +14,7 @@ public interface UserMapper {
 	
 	public User selectUserByLoginId(String loginId);
 	
-	public int insertUser(
-			@Param("loginId") String loginId,
-			@Param("password") String password,
-			@Param("name") String name,
-			@Param("email") String email,
-			@Param("phoneNumber") String phoneNumber);
+	public int insertUser(User user);
 	
 	public User selectUserByLoginIdPassword(
 			@Param("loginId") String loginId,

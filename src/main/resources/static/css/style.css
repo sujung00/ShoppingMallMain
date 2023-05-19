@@ -350,7 +350,7 @@ MY TREND
 	font-size: 1.2rem;
 	color: black;
 }
-.review-btn {
+.review-btn2 {
 	font-family: 'NanumSquareBold';
 	cursor: pointer;
 	width: 100%;
@@ -409,5 +409,26 @@ MY TREND
 	color: red;
 }
 .address-click {
+	border: none;
+}
+/*
+리뷰
+*/
+.review-btn{
+	background-color: white;
+	color: black;
+	font-family: 'NanumSquareBold';
+	font-size: 1rem;
+	color: black;
+}
+.review-div {
+	width: 550px;
+	min-height: 100px;
+	background: #efefef;
+}
+.review-write-div {
+	width: 500px;
+}
+.review-write-btn {
 	border: none;
 }

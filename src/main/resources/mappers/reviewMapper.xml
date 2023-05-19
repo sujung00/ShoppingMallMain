@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.shoppingmall.review.dao.ReviewMapper">
+	
+	<select id="selectReviewByOrderIdProductId" parameterType="map" resultType="com.shoppingmall.review.model.Review">
+		SELECT
+			`id`
+			,`userId`
+			,`orderProductId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`reviewImagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`review`
+		WHERE
+			`orderId` = #{orderId}
+			AND
+			`orderProductId` = #{orderProductId}
+	</select>
+	
+	<insert id="insertReview" parameterType="map">
+		INSERT INTO `review`
+		(
+			`userId`
+			,`orderProductId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`reviewImagePath`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{orderProductId}
+			, #{orderId}
+			, #{subject}
+			, #{content}
+			, #{reviewImagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectReviewListByUserId" parameterType="int" resultType="com.shoppingmall.review.model.Review">
+		SELECT
+			`id`
+			,`userId`
+			,`orderProductId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`reviewImagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`review`
+		WHERE
+			`userId` = #{userId}
+	</select>
+	
+	<delete id="deleteReviewByReviewId" parameterType="int">
+		DELETE
+		FROM
+			`review`
+		WHERE
+			`id` = #{reviewId}
+	</delete>
+	
+	<select id="selectReviewByReviewId" parameterType="int" resultType="com.shoppingmall.review.model.Review">
+		SELECT
+			`id`
+			,`userId`
+			,`orderProductId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`reviewImagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`review`
+		WHERE
+			`id` = #{reviewId}
+	</select>
+	
+</mapper>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container p-4">
+	<c:if test="${basket.totalPrice != 0}">
 	<div class="d-flex justify-content-around">
 		<!-- 장바구니에 담은 제품 -->
 		<div>
@@ -72,6 +73,15 @@
 			</form>
 		</div>
 	</div>
+	</c:if>
+	<c:if test="${basket.totalPrice eq 0}">
+	<div class="text-center font4 p-5 my-5"> 장바구니에 제품이 없습니다. </div>
+	<div class="d-flex justify-content-center">
+	<a href="/product/new_product_view">
+	<button type="button" class="btn review-btn py-3 px-5">신상품 보러가기</button>
+	</a>
+	</div>
+	</c:if>
 </div>
 
 <div class="modal" tabindex="-1" id="basketModal">

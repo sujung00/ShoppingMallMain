@@ -54,11 +54,6 @@
 			</div>
 			
 			<button type="button" id="basketBtn" class="btn w-100 sign-up-btn my-3" data-product-id="${product.id}" data-user-id="${userId}">장바구니 담기</button>
-			
-			<form action="/review/create" method="post">
-			<input type="hidden" name="productId" value="${product.id}">
-				<button type="submit" id="reviewWriteBtn" class="btn w-100 review-btn">리뷰 쓰기</button>
-			</form>
 		</div>
 	</div>
 

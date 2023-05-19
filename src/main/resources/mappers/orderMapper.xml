@@ -26,5 +26,25 @@
 			, NOW()
 		)
 	</insert>
+	
+	<select id="selectNewestOrderListByUserId" parameterType="int" resultType="com.shoppingmall.order.model.Order">
+		SELECT
+			`id`
+			,`userId`
+			,`addressId`
+			,`orderRequest`
+			,`payType`
+			,`totalPay`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`
+		WHERE
+			`userId` = #{userId}
+			AND
+			<![CDATA[
+				DATE(`updatedAt`) > DATE(SUBDATE(NOW(), INTERVAL 30 DAY))
+			]]>
+	</select>
 
 </mapper>

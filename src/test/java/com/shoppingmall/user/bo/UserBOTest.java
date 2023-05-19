@@ -22,10 +22,10 @@ class UserBOTest {
 	
 	@Transactional // insert 후 다시 rollback
 	//@Test
-	void 회원가입() {
-		logger.info("#### 회원가입");
-		userBO.addUser("test456", "aaaa", "test456", "test@google.com", "010000000000");
-	}
+//	void 회원가입() {
+//		logger.info("#### 회원가입");
+//		userBO.addUser("test456", "aaaa", "test456", "test@google.com", "010000000000");
+//	}
 	
 	@Test
 	void 유저가져오기() {

@@ -29,7 +29,7 @@
 			`loginId` = #{loginId}
 	</select>
 	
-	<insert id="insertUser" parameterType="map">
+	<insert id="insertUser" parameterType="com.shoppingmall.user.model.User" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `user`
 		(
 			`loginId`

@@ -3,6 +3,7 @@ package com.shoppingmall.user.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shoppingmall.basket.bo.BasketBO;
 import com.shoppingmall.user.dao.UserMapper;
 import com.shoppingmall.user.model.User;
 
@@ -16,8 +17,8 @@ public class UserBO {
 		return userMapper.selectUserByLoginId(loginId);
 	}
 	
-	public int addUser(String loginId, String password, String name, String email, String phoneNumber) {
-		return userMapper.insertUser(loginId, password, name, email, phoneNumber);
+	public int addUser(User user) {
+		return userMapper.insertUser(user);
 	}
 	
 	public User getUserByLoginIdPassword(String loginId, String password) {
