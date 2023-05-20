@@ -28,4 +28,11 @@ public interface ReviewMapper {
 	public int deleteReviewByReviewId(int reviewId);
 	
 	public Review selectReviewByReviewId(int reviewId);
+	
+	public int updateReview(
+			@Param("userId") int userId,
+			@Param("reviewId") int reviewId,
+			@Param("subject") String subject,
+			@Param("content") String content,
+			@Param("reviewImagePath") String reviewImagePath);
 }

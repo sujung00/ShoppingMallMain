@@ -53,7 +53,10 @@
 					<img alt="리뷰 이미지" src="${writtenReview.review.reviewImagePath}" width="100px" height="100px">
 				</div>
 				</c:if>
-				<div class="ml-3 pr-3">
+				<c:if test="${empty writtenReview.review.reviewImagePath}">
+				<div class="non-image font6 d-flex justify-content-center">(이미지 없음)</div>
+				</c:if>
+				<div class="ml-3 pr-3 review-product">
 					<div class="font1">${writtenReview.product.name}</div>
 					<div class="font5">색상 : ${writtenReview.productOption.color}</div>
 					<div class="font5">사이즈 : ${writtenReview.productOption.size}</div>

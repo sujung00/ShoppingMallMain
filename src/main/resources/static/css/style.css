@@ -419,10 +419,10 @@ MY TREND
 	color: black;
 	font-family: 'NanumSquareBold';
 	font-size: 1rem;
-	color: black;
+	border: none;
 }
 .review-div {
-	width: 550px;
+	width: 700px;
 	min-height: 100px;
 	background: #efefef;
 }
@@ -431,4 +431,10 @@ MY TREND
 }
 .review-write-btn {
 	border: none;
+}
+.non-image {
+	width: 100px;
+}
+.review-product {
+	width: 200px;
 }

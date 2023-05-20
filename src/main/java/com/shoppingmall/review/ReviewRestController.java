@@ -30,7 +30,7 @@ public class ReviewRestController {
 			@RequestParam("content") String content,
 			@RequestParam(value="file", required=false) MultipartFile reviewImage,
 			HttpSession session){
-		String loginId = (String)session.getAttribute("loginId");
+		String loginId = (String)session.getAttribute("userLoginId");
 		// db insert
 		int rowCount = reviewBO.addReview(userId, orderProductId, orderId, subject, content, reviewImage, loginId);
 		
@@ -67,13 +67,14 @@ public class ReviewRestController {
 	@PostMapping("/update")
 	public Map<String, Object> reviewUpdate(
 			@RequestParam("userId") int userId,
-			@RequestParam("orderProductId") int orderProductId,
-			@RequestParam("orderId") int orderId,
+			@RequestParam("reviewId") int reviewId,
 			@RequestParam("subject") String subject,
 			@RequestParam("content") String content,
 			@RequestParam(value="file", required=false) MultipartFile reviewImage,
 			HttpSession session){
-		String loginId = (String)session.getAttribute("loginId");
+		String loginId = (String)session.getAttribute("userLoginId");
+		
+		int rowCount = reviewBO.updateReview(userId, loginId, reviewId, subject, content, reviewImage);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 1);

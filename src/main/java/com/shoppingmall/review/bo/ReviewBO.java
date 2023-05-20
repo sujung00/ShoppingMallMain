@@ -3,6 +3,8 @@ package com.shoppingmall.review.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +24,8 @@ import com.shoppingmall.review.model.WrittenReviewView;
 
 @Service
 public class ReviewBO {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ReviewMapper reviewMapper;
@@ -130,5 +134,31 @@ public class ReviewBO {
 	
 	public Review getReviewByReviewId(int reviewId) {
 		return reviewMapper.selectReviewByReviewId(reviewId);
+	}
+	
+	public int updateReview(int userId, String loginId, int reviewId,
+			String subject, String content, MultipartFile file) {
+		
+		// 기존 리뷰를 가져온다(이미지 교체 시 기존 이미지 제거를 위해)
+		Review review = getReviewByReviewId(reviewId);
+		if(review == null) {
+			logger.warn("[update review] review is null. reviewId:{}, userId:{}", reviewId, userId);
+		}
+		
+		// 업로드한 이미지가 있으면 서버 업로드 => imagePath 받아옴 => 업로드 성공 시 기존 이미지 제거
+		String reviewImagePath =  null;
+		if(file != null) {
+			// 업로드 
+			reviewImagePath = fileManager.saveFile(loginId + "(review)", file);
+			
+			// 성공 여부 체크 후 기존 이미지 제거
+			// -- reviewImagePath가 null이 아닐 때(성공) 그리고 기존 이미지가 있을 때 => 기존 이미지 삭제
+			if(reviewImagePath != null && review.getReviewImagePath() != null) {
+				// 이미지 제거
+				fileManager.deleteFile(review.getReviewImagePath());
+			}
+		}
+		
+		return reviewMapper.updateReview(userId, reviewId, subject, content, reviewImagePath);
 	}
 }

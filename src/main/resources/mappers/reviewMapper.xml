@@ -90,4 +90,19 @@
 			`id` = #{reviewId}
 	</select>
 	
+	<update id="updateReview" parameterType="map">
+		UPDATE `review`
+		SET
+			`subject` = #{subject}
+			,`content` = #{content}
+			<if test="reviewImagePath != null">
+			,`reviewImagePath` = #{reviewImagePath}
+			</if>
+			,`updatedAt` = NOW()
+		WHERE
+			`id` = #{reviewId}
+			AND
+			`userId` = #{userId}
+	</update>
+	
 </mapper>
