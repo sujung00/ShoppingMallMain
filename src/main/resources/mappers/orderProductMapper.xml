@@ -58,5 +58,19 @@
 		WHERE
 			`id` = #{orderProductId}
 	</select>
+	
+	<select id="selectOrderProductList" resultType="com.shoppingmall.order.model.OrderProduct">
+		SELECT
+			`id`
+			,`orderId`
+			,`productId`
+			,`optionId`
+			,`count`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`orderproduct`
+	</select>
 
 </mapper>

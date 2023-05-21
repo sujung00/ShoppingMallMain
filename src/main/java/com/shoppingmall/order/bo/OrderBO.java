@@ -80,4 +80,8 @@ public class OrderBO {
 	public List<Order> getNewestOrderListByUserId(int userId){
 		return orderMapper.selectNewestOrderListByUserId(userId);
 	}
+	
+	public Order getOrderByOrderId(int orderId) {
+		return orderMapper.selectOrderByOrderId(orderId);
+	}
 }

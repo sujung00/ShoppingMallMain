@@ -25,4 +25,8 @@ public class OrderProductBO {
 	public OrderProduct getOrderProductByOrderProductId(int orderProductId) {
 		return orderProductMapper.selectOrderProductByOrderProductId(orderProductId);
 	}
+	
+	public List<OrderProduct> getOrderProductList(){
+		return orderProductMapper.selectOrderProductList();
+	}
 }

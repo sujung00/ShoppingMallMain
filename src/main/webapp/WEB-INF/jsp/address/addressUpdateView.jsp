@@ -16,38 +16,37 @@
 	<div class="content">
 		<div class="mytrned-logo">배송지 정보 수정</div>
 		<div class="mt-5">
-		<c:forEach items="${address}" var="ad">
 			<!-- 배송지 새로 입력 -->
 			<div id="newad" class="new-address mt-4">
 				<div>
 					<div class="mytrend-font2">이름</div>
 					<div class="mytrend-input">
-						<input type="text" id="name" value="${ad.name}">
+						<input type="text" id="name" value="${address.name}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">전화번호</div>
 					<div class="mytrend-input">
-						<input type="text" id="phoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${ad.phoneNumber}">
+						<input type="text" id="phoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${address.phoneNumber}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">추가 연락처(선택)</div>
 					<div class="mytrend-input">
-						<input type="text" id="extraPhoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${ad.extraPhoneNumber}">
+						<input type="text" id="extraPhoneNumber" placeholder="'-' 없이 숫자만 입력하세요." value="${address.extraPhoneNumber}">
 					</div>
 				</div>
 				<div class="mt-2">
 					<div class="mytrend-font2">배송지 주소</div>
 					<div class="address-input d-flex align-items-center">
-						<input type="text" id="sample6_postcode" value="${ad.postcode}">
+						<input type="text" id="sample6_postcode" value="${address.postcode}">
 						<button type="button" id="findAddressBtn" class="ml-2" onclick="sample6_execDaumPostcode()">찾 기</button>
 					</div>
 					<div class="address-input">
-						<input type="text" id="sample6_address" value="${ad.address}">
+						<input type="text" id="sample6_address" value="${address.address}">
 					</div>
 					<div class="address-input">
-						<input type="text" id="sample6_detailAddress" value="${ad.detailedAddress}">
+						<input type="text" id="sample6_detailAddress" value="${address.detailedAddress}">
 					</div>
 				</div>
 				<div class="mt-1">
@@ -56,10 +55,9 @@
 				</div>
 				<div class="d-flex mt-3">
 					<input type="button" id="cancelBtn" value="취소" class="mytrend-btn">
-					<input type="button" id="registerAddressBtn" value="수정 완료" class="mytrend-btn ml-2" data-address-id="${ad.id}">
+					<input type="button" id="registerAddressBtn" value="수정 완료" class="mytrend-btn ml-2" data-address-id="${address.id}">
 				</div>
 			</div>
-			</c:forEach>
 		</div>
 	</div>
 </div>

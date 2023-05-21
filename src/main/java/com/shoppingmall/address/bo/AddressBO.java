@@ -30,7 +30,7 @@ public class AddressBO {
 		return addressMapper.selectAddressListByUserId(userId);
 	}
 	
-	public List<Address> getAddressByAddressId(int addressId) {
+	public Address getAddressByAddressId(int addressId) {
 		return addressMapper.selectAddressByAddressId(addressId);
 	}
 	

@@ -40,7 +40,7 @@ public class AddressController {
 			@RequestParam("addressId") int addressId,
 			Model model) {
 		// db select
-		List<Address> address = addressBO.getAddressByAddressId(addressId);
+		Address address = addressBO.getAddressByAddressId(addressId);
 		
 		model.addAttribute("address", address);
 		model.addAttribute("view", "/address/addressUpdateView");

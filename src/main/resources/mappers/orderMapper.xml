@@ -46,5 +46,21 @@
 				DATE(`updatedAt`) > DATE(SUBDATE(NOW(), INTERVAL 30 DAY))
 			]]>
 	</select>
+	
+	<select id="selectOrderByOrderId" parameterType="int" resultType="com.shoppingmall.order.model.Order">
+		SELECT
+			`id`
+			,`userId`
+			,`addressId`
+			,`orderRequest`
+			,`payType`
+			,`totalPay`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`
+		WHERE
+			`id` = #{orderId}
+	</select>
 
 </mapper>

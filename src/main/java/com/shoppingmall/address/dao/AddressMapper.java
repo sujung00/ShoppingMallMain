@@ -22,7 +22,7 @@ public interface AddressMapper {
 	
 	public List<Address> selectAddressListByUserId(int userId);
 	
-	public List<Address> selectAddressByAddressId(int addressId);
+	public Address selectAddressByAddressId(int addressId);
 	
 	public Address selectDefaultAddressByUserId(int userId);
 	

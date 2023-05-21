@@ -20,4 +20,6 @@ public interface OrderProductMapper {
 	public List<OrderProduct> selectOrderProductListByOrderId(int orderId);
 	
 	public OrderProduct selectOrderProductByOrderProductId(int orderProductId);
+	
+	public List<OrderProduct> selectOrderProductList();
 }

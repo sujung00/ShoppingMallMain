@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.shoppingmall.order.dao.CancelRefundMapper">
+
+	<select id="selectCancelRefundByOrderProductId" parameterType="int" resultType="com.shoppingmall.order.model.CancelRefund">
+		SELECT
+			`id`
+			,`orderProductId`
+			,`reason`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`cancelrefund`
+		WHERE
+			`orderProductId` = #{orderProductId}
+	</select>
+
+</mapper>

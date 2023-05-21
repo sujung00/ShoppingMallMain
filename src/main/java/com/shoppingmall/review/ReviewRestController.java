@@ -21,6 +21,17 @@ public class ReviewRestController {
 	@Autowired
 	private ReviewBO reviewBO;
 	
+	/**
+	 * 리뷰 생성 API
+	 * @param userId
+	 * @param orderProductId
+	 * @param orderId
+	 * @param subject
+	 * @param content
+	 * @param reviewImage
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> reviewCreate(
 			@RequestParam("userId") int userId,
@@ -46,6 +57,11 @@ public class ReviewRestController {
 		return result;
 	}
 	
+	/**
+	 * 리뷰 삭제 API
+	 * @param reviewId
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public Map<String, Object> reviewDelete(
 			@RequestParam("reviewId") int reviewId){
@@ -64,6 +80,16 @@ public class ReviewRestController {
 		return result;
 	}
 	
+	/**
+	 * 리뷰 수정 API
+	 * @param userId
+	 * @param reviewId
+	 * @param subject
+	 * @param content
+	 * @param reviewImage
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/update")
 	public Map<String, Object> reviewUpdate(
 			@RequestParam("userId") int userId,
