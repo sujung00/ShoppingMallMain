@@ -84,4 +84,8 @@ public class OrderBO {
 	public Order getOrderByOrderId(int orderId) {
 		return orderMapper.selectOrderByOrderId(orderId);
 	}
+	
+	public List<Order> getOrderListByUserId(int userId){
+		return orderMapper.selectOrderListByUserId(userId);
+	}
 }

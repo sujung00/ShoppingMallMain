@@ -62,5 +62,21 @@
 		WHERE
 			`id` = #{orderId}
 	</select>
+	
+	<select id="selectOrderListByUserId" parameterType="int" resultType="com.shoppingmall.order.model.Order">
+		SELECT
+			`id`
+			,`userId`
+			,`addressId`
+			,`orderRequest`
+			,`payType`
+			,`totalPay`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`
+		WHERE
+			`userId` = #{userId}
+	</select>
 
 </mapper>

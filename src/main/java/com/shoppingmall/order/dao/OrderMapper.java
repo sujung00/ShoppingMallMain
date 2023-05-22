@@ -14,4 +14,6 @@ public interface OrderMapper {
 	public List<Order> selectNewestOrderListByUserId(int userId);
 	
 	public Order selectOrderByOrderId(int orderId);
+	
+	public List<Order> selectOrderListByUserId(int userId);
 }

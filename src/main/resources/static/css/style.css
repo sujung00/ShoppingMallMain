@@ -375,9 +375,6 @@ MY TREND
 	width: 450px;
 	background: #efefef;
 }
-.order-div {
-	width: 400px;
-}
 /*
 주문서
 */
@@ -437,4 +434,39 @@ MY TREND
 }
 .review-product {
 	width: 200px;
+}
+/*
+주문 상세
+*/
+.order-detail-div {
+	width: 80%;
+}
+.font7{
+	font-family: 'NanumSquareExtraBold';
+	font-size: 1rem;
+	color: black;
+}
+.order-detail-btn{
+	border: none;
+	background-color: white;
+}
+.font8{
+	font-family: 'NanumSquareBold';
+	font-size: .95rem;
+	color: #6ED746;
+}
+.font9 {
+	font-family: 'NanumSquare';
+	font-size: .9rem;
+	color: #828282;
+}
+.font10 {
+	font-family: 'NanumSquare';
+	font-size: .9rem;
+	color: #a0a0a0;
+}
+.font11 {
+	font-family: 'NanumSquare';
+	font-size: .95rem;
+	color: black;
 }
