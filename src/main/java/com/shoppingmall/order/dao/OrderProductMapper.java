@@ -22,4 +22,8 @@ public interface OrderProductMapper {
 	public OrderProduct selectOrderProductByOrderProductId(int orderProductId);
 	
 	public List<OrderProduct> selectOrderProductList();
+	
+	public int updateStateByOrderProductId(
+			@Param("state") String state,
+			@Param("orderProductId") int orderProductId);
 }

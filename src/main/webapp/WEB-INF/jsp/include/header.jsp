@@ -11,7 +11,7 @@
 				<nav class="main-nav d-flex align-items-center">
 					<ul class="nav">
 						<li class="nav-item"><a href="/product_admin/product_list_view" class="nav-link">상품관리</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">주문관리</a></li>
+						<li class="nav-item"><a href="/order_admin/order_list_view" class="nav-link">주문관리</a></li>
 						<li class="nav-item"><a href="#" class="nav-link">문의사항</a></li>
 					</ul>
 				</nav>

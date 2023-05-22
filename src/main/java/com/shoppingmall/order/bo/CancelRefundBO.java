@@ -15,4 +15,16 @@ public class CancelRefundBO {
 	public CancelRefund getCancelRefundByOrderProductId(int orderProductId) {
 		return cancelRefundMapper.selectCancelRefundByOrderProductId(orderProductId);
 	}
+	
+	public int addCancelRefund(int orderProductId, String reason, String state) {
+		return cancelRefundMapper.insertCancelRefund(orderProductId, reason, state);
+	}
+	
+	public int deleteCancelRefund(int cancelRefundId) {
+		return cancelRefundMapper.deleteCancelRefund(cancelRefundId);
+	}
+	
+	public int updateReasonByCancelRefundId(int cancelRefundId, String reason) {
+		return cancelRefundMapper.updateReasonByCancelRefundId(cancelRefundId, reason);
+	}
 }

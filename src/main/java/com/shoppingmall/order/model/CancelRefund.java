@@ -10,7 +10,7 @@ import lombok.Setter;
 public class CancelRefund {
 	private int id;
 	private int orderProductId;
-	private int reason;
+	private String reason;
 	private String state;
 	private Date createdAt;
 	private Date updatedAt;

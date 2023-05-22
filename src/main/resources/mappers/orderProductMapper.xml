@@ -72,5 +72,13 @@
 		FROM
 			`orderproduct`
 	</select>
+	
+	<update id="updateStateByOrderProductId" parameterType="map">
+		UPDATE `orderproduct`
+		SET
+			`state` = #{state}
+		WHERE
+			`id` = #{orderProductId}
+	</update>
 
 </mapper>

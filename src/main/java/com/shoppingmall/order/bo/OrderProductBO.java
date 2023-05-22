@@ -29,4 +29,8 @@ public class OrderProductBO {
 	public List<OrderProduct> getOrderProductList(){
 		return orderProductMapper.selectOrderProductList();
 	}
+	
+	public int updateStateByOrderProductId(String state, int orderProductId) {
+		return orderProductMapper.updateStateByOrderProductId(state, orderProductId);
+	}
 }

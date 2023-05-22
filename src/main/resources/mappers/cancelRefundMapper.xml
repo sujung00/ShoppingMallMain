@@ -17,5 +17,41 @@
 		WHERE
 			`orderProductId` = #{orderProductId}
 	</select>
+	
+	<insert id="insertCancelRefund" parameterType="map">
+		INSERT INTO `cancelrefund`
+		(
+			`orderProductId`
+			,`reason`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{orderProductId}
+			, #{reason}
+			, #{state}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<delete id="deleteCancelRefund" parameterType="int">
+		DELETE
+		FROM
+			`cancelrefund`
+		WHERE
+			`id` = #{cancelRefundId}
+	</delete>
+	
+	<update id="updateReasonByCancelRefundId" parameterType="map">
+		UPDATE `cancelrefund`
+		SET
+			`reason` = #{reason}
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{cancelRefundId}
+	</update>
 
 </mapper>
