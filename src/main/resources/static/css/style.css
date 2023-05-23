@@ -473,3 +473,18 @@ MY TREND
 .address-input-div {
 	width: 280px;
 }
+/*
+문의 내역
+*/
+.inquiry-header {
+	width: 70%;
+}
+.inquiry-div {
+	width: 70%;
+	background-color: #efefef;
+}
+.font12 {
+	font-family: 'NanumSquareBold';
+	font-size: .9rem;
+	color: black;
+}

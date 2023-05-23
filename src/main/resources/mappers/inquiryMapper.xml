@@ -24,5 +24,20 @@
 			, NOW()
 		)
 	</insert>
+	
+	<select id="selectInquiryListByUserId" parameterType="int" resultType="com.shoppingmall.inquiry.model.Inquiry">
+		SELECT
+			`id`
+			,`userId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`inquiry`
+		WHERE
+			`userId` = #{userId}
+	</select>
 
 </mapper>

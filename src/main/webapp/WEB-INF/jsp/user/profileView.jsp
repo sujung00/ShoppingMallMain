@@ -7,7 +7,7 @@
 		  <a class="nav-link" href="/user/profile_view">회원정보</a>
 		  <a class="nav-link" href="/order/order_deliver_view">주문/배송</a>
 		  <a class="nav-link" href="/review/review_view">리뷰</a>
-		  <a class="nav-link" href="#">문의내역</a>
+		  <a class="nav-link" href="/inquiry/inquiry_view">문의내역</a>
 		  <a class="nav-link" href="/address/address_view">배송지 관리</a>
 		  <a class="nav-link" href="/point/point_view">포인트</a>
 		</nav>
