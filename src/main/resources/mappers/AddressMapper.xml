@@ -113,4 +113,33 @@
 		WHERE `id` = #{addressId}
 	</update>
 	
+	<insert id="insertNewAddress" parameterType="com.shoppingmall.address.model.Address" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `address`
+		(
+			`userId`
+			,`name`
+			,`phoneNumber`
+			,`extraPhoneNumber`
+			,`postcode`
+			,`address`
+			,`detailedAddress`
+			,`defaultAddress`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{name}
+			, #{phoneNumber}
+			, #{extraPhoneNumber}
+			, #{postcode}
+			, #{address}
+			, #{detailedAddress}
+			, #{defaultAddress}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
 </mapper>

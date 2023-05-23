@@ -88,4 +88,12 @@ public class OrderBO {
 	public List<Order> getOrderListByUserId(int userId){
 		return orderMapper.selectOrderListByUserId(userId);
 	}
+	
+	public int updateAddressIdByOrderId(int orderId, int addressId) {
+		return orderMapper.updateAddressIdByOrderId(orderId, addressId);
+	}
+	
+	public int deleteOrderByOrderIdUserId(int orderId, int userId) {
+		return orderMapper.deleteOrderByOrderIdUserId(orderId, userId);
+	}
 }

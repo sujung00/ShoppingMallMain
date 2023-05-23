@@ -26,6 +26,17 @@ public class AddressBO {
 		return addressMapper.insertAddress(userId, name, phoneNumber, extraPhoneNumber, postcode, address, detailedAddress, defaultAddress);
 	}
 	
+	public void addNewAddress(Address newAddress) {
+		if(newAddress.getDefaulAddress()) {
+			Address defaultAd = getDefaultAddressByUserId(newAddress.getUserId());
+			if(defaultAd != null) {
+				updateDefaultAddressByAddressId(defaultAd.getId());
+			}
+		}
+		
+		addressMapper.insertNewAddress(newAddress);
+	}
+	
 	public List<Address> getAddressListByUserId(int userId){
 		return addressMapper.selectAddressListByUserId(userId);
 	}

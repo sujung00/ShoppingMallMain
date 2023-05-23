@@ -1,5 +1,7 @@
 package com.shoppingmall.order.model;
 
+import java.util.List;
+
 import com.shoppingmall.address.model.Address;
 import com.shoppingmall.product.model.Product;
 import com.shoppingmall.productOption.model.ProductOption;
@@ -26,4 +28,6 @@ public class OrderAdminView {
 	private User user;
 	
 	private CancelRefund cancelRefund;
+	
+	private List<String> colorList;
 }

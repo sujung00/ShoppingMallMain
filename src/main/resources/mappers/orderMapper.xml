@@ -77,6 +77,26 @@
 			`order`
 		WHERE
 			`userId` = #{userId}
+		ORDER BY `id` DESC
 	</select>
+	
+	<update id="updateAddressIdByOrderId" parameterType="map">
+		UPDATE `order`
+		SET
+			`addressId` = #{addressId}
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{orderId}
+	</update>
+	
+	<delete id="deleteOrderByOrderIdUserId" parameterType="map">
+		DELETE
+		FROM 
+			`order`
+		WHERE
+			`id` = #{orderId}
+			AND
+			`userId` = #{userId}
+	</delete>
 
 </mapper>

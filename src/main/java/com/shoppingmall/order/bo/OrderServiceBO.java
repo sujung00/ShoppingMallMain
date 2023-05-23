@@ -133,6 +133,8 @@ public class OrderServiceBO {
 			ProductOption productOption = productOptionBO.getProductOptionByProductOptionId(orderProduct.getOptionId());
 			orderAdminView.setProductOption(productOption);
 			
+			List<String> colorList = productOptionBO.getColorByProductId(orderProduct.getProductId());
+			orderAdminView.setColorList(colorList);
 			
 			orderAdminViewList.add(orderAdminView);
 			

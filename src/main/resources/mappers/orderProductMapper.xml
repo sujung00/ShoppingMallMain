@@ -77,6 +77,16 @@
 		UPDATE `orderproduct`
 		SET
 			`state` = #{state}
+			,`updatedAt` = NOW()
+		WHERE
+			`id` = #{orderProductId}
+	</update>
+	
+	<update id="updateOptionIdByOrderProductId" parameterType="map">
+		UPDATE `orderproduct`
+		SET
+			`optionId` = #{optionId}
+			,`updatedAt` = NOW()
 		WHERE
 			`id` = #{orderProductId}
 	</update>

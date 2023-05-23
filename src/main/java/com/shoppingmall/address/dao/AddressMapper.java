@@ -38,4 +38,6 @@ public interface AddressMapper {
 			@Param("detailedAddress") String detailedAddress,
 			@Param("defaultAddress") boolean defaultAddress);
 	
+	public void insertNewAddress(Address address);
+	
 }

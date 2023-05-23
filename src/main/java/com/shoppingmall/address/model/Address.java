@@ -19,4 +19,8 @@ public class Address {
 	private boolean defaultAddress;
 	private Date createdAt;
 	private Date updatedAt;
+	
+	public boolean getDefaulAddress() {
+		return this.defaultAddress;
+	}
 }
