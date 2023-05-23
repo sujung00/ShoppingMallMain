@@ -17,4 +17,6 @@ public interface InquiryMapper {
 			@Param("content") String content);
 	
 	public List<Inquiry> selectInquiryListByUserId(int userId);
+	
+	public List<Inquiry> selectInquiryList();
 }

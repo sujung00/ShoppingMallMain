@@ -39,5 +39,19 @@
 		WHERE
 			`userId` = #{userId}
 	</select>
+	
+	<select id="selectInquiryList" resultType="com.shoppingmall.inquiry.model.Inquiry">
+		SELECT
+			`id`
+			,`userId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`inquiry`
+		ORDER BY `id` DESC
+	</select>
 
 </mapper>
