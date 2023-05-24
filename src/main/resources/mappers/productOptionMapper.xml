@@ -86,6 +86,7 @@
 		UPDATE 	`productoption`
 		SET
 			`stock` = #{stock}
+			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{productOptionId}
 	</update>

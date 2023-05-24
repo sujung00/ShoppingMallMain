@@ -103,8 +103,14 @@ public class ReviewRestController {
 		int rowCount = reviewBO.updateReview(userId, loginId, reviewId, subject, content, reviewImage);
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 1);
-		result.put("result", "리뷰를 수정했습니다.");
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "리뷰를 수정했습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "리뷰를 수정하지 못했습니다.");
+		}
+		
 		return result;
 	}
 }

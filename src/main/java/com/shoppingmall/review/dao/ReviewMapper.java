@@ -17,6 +17,7 @@ public interface ReviewMapper {
 	
 	public int insertReview(
 			@Param("userId") int userId,
+			@Param("productId") int productId,
 			@Param("orderProductId") int orderProductId,
 			@Param("orderId") int orderId,
 			@Param("subject") String subject,
@@ -35,4 +36,6 @@ public interface ReviewMapper {
 			@Param("subject") String subject,
 			@Param("content") String content,
 			@Param("reviewImagePath") String reviewImagePath);
+	
+	public List<Review> selectReviewListByProductId(int productId);
 }

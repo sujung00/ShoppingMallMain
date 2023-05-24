@@ -8,7 +8,8 @@
 			<img alt="상품 대표 이미지" src="${product.mainImagePath}" width="300px">
 		</div>
 		<!-- 상품 설명 및 상세 정보 -->
-		<div class="product-detail mt-3">
+		<div class="d-flex align-items-center product-detail pb-5">
+		<div>
 			<!-- 상품 설명 -->
 			<div>
 				<div class="font1">상품 설명</div>
@@ -20,8 +21,10 @@
 				<div class="mytrend-font3 mt-1">${product.detailedInfo}​​</div>
 			</div>
 		</div>
+		</div>
 		<!-- 상품 옵션, 장바구니, 리뷰쓰기 -->
-		<div class="product-detail mt-3">
+		<div class="product-detail d-flex align-items-center">
+		<div>
 			<div class="font2">${product.name}</div>
 			<div class="mytrend-font3 my-3">${product.price}원</div>
 			<div class="input-group my-4">
@@ -55,6 +58,7 @@
 			
 			<button type="button" id="basketBtn" class="btn w-100 sign-up-btn my-3" data-product-id="${product.id}" data-user-id="${userId}">장바구니 담기</button>
 		</div>
+		</div>
 	</div>
 
 	<!-- 제품 상세 이미지 -->
@@ -69,25 +73,37 @@
 	<!-- review -->
 	<div class="mt-5">
 		<div class="font4 m-4 ml-5">REVIEW</div>
-
-		<div class="ml-5 review p-3 d-flex justify-content-between">
-			<div class="d-flex">
+		<c:if test="${empty reviewList}">
+			<div class="font1 ml-5">작성된 리뷰가 없습니다.</div>
+		</c:if>
+		<c:forEach items="${reviewList}" var="review">
+		<div class="ml-5 mt-4 review p-3 d-flex justify-content-between">
+			<div class="d-flex align-items-center">
+				<!-- 리뷰 이미지가 있다면 -->
+				<c:if test="${not empty writtenReview.review.reviewImagePath}">
 				<div>
-					<img alt="리뷰 이미지" src="/static/img/dressMain.jpg" width="70px" height="70px">
+					<img alt="리뷰 이미지" src="${writtenReview.review.reviewImagePath}" width="100px" height="100px">
 				</div>
+				</c:if>
+				<c:if test="${empty writtenReview.review.reviewImagePath}">
+				<div class="non-image font6 d-flex justify-content-center">(이미지 없음)</div>
+				</c:if>
 				<div class="d-flex align-items-center ml-3">
 					<div>
-						<div class="font1 mb-1">리뷰 제목</div>
-						<div class="mytrend-font3">리뷰 내용~~~~</div>
+						<div class="font1 mb-1">${review.subject}</div>
+						<div class="mytrend-font3">${review.content}</div>
 					</div>
 				</div>
 			</div>
+			<c:if test="${review.userId eq userId}">
 			<div class="d-flex align-items-center">
-				<button type="button" id="reviewMoreBtn" data-toggle="modal" data-target="#reviewModal" class="more-btn">
+				<button type="button" id="reviewMoreBtn" data-toggle="modal" data-target="#reviewModal" class="more-btn" data-review-id="${review.id}">
 					<img alt="리뷰 이미지" src="/static/img/more-icon.png" width="20px" height="20px">
 				</button>
 			</div>
+			</c:if>
 		</div>
+		</c:forEach>
 	</div>
 </div>
 
@@ -95,7 +111,6 @@
   <div class="modal-dialog modal-dialog-centered modal-sm">
   	<div class="modal-content">
       <div class="modal-body d-flex justify-content-around">
-      	<button type="button" id="reviewUpdateBtn" class="btn font1">수정 하기</button>
       	<button type="button" id="reviewDeleteBtn" class="btn font1">삭제 하기</button>
       </div>
     </div>
@@ -200,5 +215,44 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
+	$(".more-btn").on("click", function(e) {
+		e.preventDefault(); // 위로 올라가는 현상 방지
+
+		let reviewId = $(this).data("review-id"); // getting
+
+		$("#reviewModal").data("review-id", reviewId);
+		$("input[name=reviewId]").val(reviewId);
+	});
+	
+	$("#reviewModal #reviewDeleteBtn").on("click", function(e){
+		e.preventDefault(); // 위로 올라가는 현상 방지
+		
+		let reviewId = $("#reviewModal").data("review-id");
+		
+		$.ajax({
+			type:"POST"
+			, url:"/review/delete"
+			, data:{"reviewId":reviewId}
+		
+			, success:function(data){
+				if(data.code == 1){
+					$("#reviewModal").hide();
+					
+					$("#detailModal").modal();
+					$("#modalBody").text(data.result);
+					
+					$('#detailModal').on('hidden.bs.modal', function(e) {
+						location.reload();
+					})
+				}
+			}
+			, error : function(request, status, error) {
+				$("#detailModal").modal();
+				$("#modalBody").text("리뷰를 삭제하는데 실패했습니다.");
+				return;
+			}
+		})
+	})
 });
 </script>

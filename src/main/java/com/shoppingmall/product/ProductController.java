@@ -14,6 +14,8 @@ import com.shoppingmall.product.bo.ProductImageBO;
 import com.shoppingmall.product.model.Product;
 import com.shoppingmall.product.model.ProductImage;
 import com.shoppingmall.productOption.bo.ProductOptionBO;
+import com.shoppingmall.review.bo.ReviewBO;
+import com.shoppingmall.review.model.Review;
 
 @RequestMapping("/product")
 @Controller
@@ -27,6 +29,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductOptionBO productOptionBO;
+	
+	@Autowired
+	private ReviewBO reviewBO;
 
 	/**
 	 * 신상품 목록 페이지
@@ -57,8 +62,9 @@ public class ProductController {
 		List<ProductImage> productImageList = productImageBO.getProductImageList(productId);
 		
 		// 제품 리뷰 가져오기
+		List<Review> reviewList = reviewBO.getReviewListByProductId(productId);
 		
-		
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("product", product);
 		model.addAttribute("colorList", colorList);
 		model.addAttribute("productImageList", productImageList);
@@ -81,6 +87,11 @@ public class ProductController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 남성 상품 페이지
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/man_product_view")
 	public String productManView(Model model) {
 		// 여성 상품 list

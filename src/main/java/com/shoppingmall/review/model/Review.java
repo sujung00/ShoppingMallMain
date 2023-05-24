@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class Review {
 	private int id;
+	private int productId;
 	private int userId;
 	private int orderProductId;
 	private int orderId;

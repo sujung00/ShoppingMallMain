@@ -51,6 +51,7 @@
 		UPDATE `basketproduct`
 		SET
 			`count` = #{count}
+			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{basketProductId}
 	</update>

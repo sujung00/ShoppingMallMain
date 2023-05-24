@@ -8,6 +8,7 @@
 		SELECT
 			`id`
 			,`userId`
+			,`productId`
 			,`orderProductId`
 			,`orderId`
 			,`subject`
@@ -27,6 +28,7 @@
 		INSERT INTO `review`
 		(
 			`userId`
+			,`productId`
 			,`orderProductId`
 			,`orderId`
 			,`subject`
@@ -38,6 +40,7 @@
 		VALUES
 		(
 			#{userId}
+			, #{productId}
 			, #{orderProductId}
 			, #{orderId}
 			, #{subject}
@@ -52,6 +55,7 @@
 		SELECT
 			`id`
 			,`userId`
+			,`productId`
 			,`orderProductId`
 			,`orderId`
 			,`subject`
@@ -77,6 +81,7 @@
 		SELECT
 			`id`
 			,`userId`
+			,`productId`
 			,`orderProductId`
 			,`orderId`
 			,`subject`
@@ -104,5 +109,23 @@
 			AND
 			`userId` = #{userId}
 	</update>
+	
+	<select id="selectReviewListByProductId" parameterType="int" resultType="com.shoppingmall.review.model.Review">
+		SELECT
+			`id`
+			,`userId`
+			,`productId`
+			,`orderProductId`
+			,`orderId`
+			,`subject`
+			,`content`
+			,`reviewImagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`review`
+		WHERE
+			`productId` = #{productId}
+	</select>
 	
 </mapper>

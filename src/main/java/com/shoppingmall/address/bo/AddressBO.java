@@ -27,7 +27,7 @@ public class AddressBO {
 	}
 	
 	public void addNewAddress(Address newAddress) {
-		if(newAddress.getDefaulAddress()) {
+		if(newAddress.getDefaultAddress()) {
 			Address defaultAd = getDefaultAddressByUserId(newAddress.getUserId());
 			if(defaultAd != null) {
 				updateDefaultAddressByAddressId(defaultAd.getId());

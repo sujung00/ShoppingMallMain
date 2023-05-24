@@ -20,7 +20,7 @@ public class Address {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	public boolean getDefaulAddress() {
+	public boolean getDefaultAddress() {
 		return this.defaultAddress;
 	}
 }

@@ -95,7 +95,9 @@
 	
 	<update id="updateDefaultAddressByAddressId" parameterType="int">
 		UPDATE `address`
-		SET `defaultAddress` = 0
+		SET 
+			`defaultAddress` = 0
+			, `updatedAt` = NOW()
 		WHERE `id` = #{addressId}
 	</update>
 	

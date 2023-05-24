@@ -29,7 +29,7 @@ public class AddressController {
 		// 배송지 목록 db select
 		List<Address> addressList = addressBO.getAddressListByUserId(userId);
 
-		model.addAttribute("defualAddress", defaultAddress);
+		model.addAttribute("defualtAddress", defaultAddress);
 		model.addAttribute("addressList", addressList);
 		model.addAttribute("view", "/address/addressView");
 		return "template/layout";

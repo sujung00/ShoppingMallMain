@@ -71,6 +71,7 @@
 			,`updatedAt`
 		FROM
 			`orderproduct`
+		ORDER BY `id` DESC
 	</select>
 	
 	<update id="updateStateByOrderProductId" parameterType="map">

@@ -98,7 +98,10 @@ public class ReviewBO {
 			reviewImagePath = fileManager.saveFile(loginId + "(review)", file);
 		}
 		
-		return reviewMapper.insertReview(userId, orderProductId, orderId, subject, content, reviewImagePath);
+		OrderProduct orderProduct = orderProductBO.getOrderProductByOrderProductId(orderProductId);
+		int productId = orderProduct.getProductId();
+		
+		return reviewMapper.insertReview(userId, productId, orderProductId, orderId, subject, content, reviewImagePath);
 	}
 	
 	public List<Review> getReviewListByUserId(int userId){
@@ -160,5 +163,9 @@ public class ReviewBO {
 		}
 		
 		return reviewMapper.updateReview(userId, reviewId, subject, content, reviewImagePath);
+	}
+	
+	public List<Review> getReviewListByProductId(int productId){
+		return reviewMapper.selectReviewListByProductId(productId);
 	}
 }

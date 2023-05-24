@@ -4,13 +4,15 @@
 <div class="d-flex">
 	<div class="mytrend-nav">
 		<nav class="nav flex-column">
-			<a class="nav-link" href="/user/profile_view">회원정보</a> <a
-				class="nav-link" href="#">주문/배송</a> <a class="nav-link"
-				href="/review/review_view">리뷰</a> <a class="nav-link" href="#">문의내역</a>
-			<a class="nav-link" href="/address/address_view">배송지 관리</a> <a
-				class="nav-link" href="/point/point_view">포인트</a>
+		  <a class="nav-link" href="/user/profile_view">회원정보</a>
+		  <a class="nav-link" href="/order/order_deliver_view">주문/배송</a>
+		  <a class="nav-link" href="/review/review_view">리뷰</a>
+		  <a class="nav-link" href="/inquiry/inquiry_view">문의내역</a>
+		  <a class="nav-link" href="/address/address_view">배송지 관리</a>
+		  <a class="nav-link" href="/point/point_view">포인트</a>
 		</nav>
 	</div>
+	
 	<div class="p-5">
 		<div class="d-flex align-items-center review-write-div">
 			<input type="button" id="writeBtn" value="작성 가능한 리뷰" class="review-btn">

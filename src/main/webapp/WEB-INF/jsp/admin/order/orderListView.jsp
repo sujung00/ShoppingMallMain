@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container">
 	<h2>주문 관리</h2>
+	<c:if test="${not empty orderAdminViewList}">
 	<c:forEach items="${orderAdminViewList}" var="order">
 	<div class="mt-2 d-flex border">
 		<div>
@@ -72,6 +73,7 @@
 		</div>
 	</div>
 	</c:forEach>
+	</c:if>
 </div>
 
 <script>

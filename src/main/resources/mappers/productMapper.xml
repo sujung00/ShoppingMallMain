@@ -42,6 +42,7 @@
 			,`updatedAt`
 		FROM
 			`product`
+		ORDER BY `id` DESC
 	</select>
 	
 	<select id="selectProductByProductId" parameterType="int" resultType="com.shoppingmall.product.model.Product">

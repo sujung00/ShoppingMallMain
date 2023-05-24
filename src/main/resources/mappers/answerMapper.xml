@@ -21,6 +21,7 @@
 		UPDATE `answer`
 		SET
 			`content` = #{content}
+			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{answerId}
 	</update>

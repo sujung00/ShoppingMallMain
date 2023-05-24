@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingmall.basket.bo.BasketBO;
 import com.shoppingmall.common.EncryptUtils;
+import com.shoppingmall.point.bo.PointBO;
 import com.shoppingmall.user.bo.MailBO;
 import com.shoppingmall.user.bo.UserBO;
 import com.shoppingmall.user.model.Mail;
@@ -30,6 +31,9 @@ public class UserRestController {
 	
 	@Autowired
 	private BasketBO basketBO;
+	
+	@Autowired
+	private PointBO pointBO;
 	
 	/**
 	 * 회원가입 API
@@ -89,6 +93,9 @@ public class UserRestController {
 			result.put("code", 500);
 			result.put("errorMessage", "회원가입에 실패했습니다. 관리자에게 문의해주세요.");
 		}
+		
+		// point 적립
+		pointBO.addPoint(userId, 2000, "회원가입 적립", 2000);
 		
 		return result;
 	}

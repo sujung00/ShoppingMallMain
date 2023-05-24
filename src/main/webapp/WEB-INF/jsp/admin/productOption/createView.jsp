@@ -17,7 +17,7 @@
 			<input type="hidden" name="productId" value="${product.id}">
 			<button type="submit" id="updateBtn" class="btn btn-info">재고 수정</button>
 		</form>
-		<button type="submit" id="deleteBtn" class="btn btn-danger" data-option-id="${productOption.id}">옵션 삭제</button>
+		<button type="submit" class="delete-btn btn btn-danger" data-option-id="${productOption.id}">옵션 삭제</button>
 	</div>
 	</c:forEach>
 
@@ -77,7 +77,7 @@ $(document).ready(function(){
 		})
 	});
 	
-	$("#deleteBtn").on("click", function(){
+	$(".delete-btn").on("click", function(){
 		let productOptionId = $(this).data("option-id");
 		
 		$.ajax({

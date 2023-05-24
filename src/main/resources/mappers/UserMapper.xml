@@ -119,37 +119,49 @@
 	
 	<update id="updateUserPassword" parameterType="map">
 		UPDATE `user`
-		SET `password` = #{password}
+		SET
+			`password` = #{password}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	
 	<update id="updateLoginIdByUserId" parameterType="map">
 		UPDATE `user`
-		SET `loginId` = #{loginId}
+		SET 
+			`loginId` = #{loginId}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	
 	<update id="updateNamerByUserId" parameterType="map">
 		UPDATE `user`
-		SET `name` = #{name}
+		SET 
+			`name` = #{name}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	
 	<update id="updateEmailByUserId" parameterType="map">
 		UPDATE `user`
-		SET `email` = #{email}
+		SET 
+			`email` = #{email}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	
 	<update id="updatePhoneNumber" parameterType="map">
 		UPDATE `user`
-		SET `phoneNumber` = #{phoneNumber}
+		SET 
+			`phoneNumber` = #{phoneNumber}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	
 	<update id="updatePWByUserId" parameterType="map">
 		UPDATE `user`
-		SET `password` = #{password}
+		SET 
+			`password` = #{password}
+			, `updatedAt` = NOW()
 		WHERE `id` = #{userId}
 	</update>
 	

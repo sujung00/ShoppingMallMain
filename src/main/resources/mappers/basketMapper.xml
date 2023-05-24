@@ -38,6 +38,7 @@
 		UPDATE `basket`
 		SET
 			`totalPrice` = #{totalPrice}
+			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{basketId}
 	</update>

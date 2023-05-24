@@ -35,9 +35,9 @@
 
 				<!-- 배송지 목록 -->
 				<div id="adlist" class="address-list mt-2">
-					<div class="font1 mb-2">기본 배송지</div>
 					<c:forEach items="${orderView.addressList}" var="defualtAddress">
 						<c:if test="${defualtAddress.defaultAddress eq true}">
+						<div class="font1 mb-2">기본 배송지</div>
 							<button type="button" class="address-btn d-flex mb-3" data-address-id="${defualtAddress.id}">
 								<div class="address-table">
 									<div>이름</div>
@@ -519,7 +519,7 @@
 						$("#modalBody").text(data.result);
 						
 						$('#orderModal').on('hidden.bs.modal', function (e) {
-						     location.href="/main/main_view"
+						     location.href="/order/order_deliver_view"
 						})
 					} else {
 						$("#orderModal").modal();

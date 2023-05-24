@@ -5,10 +5,11 @@
 	<div class="mytrend-nav">
 		<nav class="nav flex-column">
 		  <a class="nav-link" href="/user/profile_view">회원정보</a>
-		  <a class="nav-link" href="#">주문/배송</a>
-		  <a class="nav-link" href="#">문의내역</a>
+		  <a class="nav-link" href="/order/order_deliver_view">주문/배송</a>
+		  <a class="nav-link" href="/review/review_view">리뷰</a>
+		  <a class="nav-link" href="/inquiry/inquiry_view">문의내역</a>
 		  <a class="nav-link" href="/address/address_view">배송지 관리</a>
-		  <a class="nav-link" href="#">예치금</a>
+		  <a class="nav-link" href="/point/point_view">포인트</a>
 		</nav>
 	</div>
 	
@@ -31,9 +32,12 @@
 			<!-- 배송지 목록 -->
 			<div id="adlist" class="address-list mt-4">
 				<div class="mytrend-font2 mb-2">기본 배송지</div>
-				<c:if test="${not empty defualAddress}">
+				<c:if test="${empty defaultAddress}">
+					<div class="font5 m-3">기본 배송지가 없습니다.</div>
+				</c:if>
+				<c:if test="${not empty defualtAddress}">
 				<form action="/address/address_update_view" method="post">
-				<input type="hidden" name="addressId" value="${defualAddress.id}">
+				<input type="hidden" name="addressId" value="${defualtAddress.id}">
 				<button type="submit" class="address-div d-flex mb-3">
 					<div class="address-table">
 						<div>이름</div>
@@ -42,21 +46,24 @@
 						<div class="mt-1">주소</div>
 					</div>
 					<div class="address-data">
-						<div>${defualAddress.name}</div>
-						<div class="mt-1">${defualAddress.phoneNumber}</div>
-						<c:if test="${not empty defualAddress.extraPhoneNumber}">
-							<div class="mt-1">${defualAddress.extraPhoneNumber}</div>
+						<div>${defualtAddress.name}</div>
+						<div class="mt-1">${defualtAddress.phoneNumber}</div>
+						<c:if test="${not empty defualtAddress.extraPhoneNumber}">
+							<div class="mt-1">${defualtAddress.extraPhoneNumber}</div>
 						</c:if>
-						<c:if test="${empty defualAddress.extraPhoneNumber}">
+						<c:if test="${empty defualtAddress.extraPhoneNumber}">
 							<div class="mt-1">추가 연락처가 없습니다.</div>
 						</c:if>
-						<div class="mt-1">${defualAddress.address} ${defualAddress.detailedAddress}</div>
+						<div class="mt-1">${defualtAddress.address} ${defualtAddress.detailedAddress}</div>
 					</div>
 				</button>
 				</form>
 				</c:if>
 				
 				<div class="mytrend-font2 mt-4 mb-2">배송지 목록</div>
+				<c:if test="${empty addressList}">
+					<div class="font5 m-3">등록된 배송지가 없습니다.</div>
+				</c:if>
 				<c:forEach items="${addressList}" var="address">
 				<form action="/address/address_update_view" method="post">
 				<input type="hidden" name="addressId" value="${address.id}">
