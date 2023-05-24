@@ -38,6 +38,7 @@
 			`inquiry`
 		WHERE
 			`userId` = #{userId}
+		ORDER BY `id` DESC
 	</select>
 	
 	<select id="selectInquiryList" resultType="com.shoppingmall.inquiry.model.Inquiry">

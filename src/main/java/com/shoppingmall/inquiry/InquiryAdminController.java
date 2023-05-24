@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.shoppingmall.inquiry.bo.InquiryAdminBO;
-import com.shoppingmall.inquiry.bo.InquiryBO;
 import com.shoppingmall.inquiry.model.InquiryView;
 
 @RequestMapping("/inquiry_admin")

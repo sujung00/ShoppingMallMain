@@ -16,5 +16,30 @@
 		WHERE
 			`inquiryId` = #{inquiryId}
 	</select>
+	
+	<update id="updateAnswer" parameterType="map">
+		UPDATE `answer`
+		SET
+			`content` = #{content}
+		WHERE
+			`id` = #{answerId}
+	</update>
+	
+	<insert id="inserAnswer" parameterType="map">
+		INSERT INTO `answer`
+		(
+			`inquiryId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{inquiryId}
+			, #{content}
+			, NOW()
+			, NOW()
+		)
+	</insert>
 
 </mapper>

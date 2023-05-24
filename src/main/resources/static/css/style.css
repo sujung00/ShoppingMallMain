@@ -488,3 +488,7 @@ MY TREND
 	font-size: .9rem;
 	color: black;
 }
+.inquiry-border {
+	min-width: 600px;
+	border: 1px solid black;
+}
