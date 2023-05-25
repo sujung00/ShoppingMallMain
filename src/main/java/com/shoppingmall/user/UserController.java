@@ -1,23 +1,28 @@
 package com.shoppingmall.user;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shoppingmall.user.bo.UserBO;
-import com.shoppingmall.user.model.User;
+import com.shoppingmall.user.bo.KakaoService;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private UserBO userBO;
-
+	private KakaoService kakaoService;
+	
 	/**
 	 * 로그인 화면
 	 * @param model
@@ -92,17 +97,6 @@ public class UserController {
 	}
 	
 	/**
-	 * 아이디 변경 화면
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/update_loginid_view")
-	public String updateLoginIdView(Model model) {
-		model.addAttribute("view", "/user/updateLoginIdView");
-		return "template/layout";
-	}
-	
-	/**
 	 * 이름 변경 화면
 	 * @param model
 	 * @return
@@ -112,17 +106,6 @@ public class UserController {
 		model.addAttribute("view", "/user/updateNameView");
 		return "template/layout";
 		
-	}
-	
-	/**
-	 * 이메일 변경 화면
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/update_email_view")
-	public String updateEmailView(Model model) {
-		model.addAttribute("view", "/user/updateEmailView");
-		return "template/layout";
 	}
 	
 	/**
@@ -145,5 +128,27 @@ public class UserController {
 	public String updatePasswordView(Model model) {
 		model.addAttribute("view", "/user/updatePasswordView");
 		return "template/layout";
+	}
+	
+	@RequestMapping("/kakao")
+	public String kakoLogin(
+			@RequestParam("code") String code,
+			HttpSession session,
+			Model model) {
+		
+		logger.info("*****[kakao login]***** code : " + code);
+		String access_token = kakaoService.getAccessToken(code);
+		
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token);
+		logger.info("*****[kakao login]***** userInfo : " + userInfo);
+	    
+	    // 클라이언트의 정보가 존재할 때 로그인 또는 회원가입 진행
+	    if (userInfo != null) {
+	    	String nickname = (String)userInfo.get("nickname");
+	    	String email = (String)userInfo.get("email");
+	    	kakaoService.kakaoLogin(nickname, email, session);
+	    }
+	    
+		return "redirect:/main/main_view";
 	}
 }

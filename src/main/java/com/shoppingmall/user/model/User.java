@@ -14,6 +14,11 @@ public class User {
 	private String name;
 	private String email;
 	private String phoneNumber;
+	private boolean kakaoUser;
 	private Date createdAt;
 	private Date updatedAt;
+	
+	public boolean getKakaoUser() {
+		return this.kakaoUser;
+	}
 }

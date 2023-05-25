@@ -21,8 +21,14 @@
 		<div class="sign-div d-flex justify-content-center">
 			<input type="text" placeholder="phoneNumber (-없이 숫자만 입력하세요)" id="phoneNumber">
 		</div>
+		<div class="d-flex justify-content-center font9 mt-4">
+			*id와 email은 회원 가입 후 변경 하실 수 없습니다.
+		</div>
+		<div class="d-flex justify-content-center font9">
+			확인 후 회원 가입 부탁드립니다.
+		</div>
 		<div class="d-flex justify-content-center">
-			<button type="button" id="signUpBtn" class="sign-btn mt-3">SIGN UP</button>
+			<button type="button" id="signUpBtn" class="sign-btn">SIGN UP</button>
 		</div>
 	</div>
 </div>
@@ -53,6 +59,7 @@ $(document).ready(function(){
 		let name = $("#name").val().trim();
 		let email = $("#email").val().trim();
 		let phoneNumber = $("#phoneNumber").val().trim();
+		let kakaoUser = false;
 		
 		if(!loginId){
 			$("#signUpModal").modal();
@@ -98,7 +105,8 @@ $(document).ready(function(){
 		$.ajax({
 			type:"POST"
 			, url:"/user/sign_up"
-			, data:{"loginId":loginId, "password":password, "name":name, "email":email, "phoneNumber":phoneNumber}
+			, data:{"loginId":loginId, "password":password, "name":name,
+				"email":email, "phoneNumber":phoneNumber, "kakaoUser":kakaoUser}
 			
 			, success:function(data){
 				if(data.code == 300){

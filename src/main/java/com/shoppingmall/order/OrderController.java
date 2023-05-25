@@ -55,6 +55,12 @@ public class OrderController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 주문 상세 화면
+	 * @param orderId
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/order_detail_view")
 	public String orderDetailView(
 			@RequestParam("orderId") int orderId,

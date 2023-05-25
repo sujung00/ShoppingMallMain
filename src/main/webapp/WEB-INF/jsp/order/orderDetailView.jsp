@@ -62,7 +62,9 @@
 			<hr>
 			<div class="d-flex justify-content-between">
 				<div class="font7">배송지 정보</div>
+				<c:if test="${orderDetail.deliveryCheck eq true}">
 				<button class="btn review-btn2 col-3" data-toggle="modal" data-target="#addressModal">배송지 정보 변경</button>
+				</c:if>
 			</div>
 			<div class="d-flex justify-content-between mt-3">
 				<div class="col-3">
@@ -115,7 +117,9 @@
 					</div>
 				</div>
 			</div>
+			<c:if test="${orderDetail.deliveryCheck eq true}">
 			<button id="orderCancelBtn" class="btn sign-up-btn mt-5 p-2" data-order-id="${orderDetail.order.id}">구매 취소</button>
+			</c:if>
 		</div>
 	</div>
 </div>

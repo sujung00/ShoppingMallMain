@@ -20,7 +20,7 @@ public interface UserMapper {
 			@Param("loginId") String loginId,
 			@Param("password") String password);
 	
-	public User selectUserByEmail(String email);
+	public List<User> selectUserListByEmail(String email);
 	
 	public String selectLoginIdByNameEmail(
 			@Param("name") String name,
@@ -56,4 +56,8 @@ public interface UserMapper {
 			@Param("userId") int userId);
 	
 	public User selectUserByUserId(int userId);
+	
+	public User selectUserByLoginIdEmail(
+			@Param("loginId") String loginId,
+			@Param("email") String email);
 }

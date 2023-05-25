@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="d-flex">
 	<div class="mytrend-nav">
@@ -19,10 +20,7 @@
 		<div class="mt-5">
 			<div>
 				<div class="mytrend-font">아이디</div>
-				<a href="/user/update_loginid_view">
-					${userLoginId}
-					<img alt="update login id" src="/static/img/right.png" width="10px" class="ml-1">
-				</a>
+				<div>${userLoginId}</div>
 			</div>
 			<div class="mt-4">
 				<div class="mytrend-font">이름</div>
@@ -33,10 +31,7 @@
 			</div>
 			<div class="mt-4">
 				<div class="mytrend-font">이메일</div>
-				<a href="/user/update_email_view">
-					${userEmail}
-					<img alt="update login id" src="/static/img/right.png" width="10px" class="ml-1">
-				</a>
+				${userEmail}
 			</div>
 			<div class="mt-4">
 				<div class="mytrend-font">휴대폰 번호</div>
@@ -45,6 +40,8 @@
 					<img alt="update login id" src="/static/img/right.png" width="10px" class="ml-1">
 				</a>
 			</div>
+			
+			<c:if test="${fn:startsWith(userLoginId, 'kakao@') eq false}">
 			<div class="mt-4">
 				<div class="mytrend-font">비밀번호</div>
 				<a href="/user/update_password_view">
@@ -52,6 +49,7 @@
 					<img alt="update login id" src="/static/img/right.png" width="10px" class="ml-1">
 				</a>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </div>

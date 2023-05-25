@@ -1,9 +1,10 @@
 package com.shoppingmall.user.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shoppingmall.basket.bo.BasketBO;
 import com.shoppingmall.user.dao.UserMapper;
 import com.shoppingmall.user.model.User;
 
@@ -25,8 +26,8 @@ public class UserBO {
 		return userMapper.selectUserByLoginIdPassword(loginId, password);
 	}
 	
-	public User getUserByEmail(String email) {
-		return userMapper.selectUserByEmail(email);
+	public List<User> getUserListByEmail(String email) {
+		return userMapper.selectUserListByEmail(email);
 	}
 	
 	public String getLoginIdByNameEmail(String name, String email) {
@@ -63,5 +64,9 @@ public class UserBO {
 	
 	public User getUserByUserId(int userId) {
 		return userMapper.selectUserByUserId(userId);
+	}
+	
+	public User getUserByLoginIdEmail(String loginId, String email) {
+		return userMapper.selectUserByLoginIdEmail(loginId, email);
 	}
 }

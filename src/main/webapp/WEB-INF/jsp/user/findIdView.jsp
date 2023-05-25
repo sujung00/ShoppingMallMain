@@ -4,7 +4,7 @@
 	<div class="sign-text text-center mb-3">아이디 찾기</div>
 	<hr>
 	<div> 
-		<div class="sign-div d-flex justify-content-center">
+		<div class="sign-in-div d-flex justify-content-center">
 			<input type="text" placeholder="name" id="name">
 		</div>
 		<div class="sign-div d-flex justify-content-center">

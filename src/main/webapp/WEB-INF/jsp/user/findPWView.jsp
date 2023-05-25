@@ -87,6 +87,14 @@ $(document).ready(function(){
 					$('#findPWModal').on('hidden.bs.modal', function (e) {
 					     location.reload();
 					})
+				} else if(data.code == 301){
+					//카카오 계정
+					$("#findPWModal").modal();
+					$("#modalBody").text(data.errorMessage);
+					
+					$('#findPWModal').on('hidden.bs.modal', function (e) {
+					     location.href="/user/sign_in_view";
+					})
 				}
 			}
 			, error : function(request, status, error) {

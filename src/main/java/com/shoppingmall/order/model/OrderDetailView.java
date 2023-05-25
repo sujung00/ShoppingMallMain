@@ -19,4 +19,6 @@ public class OrderDetailView {
 	
 	private Address address;
 	
+	// 배송 완료 여부
+	private boolean deliveryCheck;
 }

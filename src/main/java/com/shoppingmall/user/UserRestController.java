@@ -1,6 +1,7 @@
 package com.shoppingmall.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,7 @@ import com.shoppingmall.user.model.User;
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
-
+	
 	@Autowired
 	private UserBO userBO;
 	
@@ -50,7 +51,8 @@ public class UserRestController {
 			@RequestParam("password") String password,
 			@RequestParam("name")String name,
 			@RequestParam("email") String email,
-			@RequestParam("phoneNumber") String phoneNumber){
+			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("kakaoUser") boolean kakaoUser){
 		Map<String, Object> result = new HashMap<>();
 		
 		// id 중복 확인
@@ -62,12 +64,16 @@ public class UserRestController {
 			return result;
 		}
 		// email 중복 확인
-		User emailUser = userBO.getUserByEmail(email);
+		List<User> emailUser = userBO.getUserListByEmail(email);
 		if(emailUser != null) {
-			result.put("code", 301);
-			result.put("errorMessage", "이미 존재하는 이메일 입니다.");
-			
-			return result;
+			for(User user : emailUser) {
+				if(user.getKakaoUser() == kakaoUser) {
+					result.put("code", 301);
+					result.put("errorMessage", "이미 존재하는 이메일 입니다.");
+					
+					return result;
+				}
+			}
 		}
 		
 		// password 해싱
@@ -80,6 +86,8 @@ public class UserRestController {
 		user.setName(name);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
+		user.setKakaoUser(kakaoUser);
+
 		int rowCount = userBO.addUser(user);
 		
 		// 장바구니 생성
@@ -117,7 +125,7 @@ public class UserRestController {
 		
 		// db select
 		User user = userBO.getUserByLoginIdPassword(loginId, hashedPassword);
-				
+		
 		Map<String, Object> result = new HashMap<>();
 		if(user != null) {
 			result.put("code", 1);
@@ -187,8 +195,15 @@ public class UserRestController {
 		
 		Map<String, Object> result = new HashMap<>();
 		if(user != null) {
+			if(user.getLoginId().startsWith("kakao@")) {
+				result.put("code", 301);
+				result.put("errorMessage", "카카오 계정입니다. 카카오 계정으로 로그인 해주세요.");
+				
+				return result;
+			}
+			
 			//존재하는 계정이면 등록된 이메일로 메일 보냄
-			Mail mail = mailBO.createMailAndChangePassword(user.getEmail(), user.getName());
+			Mail mail = mailBO.createMailAndChangePassword(user.getLoginId(), user.getEmail(), user.getName());
 			mailBO.mailSend(mail);
 			
 			result.put("code", 1);
@@ -196,42 +211,6 @@ public class UserRestController {
 		} else {
 			result.put("code", 300);
 			result.put("errorMessage", "존재하지 않는 계정입니다.");
-		}
-		
-		return result;
-	}
-	
-	/**
-	 * id 변경 API
-	 * @param loginId
-	 * @param session
-	 * @return
-	 */
-	@PostMapping("/update_loginid")
-	public Map<String, Object> updateLoginId(
-			@RequestParam("loginId") String loginId,
-			HttpSession session) {
-		// id 중복 확인
-		User user = userBO.getUserByLoginId(loginId);
-		Map<String, Object> result = new HashMap<>();
-		if(user != null) {
-			result.put("code", 300);
-			result.put("errorMessage", "이미 존재하는 아이디 입니다.");
-					
-			return result;
-		}
-		
-		// db update
-		int rowCount = userBO.updateLoginIdByUserId(loginId, (int)session.getAttribute("userId"));
-		
-		if(rowCount > 0) {
-			result.put("code", 1);
-			result.put("result", "아이디 변경에 성공하였습니다.");
-			
-			session.setAttribute("userLoginId", loginId);
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "아이디 변경에 실패하였습니다. 관리자에게 문의해주세요.");
 		}
 		
 		return result;
@@ -259,42 +238,6 @@ public class UserRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "이름 변경에 실패하였습니다. 관리자에게 문의해주세요.");
-		}
-		
-		return result;
-	}
-	
-	/**
-	 * 이메일 변경 API
-	 * @param email
-	 * @param session
-	 * @return
-	 */
-	@PostMapping("/update_email")
-	public Map<String, Object> updateEmail(
-			@RequestParam("email") String email,
-			HttpSession session) {
-		int userId = (int)session.getAttribute("userId");
-		Map<String, Object> result = new HashMap<>();
-
-		// email 중복 확인
-		User emailUser = userBO.getUserByEmail(email);
-		if(emailUser != null) {
-			result.put("code", 300);
-			result.put("errorMessage", "이미 존재하는 이메일 입니다.");
-					
-			return result;
-		}
-	
-		int rowCount = userBO.updateEmailByUserId(email, userId);
-		if(rowCount > 0) {
-			result.put("code", 1);
-			result.put("result", "이메일 변경에 성공하였습니다.");
-			
-			session.setAttribute("userEmail", email);
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "이메일 변경에 실패하였습니다. 관리자에게 문의해주세요.");
 		}
 		
 		return result;

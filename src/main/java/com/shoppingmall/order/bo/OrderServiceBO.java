@@ -120,6 +120,7 @@ public class OrderServiceBO {
 		Order order = orderBO.getOrderByOrderId(orderId);
 		orderDetailView.setOrder(order);
 		
+		boolean deliveryCheck = true;
 		List<OrderAdminView> orderAdminViewList = new ArrayList<>();
 		List<OrderProduct> orderProductList = orderProductBO.getOrderProductListByOrderId(order.getId());
 		for(OrderProduct orderProduct : orderProductList) {
@@ -136,6 +137,11 @@ public class OrderServiceBO {
 			List<String> colorList = productOptionBO.getColorByProductId(orderProduct.getProductId());
 			orderAdminView.setColorList(colorList);
 			
+			// 배송 완료된 상품이 있으면 false
+			if(orderProduct.getState().equals("배송완료")) {
+				deliveryCheck = false;
+			}
+			
 			orderAdminViewList.add(orderAdminView);
 			
 		}
@@ -143,6 +149,8 @@ public class OrderServiceBO {
 		
 		Address address = addressBO.getAddressByAddressId(order.getAddressId());
 		orderDetailView.setAddress(address);
+		
+		orderDetailView.setDeliveryCheck(deliveryCheck);
 		
 		return orderDetailView;
 	}

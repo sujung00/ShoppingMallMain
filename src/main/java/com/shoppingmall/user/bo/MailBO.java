@@ -18,23 +18,23 @@ public class MailBO {
 	private JavaMailSender mailSender;
 
 	
-	public Mail createMailAndChangePassword(String userEmail, String userName){
+	public Mail createMailAndChangePassword(String loginId, String userEmail, String userName){
         String str = getTempPassword();
         Mail mail= new Mail();
         mail.setAddress(userEmail);
         mail.setTitle(userName+"님의 TREND 임시비밀번호 안내 이메일 입니다.");
         mail.setMessage("안녕하세요. TREND입니다.\n" + "임시비밀번호 안내 관련 이메일 입니다.\n" + "[" + userName + "]" +"님의 임시 비밀번호는 "
         + str + " 입니다.");
-        updatePassword(str, userEmail);
+        updatePassword(str, loginId, userEmail);
         
         return mail;
     }
 	
 	// 임시 비밀번호로 업데이트
-	public void updatePassword(String str, String userEmail){
+	public void updatePassword(String str, String loginId, String userEmail){
         // 해싱된 비밀번호
 		String pw = EncryptUtils.md5(str);
-        int userId = userBO.getUserByEmail(userEmail).getId();
+        int userId = userBO.getUserByLoginIdEmail(loginId, userEmail).getId();
         
         userBO.updateUserPassword(userId, pw);
     }

@@ -16,7 +16,7 @@ public class MainController {
 	// http://localhost/main/main_view
 	@RequestMapping("/main_view")
 	public String mainView(Model model) {
-		model.addAttribute("view", "main/mainView");
+		model.addAttribute("view", "/main/mainView");
 		return "template/layout";
 	}
 	
