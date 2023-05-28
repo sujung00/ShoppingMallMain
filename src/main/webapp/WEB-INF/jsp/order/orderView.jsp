@@ -181,6 +181,10 @@
 				<input type="radio" name="payType" id="naverPay"> <label
 					for="naverPay" class="font5 m-0 ml-1">네이버 페이</label>
 			</div>
+			<div class="d-flex align-items-center mt-1">
+				<input type="radio" name="payType" id="kakaoPay"> <label
+					for="kakaoPay" class="font5 m-0 ml-1">카카오 페이</label>
+			</div>
 
 			<div class="d-flex align-items-center mt-5 pt-5">
 				<input type="checkbox" name="orderCheck" id="orderCheck"> <label
@@ -189,7 +193,8 @@
 			</div>
 
 			<div class="d-flex mt-3">
-				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn" data-user-id="${orderView.user.id}" data-basket-id="${orderView.basket.id}">
+				<input type="button" id="orderBtn" value="결제하기" class="mytrend-btn"
+				 data-user-id="${orderView.user.id}" data-basket-id="${orderView.basket.id}" data-user-name="${orderView.user.name}">
 			</div>
 		</div>
 		<!-- 주문 상품 -->
@@ -323,10 +328,15 @@
 					}
 				}).open();
 	}
-
+	
 	$(document).ready(function() {
 		let totalPrice = $("#totalPrice").text();
 		let userPoint = $("#totalPoint").text();
+		
+		// 결제 정보
+		var IMP = window.IMP;
+		var code = "imp55413628";
+		IMP.init(code);
 		
 		$("#totalPay").text(totalPrice - userPoint);
 		
@@ -492,6 +502,9 @@
 			// 총 결제 금액
 			let totalPay = $("#totalPay").text();
 			
+			// 결제자 이름
+			let name = $(this).data("user-name");
+			
 			if(!addressId){
 				$("#orderModal").modal();
 				$("#modalBody").text("배송지를 선택해주세요.");
@@ -506,6 +519,14 @@
 				$("#orderModal").modal();
 				$("#modalBody").text("주문내용 확인 후 동의부탁드립니다.");
 				return;
+			}
+			
+			// 카카오 페이 결제 요청
+			if(payType == 'kakaoPay'){
+				$.ajax({
+					type:"POST"
+					, url:"/kakaopay/pay"
+				})
 			}
 			
 			$.ajax({
