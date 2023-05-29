@@ -35,7 +35,7 @@ public class OrderBO {
 	@Autowired
 	private ProductOptionBO productOptionBO;
 	
-	public void generateOrder(int userId, int addressId, int basketId,
+	public int generateOrder(int userId, int addressId, int basketId,
 			String orderRequest, String payType, int totalPay, Integer usePoint) {
 		// order db insert
 		Order order = new Order();
@@ -51,7 +51,7 @@ public class OrderBO {
 		int orderId = order.getId();
 		List<BasketView> basketViewList = basketProductBO.generateBasket(userId);
 		for(BasketView basketView : basketViewList) {
-			orderProductBO.addOrderProduct(orderId, basketView.getProduct().getId(), basketView.getProductOption().getId(), basketView.getBasketProduct().getCount(), "배송준비중");
+			orderProductBO.addOrderProduct(orderId, basketView.getProduct().getId(), basketView.getProductOption().getId(), basketView.getBasketProduct().getCount(), "결제대기");
 		
 			// product(재고) update
 			ProductOption productOption = productOptionBO.getProductOptionByProductId(basketView.getProduct().getId(), basketView.getProductOption().getColor(), basketView.getProductOption().getSize());
@@ -71,6 +71,8 @@ public class OrderBO {
 		}
 		pointBO.addPoint(userId, (int)(totalPay*0.01), "결제 적립", totalPoint-usePoint+(int)(totalPay*0.01));
 		
+		
+		return order.getId();
 	}
 	
 	public void addOrder(Order order) {

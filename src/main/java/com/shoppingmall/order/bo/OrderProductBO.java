@@ -57,4 +57,11 @@ public class OrderProductBO {
 	public void updateOptionIdByOrderProductId(int orderProductId, int optionId) {
 		orderProductMapper.updateOptionIdByOrderProductId(orderProductId, optionId);
 	}
+	
+	public void updateStateByOrderId(int orderId) {
+		List<OrderProduct> orderProductList = getOrderProductListByOrderId(orderId);
+		for(OrderProduct orderProduct : orderProductList) {
+			updateStateByOrderProductId("결제 완료", orderProduct.getId());
+		}
+	}
 }
