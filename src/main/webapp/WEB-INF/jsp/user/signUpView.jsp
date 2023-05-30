@@ -16,7 +16,7 @@
 			<input type="text" placeholder="name" id="name">
 		</div>
 		<div class="sign-div d-flex justify-content-center">
-			<input type="text" placeholder="email" id="email">
+			<input type="email" placeholder="email" id="email">
 		</div>
 		<div class="sign-div d-flex justify-content-center">
 			<input type="text" placeholder="phoneNumber (-없이 숫자만 입력하세요)" id="phoneNumber">
@@ -90,6 +90,12 @@ $(document).ready(function(){
 			$("#signUpModal").modal();
 			$("#modalBody").text("이메일을 입력해주세요.");
 			return;
+		}
+		email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+		if(!email_regex.test(email)){ 
+			$("#signUpModal").modal();
+			$("#modalBody").text("올바른 이메일을 입력해주세요.");
+			return; 
 		}
 		if(!phoneNumber){
 			$("#signUpModal").modal();

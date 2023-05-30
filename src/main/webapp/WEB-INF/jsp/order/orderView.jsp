@@ -524,21 +524,34 @@
 		
 		$("#pointBtn").on("click", function(){
 			let userPoint = $("#userPoint").text();
-			$("#pointNum").val(userPoint);
-			$("#totalPoint").text(userPoint);
-			
 			let totalPrice = $("#totalPrice").text();
-			userPoint = $("#totalPoint").text();
-			
-			$("#totalPay").text(totalPrice - userPoint);
+
+			if(userPoint > totalPrice){
+				$("#orderModal").modal();
+				$("#modalBody").text("사용할 수 있는 최대 포인트는" + (parseInt(totalPrice)-100) + "포인트입니다.");
+				
+				$("#pointNum").val(parseInt(totalPrice)-100);
+				$("#totalPoint").text(parseInt(totalPrice)-100);
+				$("#totalPay").text(parseInt(totalPrice) + parseInt(deliveryCharge) - (parseInt(totalPrice)-100));
+				return;
+			} else {
+				$("#pointNum").val(userPoint);
+				$("#totalPoint").text(userPoint);
+				
+				let totalPrice = $("#totalPrice").text();
+				userPoint = $("#totalPoint").text();
+				
+				$("#totalPay").text(totalPrice - userPoint);
+			}
 		});
 		$("#pointNum").change(function(){
 			$("#totalPoint").text($(this).val());
 			
 			let totalPrice = $("#totalPrice").text();
 			let totalPoint = $("#totalPoint").text();
+			let deliveryCharge = $(".delivery-charge").text();
 			
-			$("#totalPay").text(totalPrice - totalPoint);
+			$("#totalPay").text(parseInt(totalPrice) + parseInt(deliveryCharge) - parseInt(totalPoint));
 			
 			let userPoint = $("#userPoint").text();
 			let usePoint = $(this).val();
@@ -547,6 +560,8 @@
 				$("#modalBody").text("사용할 수 있는 포인트는 0포인트부터 사용 가능합니다.");
 				
 				$("#pointNum").val("");
+				$("#totalPoint").text("0");
+				$("#totalPay").text(parseInt(totalPrice) + parseInt(deliveryCharge));
 				return;
 			}
 			if(parseInt(usePoint) > userPoint){
@@ -554,6 +569,8 @@
 				$("#modalBody").text("사용할 수 있는 최대 포인트는 " + userPoint + "포인트 입니다.");
 				
 				$("#pointNum").val("");
+				$("#totalPoint").text("0");
+				$("#totalPay").text(parseInt(totalPrice) + parseInt(deliveryCharge));
 				return;
 			}
 			if(parseInt(usePoint) > parseInt(totalPrice)-100){
@@ -561,6 +578,8 @@
 				$("#modalBody").text("사용할 수 있는 최대 포인트는 " + (parseInt(totalPrice)-100) + "포인트 입니다.");
 				
 				$("#pointNum").val("");
+				$("#totalPoint").text("0");
+				$("#totalPay").text(parseInt(totalPrice) + parseInt(deliveryCharge));
 				return;
 			}
 		});
@@ -580,7 +599,7 @@
 			// 포인트 사용
 			let point = $("#pointNum").val();
 			// 결제 정보
-			let payType = $('input[name="payType"]:checked').attr('id');
+			let payType = "카드결제";
 			// 동의
 			let agreement = $('input[name="orderCheck"]:checked').val();
 			// 총 결제 금액
@@ -611,13 +630,6 @@
 				, success:function(data) {
 					if(data.code == 1){
 						requestPay(data);
-						
-						//$("#orderModal").modal();
-						//$("#modalBody").text(data.result);
-						
-						//$('#orderModal').on('hidden.bs.modal', function (e) {
-						//     location.href="/order/order_deliver_view"
-						//})
 					} else {
 						$("#orderModal").modal();
 						$("#modalBody").text(data.errorMessage);

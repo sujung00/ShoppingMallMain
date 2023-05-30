@@ -14,6 +14,7 @@ public class Order {
 	private String orderRequest;
 	private String payType;
 	private int totalPay;
+	private String impUid;
 	private Date createdAt;
 	private Date updatedAt;
 }

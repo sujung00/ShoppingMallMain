@@ -137,8 +137,8 @@ public class OrderServiceBO {
 			List<String> colorList = productOptionBO.getColorByProductId(orderProduct.getProductId());
 			orderAdminView.setColorList(colorList);
 			
-			// 배송 완료된 상품이 있으면 false
-			if(orderProduct.getState().equals("배송완료")) {
+			// 배송 완료된 상품이거나 주문 취소이면 false
+			if(orderProduct.getState().equals("배송완료") || orderProduct.getState().equals("주문취소")) {
 				deliveryCheck = false;
 			}
 			

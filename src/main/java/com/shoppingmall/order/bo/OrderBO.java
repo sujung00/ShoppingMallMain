@@ -10,6 +10,7 @@ import com.shoppingmall.basket.bo.BasketProductBO;
 import com.shoppingmall.basket.model.BasketView;
 import com.shoppingmall.order.dao.OrderMapper;
 import com.shoppingmall.order.model.Order;
+import com.shoppingmall.order.model.OrderProduct;
 import com.shoppingmall.point.bo.PointBO;
 import com.shoppingmall.productOption.bo.ProductOptionBO;
 import com.shoppingmall.productOption.model.ProductOption;
@@ -95,7 +96,14 @@ public class OrderBO {
 		return orderMapper.updateAddressIdByOrderId(orderId, addressId);
 	}
 	
-	public int deleteOrderByOrderIdUserId(int orderId, int userId) {
-		return orderMapper.deleteOrderByOrderIdUserId(orderId, userId);
+	public void deleteOrderByOrderIdUserId(int orderId, int userId, int totalPay) {
+		int totalPoint = pointBO.getTotalPointByUserId(userId);
+		// 포인트 다시 적립
+		pointBO.addPoint(userId, (int)(totalPay*0.01), "결제 취소", totalPoint+(int)(totalPay*0.01));
+		
+		List<OrderProduct> orderProductList = orderProductBO.getOrderProductListByOrderId(orderId);
+		for(OrderProduct orderProduct : orderProductList) {
+			orderProductBO.updateStateByOrderProductId("주문취소", orderProduct.getId());
+		}
 	}
 }

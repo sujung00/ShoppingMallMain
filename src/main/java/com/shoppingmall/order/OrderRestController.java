@@ -1,19 +1,28 @@
 package com.shoppingmall.order;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.shoppingmall.address.bo.AddressBO;
 import com.shoppingmall.address.model.Address;
 import com.shoppingmall.order.bo.OrderBO;
@@ -77,7 +86,8 @@ public class OrderRestController {
 		if(orderProductList.size() == 1) {
 			orderProductName = product.getName();
 		} else {
-			orderProductName = product.getName() + "외 " + String.valueOf(orderProductList.size()-1) + "상품";
+			// ex) 미니멀 크롭 브이넥 가디건 외 2개 상품
+			orderProductName = product.getName() + " 외 " + String.valueOf(orderProductList.size()-1) + "개 상품";
 		}
 		
 		Map<String, Object> result = new HashMap<>();
@@ -116,16 +126,15 @@ public class OrderRestController {
 		int userId = (int)session.getAttribute("userId");
 		
 		// order delete
-		int rowCount = orderBO.deleteOrderByOrderIdUserId(orderId, userId);
+		Order order = orderBO.getOrderByOrderId(orderId);
+		int totalPay = order.getTotalPay();
+		orderBO.deleteOrderByOrderIdUserId(orderId, userId, totalPay);
 		
 		Map<String, Object> result = new HashMap<>();
-		if(rowCount > 0) {
-			result.put("code", 1);
-			result.put("result", "구매를 취소하였습니다.");
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "구매를 취소하지 못했습니다.");
-		}
+		result.put("code", 1);
+		result.put("result", "구매를 취소하였습니다.");
+		result.put("orderId", orderId);
+		result.put("cancelPrice", order.getTotalPay());
 		
 		return result;
 	}
@@ -156,4 +165,85 @@ public class OrderRestController {
 		return result;
 	}
 	
+	@PostMapping("/cancel")
+	public void orderCancel(
+			@RequestParam("merchant_uid") int merchantUid,
+			@RequestParam("cancel_request_amount") int amount,
+			@RequestParam("reason") String reason) throws IOException {
+		// access token 발급
+		String access_token = getToken();
+		
+		// 포트원 REST API로 결제 환불 요청
+		HttpsURLConnection conn = null;
+		URL url = new URL("https://api.iamport.kr/payments/cancel");
+ 
+		conn = (HttpsURLConnection) url.openConnection();
+ 
+		conn.setRequestMethod("POST");
+ 
+		conn.setRequestProperty("Content-type", "application/json");
+		conn.setRequestProperty("Accept", "application/json");
+		conn.setRequestProperty("Authorization", access_token);
+ 
+		conn.setDoOutput(true);
+		
+		JsonObject json = new JsonObject();
+ 
+		json.addProperty("reason", reason);
+		json.addProperty("merchant_uid", merchantUid);
+		json.addProperty("checksum", amount);
+ 
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		 
+		bw.write(json.toString());
+		bw.flush();
+		bw.close();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+		
+		br.close();
+		conn.disconnect();
+	}
+	
+	public String getToken() throws IOException {
+
+		HttpsURLConnection conn = null;
+
+		URL url = new URL("https://api.iamport.kr/users/getToken");
+
+		conn = (HttpsURLConnection) url.openConnection();
+
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-type", "application/json");
+		conn.setRequestProperty("Accept", "application/json");
+		conn.setDoOutput(true);
+		JsonObject json = new JsonObject();
+
+		iamportAPI = new IamportAPI();
+		
+		String IAMPORT_API = iamportAPI.getApi();
+		String IAMPORT_API_SECRET = iamportAPI.getApiSecret();
+		
+		json.addProperty("imp_key", IAMPORT_API);
+		json.addProperty("imp_secret", IAMPORT_API_SECRET);
+		
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		
+		bw.write(json.toString());
+		bw.flush();
+		bw.close();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+
+		Gson gson = new Gson();
+
+		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+		
+		String token = gson.fromJson(response, Map.class).get("access_token").toString();
+
+		br.close();
+		conn.disconnect();
+
+		return token;
+	}
 }

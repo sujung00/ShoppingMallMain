@@ -31,7 +31,14 @@
 			<hr>
 			<!-- orderProduct -->
 			<c:forEach items="${orderDetail.orderAdminViewList}" var="orderAdmin">
-			<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
+			<c:choose>
+			<c:when test="${orderAdmin.orderProduct.state == '주문취소'}">
+				<div class="mt-2 font13">${orderAdmin.orderProduct.state}</div>
+			</c:when>
+			<c:otherwise>
+				<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
+			</c:otherwise>
+			</c:choose>
 			<div class="d-flex align-items-center mt-2">
 				<form action="/product/product_detail_view" method="post">
 				<input type="hidden" name="productId" value="${orderAdmin.product.id}">

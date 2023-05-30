@@ -23,7 +23,14 @@
 					pattern="yy.MM.dd" />
 			</div>
 			<c:forEach items="${orderDetail.orderAdminViewList}" var="orderAdmin">
-				<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
+				<c:choose>
+				<c:when test="${orderAdmin.orderProduct.state eq '주문취소'}">
+					<div class="mt-2 font13">${orderAdmin.orderProduct.state}</div>
+				</c:when>
+				<c:otherwise>
+					<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
+				</c:otherwise>
+				</c:choose>
 				<div class="order-product-detail d-flex justify-content-between align-items-center">
 					<div class="d-flex align-items-center mt-2">
 						<form action="/product/product_detail_view" method="post">
@@ -47,7 +54,7 @@
 							</div>
 						</div>
 					</div>
-					<c:if test="${orderAdmin.orderProduct.state != '배송완료'}">
+					<c:if test="${orderAdmin.orderProduct.state != '배송완료' && orderAdmin.orderProduct.state != '주문취소'}">
 						<button type="button" class="option-update-btn order-detail-btn font1" data-toggle="modal"
 						 data-target="#optionChangeModal" data-product-id="${orderAdmin.product.id}"
 						 data-color-list="${orderAdmin.colorList}" data-orderproduct-id="${orderAdmin.orderProduct.id}"
@@ -289,6 +296,41 @@ function sample6_execDaumPostcode() {
 }
 
 $(document).ready( function() {
+	function cancelPay(data){
+		jQuery.ajax({
+			// 예: http://www.myservice.com/payments/cancel
+		    "url": "/order/cancel",
+		    "type": "POST",
+		    //"contentType": "application/json",
+		    "data": {
+		    "merchant_uid": data.orderId, // 예: ORD20180131-0000011
+		    "cancel_request_amount": data.cancelPrice, // 환불금액
+		    "reason": "주문 취소 및 환불" // 환불사유
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+		    //"refund_holder": "홍길동", 
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+		    //"refund_bank": "88" 
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+		    //"refund_account": "56211105948400" 
+		 	}
+		 	//"dataType": "json"
+		}).done(function(result){
+			$("#orderDetailModal").modal();
+			$("#orderDetailModal #modalBody").text("주문 및 결제가 취소되었습니다.");
+			
+			$('#orderDetailModal').on('hidden.bs.modal', function (e) {
+			     location.href="/order/order_deliver_view"
+			})
+		}).fail(function(error){
+			$("#orderDetailModal").modal();
+			$("#orderDetailModal #modalBody").text("주문은 취소 되었지만 결제는 취소에 실패했습니다.");
+			
+			$('#orderDetailModal').on('hidden.bs.modal', function (e) {
+			     location.href="/order/order_deliver_view"
+			})
+		});
+	}
+	
 	var totalProductPrice = 0;
 	$(".order-product-detail").each(function() {
 		var productPrice = parseInt($(this).find('.product-price').text());
@@ -547,12 +589,7 @@ $(document).ready( function() {
 		
 			, success:function(data){
 				if(data.code == 1){
-					$("#orderDetailModal").modal();
-					$("#orderDetailModal #modalBody").text(data.result);
-					
-					$('#orderDetailModal').on('hidden.bs.modal', function (e) {
-					     location.href="/order/order_deliver_view"
-					})
+					cancelPay(data);
 				} else {
 					$("#orderDetailModal").modal();
 					$("#orderDetailModal #modalBody").text(data.errorMessage);
