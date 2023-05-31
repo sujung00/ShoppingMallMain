@@ -1,6 +1,6 @@
 package com.shoppingmall.user;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -86,7 +86,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 회원 정보 화면
+	 * 회원 정보 화면(MY TRNED)
 	 * @param model
 	 * @return
 	 */
@@ -130,6 +130,13 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 카카오 로그인 API
+	 * @param code
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/kakao")
 	public String kakoLogin(
 			@RequestParam("code") String code,
@@ -139,7 +146,7 @@ public class UserController {
 		logger.info("*****[kakao login]***** code : " + code);
 		String access_token = kakaoService.getAccessToken(code);
 		
-		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_token);
+		Map<String, Object> userInfo = kakaoService.getUserInfo(access_token);
 		logger.info("*****[kakao login]***** userInfo : " + userInfo);
 	    
 	    // 클라이언트의 정보가 존재할 때 로그인 또는 회원가입 진행

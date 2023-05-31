@@ -34,7 +34,7 @@ public class ProductController {
 	private ReviewBO reviewBO;
 
 	/**
-	 * 신상품 목록 페이지
+	 * 신상품 목록 화면
 	 * @param model
 	 * @return
 	 */
@@ -48,6 +48,12 @@ public class ProductController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 제품 상세 화면
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/product_detail_view")
 	public String productDetailView(
 			@RequestParam("productId") int productId,
@@ -73,7 +79,7 @@ public class ProductController {
 	}
 	
 	/**
-	 * 여성 상품 페이지
+	 * 여성 상품 화면
 	 * @param model
 	 * @return
 	 */
@@ -88,13 +94,13 @@ public class ProductController {
 	}
 	
 	/**
-	 * 남성 상품 페이지
+	 * 남성 상품 화면
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/man_product_view")
 	public String productManView(Model model) {
-		// 여성 상품 list
+		// 남성 상품 list
 		List<Product> manProductList = productBO.getManProductList();
 		
 		model.addAttribute("manProductList", manProductList);

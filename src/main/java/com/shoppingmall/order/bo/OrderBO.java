@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.basket.bo.BasketBO;
 import com.shoppingmall.basket.bo.BasketProductBO;
@@ -36,6 +37,7 @@ public class OrderBO {
 	@Autowired
 	private ProductOptionBO productOptionBO;
 	
+	@Transactional
 	public int generateOrder(int userId, int addressId, int basketId,
 			String orderRequest, String payType, int totalPay, Integer usePoint) {
 		// order db insert
@@ -76,6 +78,7 @@ public class OrderBO {
 		return order.getId();
 	}
 	
+	@Transactional
 	public void addOrder(Order order) {
 		orderMapper.insertOrder(order);
 	}
@@ -92,6 +95,7 @@ public class OrderBO {
 		return orderMapper.selectOrderListByUserId(userId);
 	}
 	
+	@Transactional
 	public int updateAddressIdByOrderId(int orderId, int addressId) {
 		return orderMapper.updateAddressIdByOrderId(orderId, addressId);
 	}

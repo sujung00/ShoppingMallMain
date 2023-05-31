@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.basket.dao.BasketProductMapper;
 import com.shoppingmall.basket.model.Basket;
@@ -35,6 +36,7 @@ public class BasketProductBO {
 	@Autowired
 	private BasketProductMapper basketProductMapper;
 	
+	@Transactional
 	public void addBasketProduct(int userId, int producId, String color, String size, int count) {
 		// 유저의 장바구니 찾기
 		Basket basket = basketBO.getBasketByUserId(userId);
@@ -61,10 +63,12 @@ public class BasketProductBO {
 		basketBO.updateTotalPrice(basket.getId(), totalPrice);
 	}
 	
+	@Transactional
 	public void createBasketProduct(int userId, int basketId, int productId, int optionId, int count) {
 		basketProductMapper.insertBasketProduct(userId, basketId, productId, optionId, count);
 	}
 	
+	@Transactional
 	public void updateBasketProduct(int basketProductId, int count) {
 		basketProductMapper.updateBasketProduct(basketProductId, count);
 	}

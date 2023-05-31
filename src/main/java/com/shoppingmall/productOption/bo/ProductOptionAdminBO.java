@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.productOption.model.ProductOption;
 
@@ -13,6 +14,7 @@ public class ProductOptionAdminBO {
 	@Autowired
 	private ProductOptionBO productOptionBO;
 	
+	@Transactional
 	public int addProductOption(int productId, String color, String size, int stock) {
 		return productOptionBO.addProductOption(productId, color, size, stock);
 	}
@@ -29,6 +31,7 @@ public class ProductOptionAdminBO {
 		return productOptionBO.getProductOptionByProductOptionId(productOptionId);
 	}
 	
+	@Transactional
 	public int updateStockByProductOptionId(int productOptionId, int stock) {
 		return productOptionBO.updateStockByProductOptionId(productOptionId, stock);
 	}

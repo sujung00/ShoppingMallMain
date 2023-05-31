@@ -2,6 +2,7 @@ package com.shoppingmall.basket.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.basket.dao.BasketMapper;
 import com.shoppingmall.basket.model.Basket;
@@ -12,6 +13,7 @@ public class BasketBO {
 	@Autowired
 	private BasketMapper basketMapper;
 	
+	@Transactional
 	public void addBasket(int userId) {
 		basketMapper.insertBasket(userId);
 	}
@@ -20,6 +22,7 @@ public class BasketBO {
 		return basketMapper.selectBasketByUserId(userId);
 	}
 	
+	@Transactional
 	public void updateTotalPrice(int basketId, int totalPrice) {
 		basketMapper.updateTotalPrice(basketId, totalPrice);
 	}

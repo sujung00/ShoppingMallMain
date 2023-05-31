@@ -20,6 +20,13 @@ public class BasketProductRestController {
 	@Autowired
 	private BasketProductBO basketProductBO;
 	
+	/**
+	 * 장바구니 상품 삭제 API
+	 * @param basketId
+	 * @param basketProductId
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("basketId") int basketId,

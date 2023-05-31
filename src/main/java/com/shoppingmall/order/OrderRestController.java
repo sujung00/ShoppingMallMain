@@ -62,6 +62,17 @@ public class OrderRestController {
 
 	private IamportAPI iamportAPI;
 	
+	/**
+	 * 주문서 생성 API
+	 * @param userId
+	 * @param addressId
+	 * @param basketId
+	 * @param orderRequest
+	 * @param usePoint
+	 * @param payType
+	 * @param totalPay
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("userId") int userId,
@@ -102,6 +113,16 @@ public class OrderRestController {
 		return result;
 	}
 	
+	/**
+	 * 주문서 상품 옵션 수정 API
+	 * @param orderProductId
+	 * @param color
+	 * @param size
+	 * @param originColor
+	 * @param originSize
+	 * @param originCount
+	 * @return
+	 */
 	@PostMapping("/order_product_update")
 	public Map<String, Object> orderProductUpdate(
 			@RequestParam("orderProductId") int orderProductId,
@@ -119,6 +140,12 @@ public class OrderRestController {
 		return result;
 	}
 	
+	/**
+	 * 주문 취소 API
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("orderId") int orderId,
@@ -139,6 +166,13 @@ public class OrderRestController {
 		return result;
 	}
 	
+	/**
+	 * 포트원 - 주문 결제 검증 API
+	 * @param imp_uid
+	 * @return
+	 * @throws IamportResponseException
+	 * @throws IOException
+	 */
 	@PostMapping("/verify/{imp_uid}")
 	public IamportResponse<Payment> verifyByImpUid(@PathVariable(value="imp_uid") String imp_uid) throws IamportResponseException, IOException{
 		iamportAPI = new IamportAPI();
@@ -150,6 +184,12 @@ public class OrderRestController {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
 	
+	/**
+	 * 포트원 - 주문 결제 완료 처리 API
+	 * @param imp_uid
+	 * @param merchant_uid
+	 * @return
+	 */
 	@PostMapping("/succeed")
 	public Map<String, Object> updateStatus(
 			@RequestParam("imp_uid") String imp_uid,
@@ -165,6 +205,13 @@ public class OrderRestController {
 		return result;
 	}
 	
+	/**
+	 * 포트원 - 주문/결제 취소 API
+	 * @param merchantUid
+	 * @param amount
+	 * @param reason
+	 * @throws IOException
+	 */
 	@PostMapping("/cancel")
 	public void orderCancel(
 			@RequestParam("merchant_uid") int merchantUid,
@@ -205,6 +252,11 @@ public class OrderRestController {
 		conn.disconnect();
 	}
 	
+	/**
+	 * 포트원 - 액세스 토큰 발급 API
+	 * @return
+	 * @throws IOException
+	 */
 	public String getToken() throws IOException {
 
 		HttpsURLConnection conn = null;

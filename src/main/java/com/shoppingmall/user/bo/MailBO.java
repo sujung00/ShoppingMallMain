@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.common.EncryptUtils;
 import com.shoppingmall.user.model.Mail;
@@ -17,7 +18,7 @@ public class MailBO {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	
+	@Transactional
 	public Mail createMailAndChangePassword(String loginId, String userEmail, String userName){
         String str = getTempPassword();
         Mail mail= new Mail();

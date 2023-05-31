@@ -18,6 +18,14 @@ public class ProductOptionAdminRestController {
 	@Autowired
 	private ProductOptionAdminBO poaBO;
 	
+	/**
+	 * ADMIN - 상품 옵션 생성 API
+	 * @param productId
+	 * @param color
+	 * @param size
+	 * @param stock
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("productId") int productId,
@@ -38,6 +46,12 @@ public class ProductOptionAdminRestController {
 		return result;
 	}
 	
+	/**
+	 * ADMIN - 상품 옵션 수정 API
+	 * @param productOptionId
+	 * @param stock
+	 * @return
+	 */
 	@PostMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("productOptionId") int productOptionId,
@@ -57,6 +71,11 @@ public class ProductOptionAdminRestController {
 		return result;
 	}
 	
+	/**
+	 * ADMIN - 상품 옵션 삭제 API
+	 * @param productOptionId
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("productOptionId") int productOptionId) {

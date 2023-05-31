@@ -313,7 +313,6 @@ $(document).ready( function() {
 		    // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
 		    //"refund_account": "56211105948400" 
 		 	}
-		 	//"dataType": "json"
 		}).done(function(result){
 			$("#orderDetailModal").modal();
 			$("#orderDetailModal #modalBody").text("주문 및 결제가 취소되었습니다.");

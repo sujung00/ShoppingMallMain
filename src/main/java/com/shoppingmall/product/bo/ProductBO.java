@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingmall.common.FileManagerService;
@@ -26,6 +27,7 @@ public class ProductBO {
 	@Autowired
 	private FileManagerService fileManager;
 
+	@Transactional
 	public int addProduct(Product product, MultipartFile mainImage) {
 		
 		String mainImgaePath = null;
@@ -45,6 +47,7 @@ public class ProductBO {
 		return productMapper.selectProductByProductId(productId);
 	}
 	
+	@Transactional
 	public int updateProductByproductId(int productId, String name, String informaiton,
 			int price, MultipartFile mainImage, String detailedInfo, String gender, List<MultipartFile> files) {
 		Product product = getProductByProductId(productId);

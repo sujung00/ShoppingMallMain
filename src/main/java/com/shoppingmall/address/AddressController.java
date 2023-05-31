@@ -20,6 +20,12 @@ public class AddressController {
 	@Autowired
 	private AddressBO addressBO;
 	
+	/**
+	 * MY TREND > 배송지 관리 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/address_view")
 	public String addressView(Model model, HttpSession session) {
 		// 기본 배송지 db select
@@ -35,6 +41,12 @@ public class AddressController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 배송지 관리 > 배송지 정보 수정 화면
+	 * @param addressId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/address_update_view")
 	public String addressUpdateView(
 			@RequestParam("addressId") int addressId,

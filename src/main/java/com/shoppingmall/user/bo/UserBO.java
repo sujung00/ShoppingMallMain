@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.user.dao.UserMapper;
 import com.shoppingmall.user.model.User;
@@ -18,6 +19,7 @@ public class UserBO {
 		return userMapper.selectUserByLoginId(loginId);
 	}
 	
+	@Transactional
 	public int addUser(User user) {
 		return userMapper.insertUser(user);
 	}
@@ -38,26 +40,22 @@ public class UserBO {
 		return userMapper.selectUserByLoginIdNameEmail(loginId, name, email);
 	}
 	
+	@Transactional
 	public void updateUserPassword(int userId, String password) {
 		userMapper.updateUserPassword(userId, password);
 	}
 	
-	public int updateLoginIdByUserId(String loginId, int userId) {
-		return userMapper.updateLoginIdByUserId(loginId, userId);
-	}
-	
+	@Transactional
 	public int updateNamerByUserId(String name, int userId) {
 		return userMapper.updateNamerByUserId(name, userId);
 	}
 	
-	public int updateEmailByUserId(String email, int userId) {
-		return userMapper.updateEmailByUserId(email, userId);
-	}
-	
+	@Transactional
 	public int updatePhoneNumber(String phoneNumber, int userId) {
 		return userMapper.updatePhoneNumber(phoneNumber, userId);
 	}
 	
+	@Transactional
 	public int updatePWByUserId(String password, int userId) {
 		return userMapper.updatePWByUserId(password, userId);
 	}

@@ -20,6 +20,14 @@ public class InquiryRestController {
 	@Autowired
 	private InquiryBO inquiryBO;
 	
+	/**
+	 * 문의 작성 API
+	 * @param orderId
+	 * @param subject
+	 * @param content
+	 * @param seesion
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("orderId") int orderId,

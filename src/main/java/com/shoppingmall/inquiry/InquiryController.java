@@ -19,6 +19,12 @@ public class InquiryController {
 	@Autowired
 	private InquiryBO inquiryBO;
 
+	/**
+	 * 문의 작성 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/inquiry_view")
 	public String inquiryView(Model model, HttpSession session) {
 		int userId = (int)session.getAttribute("userId");

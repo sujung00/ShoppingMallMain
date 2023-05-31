@@ -20,6 +20,12 @@ public class ProductRestController {
 	@Autowired
 	private ProductOptionBO optionBO;
 	
+	/**
+	 * COLOR에 따른 SIZE 가져오는 API
+	 * @param productId
+	 * @param color
+	 * @return
+	 */
 	@PostMapping("/get_size")
 	public Map<String, Object> getSize(
 			@RequestParam("productId") int productId,

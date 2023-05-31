@@ -17,6 +17,11 @@ public class InquiryAdminController {
 	@Autowired
 	private InquiryAdminBO inquiryAdminBO;
 
+	/**
+	 * ADMIN - 문의 사항 관리 화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/inquiry_view")
 	public String inquiryView(Model model) {
 		List<InquiryView> inquiryViewList = inquiryAdminBO.generateInQuiryView();

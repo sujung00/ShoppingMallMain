@@ -29,6 +29,17 @@ public class ProductAdminRestController {
 	@Autowired
 	private ProductImageBO productImageBO;
 	
+	/**
+	 * ADMIN - 제품 등록 API
+	 * @param name
+	 * @param information
+	 * @param price
+	 * @param mainImage
+	 * @param detailedInfo
+	 * @param gender
+	 * @param files
+	 * @return
+	 */
 	@PostMapping("/product_create")
 	public Map<String, Object> productCreate(
 			@RequestParam("name") String name,
@@ -65,6 +76,18 @@ public class ProductAdminRestController {
 		return result;
 	}
 	
+	/**
+	 * ADMIN - 제품 수정 API
+	 * @param productId
+	 * @param name
+	 * @param information
+	 * @param price
+	 * @param mainImage
+	 * @param detailedInfo
+	 * @param gender
+	 * @param files
+	 * @return
+	 */
 	@PostMapping("/product_update")
 	public Map<String, Object> productUpdate(
 			@RequestParam("productId") int productId,
@@ -90,6 +113,11 @@ public class ProductAdminRestController {
 		return result;
 	}
 	
+	/**
+	 * ADMIN - 제품 삭제 API
+	 * @param productId
+	 * @return
+	 */
 	@PostMapping("/product_delete")
 	public Map<String, Object> productDelete(
 			@RequestParam("productId") int productId) {

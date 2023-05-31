@@ -17,6 +17,11 @@ public class OrderAdminController {
 	@Autowired
 	private OrderAdminBO orderAdminBO;
 	
+	/**
+	 * ADMIN - 주문 관리 화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/order_list_view")
 	public String orderListView(Model model) {
 		List<OrderAdminView> orderAdminViewList = orderAdminBO.generateOrderAdminView();

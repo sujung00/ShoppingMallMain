@@ -39,6 +39,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewBO reviewBO;
 	
+	/**
+	 * MY TREND > 리뷰 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/review_view")
 	public String reviewCreate(Model model, HttpSession session) {
 		// state가 배송완료인 orderProductList 가져오기
@@ -62,6 +68,13 @@ public class ReviewController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 리뷰 화면(작성 가능한 리뷰) > 리뷰 작성 화면
+	 * @param orderProductId
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/review_create")
 	public String reviewCreate(
 			@RequestParam("orderProductId") int orderProductId,
@@ -75,6 +88,13 @@ public class ReviewController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 리뷰 화면(작성한 리뷰) > 리뷰 수정 화면
+	 * @param reviewId
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/review_update")
 	public String reviewUpdate(
 			@RequestParam("reviewId") int reviewId,

@@ -18,6 +18,12 @@ public class InquiryAdminRestController {
 	@Autowired
 	private AnswerAdminBO answerAdminBO;
 	
+	/**
+	 * ADMIN - 문의 답변 수정 API
+	 * @param answerId
+	 * @param content
+	 * @return
+	 */
 	@PostMapping("/answer_update")
 	public Map<String, Object> answerUpdate(
 			@RequestParam("answerId") int answerId,
@@ -37,6 +43,12 @@ public class InquiryAdminRestController {
 		return result;
 	}
 	
+	/**
+	 * ADMIN - 문의 답변 API
+	 * @param inquiryId
+	 * @param content
+	 * @return
+	 */
 	@PostMapping("/answer_create")
 	public Map<String, Object> answerCreate(
 			@RequestParam("inquiryId") int inquiryId,

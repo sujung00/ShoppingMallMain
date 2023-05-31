@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.address.dao.AddressMapper;
 import com.shoppingmall.address.model.Address;
@@ -14,6 +15,7 @@ public class AddressBO {
 	@Autowired
 	private AddressMapper addressMapper;
 
+	@Transactional
 	public int addAddress(int userId, String name, String phoneNumber, String extraPhoneNumber,
 			int postcode, String address, String detailedAddress, boolean defaultAddress) {
 		if(defaultAddress) {
@@ -26,6 +28,7 @@ public class AddressBO {
 		return addressMapper.insertAddress(userId, name, phoneNumber, extraPhoneNumber, postcode, address, detailedAddress, defaultAddress);
 	}
 	
+	@Transactional
 	public void addNewAddress(Address newAddress) {
 		if(newAddress.getDefaultAddress()) {
 			Address defaultAd = getDefaultAddressByUserId(newAddress.getUserId());
@@ -49,10 +52,12 @@ public class AddressBO {
 		return addressMapper.selectDefaultAddressByUserId(userId);
 	}
 	
+	@Transactional
 	public void updateDefaultAddressByAddressId(int addressId) {
 		addressMapper.updateDefaultAddressByAddressId(addressId);
 	}
 	
+	@Transactional
 	public int updateAddressByAdderssId(int addressId, String name, String phoneNumber, 
 			String extraPhoneNumber, int postcode, String address, String detailedAddress, boolean defaultAddress) {
 		return addressMapper.updateAddressByAdderssId(addressId, name, phoneNumber, extraPhoneNumber, postcode, address, detailedAddress, defaultAddress);

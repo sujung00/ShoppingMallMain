@@ -18,6 +18,15 @@ public class BasketRestController {
 	@Autowired
 	private BasketProductBO basketProductBO;
 
+	/**
+	 * 장바구니 제품 추가 API
+	 * @param userId
+	 * @param productId
+	 * @param color
+	 * @param size
+	 * @param count
+	 * @return
+	 */
 	@PostMapping("/add_basket")
 	public Map<String, Object> addBasket(
 			@RequestParam("userId") int userId,

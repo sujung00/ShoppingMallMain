@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,18 @@ public class AddressRestController {
 	@Autowired
 	private OrderBO orderBO;
 
+	/**
+	 * 배송지 생성 API
+	 * @param name
+	 * @param phoneNumber
+	 * @param extraPhoneNumber
+	 * @param postcode
+	 * @param address
+	 * @param datailedAddress
+	 * @param defaultAddress
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/address_create")
 	public Map<String, Object> addressCreate(
 			@RequestParam("name") String name,
@@ -53,6 +66,19 @@ public class AddressRestController {
 		return result;
 	}
 	
+	/**
+	 * 배송지 수정 API
+	 * @param addressId
+	 * @param name
+	 * @param phoneNumber
+	 * @param extraPhoneNumber
+	 * @param postcode
+	 * @param address
+	 * @param datailedAddress
+	 * @param defaultAddress
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/address_update")
 	public Map<String, Object> addressUpdate(
 			@RequestParam("addressId") int addressId,
@@ -98,6 +124,19 @@ public class AddressRestController {
 		return result;
 	}
 	
+	/**
+	 * 주문서의 배송지 정보 수정 API
+	 * @param orderId
+	 * @param name
+	 * @param phoneNumber
+	 * @param extraPhoneNumber
+	 * @param postcode
+	 * @param address
+	 * @param datailedAddress
+	 * @param defaultAddress
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/order_update_address_add")
 	public Map<String, Object> orderUpdateAddressAdd(
 			@RequestParam("orderId") int orderId,

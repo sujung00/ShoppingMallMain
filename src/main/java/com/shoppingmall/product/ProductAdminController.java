@@ -20,7 +20,7 @@ public class ProductAdminController {
 	private ProductAdminBO productAdminBO;
 
 	/**
-	 * ADMIN - 제품 목록 페이지
+	 * ADMIN - 제품 목록 화면
 	 * @param model
 	 * @return
 	 */
@@ -34,7 +34,7 @@ public class ProductAdminController {
 	}
 	
 	/**
-	 * ADMIN - 제품 등록 페이지
+	 * ADMIN - 제품 등록 화면
 	 * @param model
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public class ProductAdminController {
 	}
 	
 	/**
-	 * ADMIN - 제품 수정 페이지
+	 * ADMIN - 제품 수정 화면
 	 * @param productId
 	 * @param model
 	 * @return

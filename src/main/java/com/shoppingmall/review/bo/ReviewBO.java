@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingmall.common.FileManagerService;
@@ -89,6 +90,7 @@ public class ReviewBO {
 		return reviewView;
 	}
 	
+	@Transactional
 	public int addReview(int userId, int orderProductId, int orderId, String subject,
 			String content, MultipartFile file, String loginId) {
 		
@@ -139,6 +141,7 @@ public class ReviewBO {
 		return reviewMapper.selectReviewByReviewId(reviewId);
 	}
 	
+	@Transactional
 	public int updateReview(int userId, String loginId, int reviewId,
 			String subject, String content, MultipartFile file) {
 		

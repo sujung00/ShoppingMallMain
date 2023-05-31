@@ -19,6 +19,12 @@ public class PointController {
 	@Autowired
 	private PointBO pointBO;
 	
+	/**
+	 * MY TREND > 포인트 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/point_view")
 	public String pointView(Model model, HttpSession session) {
 		int userId = (int)session.getAttribute("userId");

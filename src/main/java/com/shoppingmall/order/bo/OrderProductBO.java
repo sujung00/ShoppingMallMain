@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.order.dao.OrderProductMapper;
 import com.shoppingmall.order.model.OrderProduct;
@@ -19,6 +20,7 @@ public class OrderProductBO {
 	@Autowired
 	private ProductOptionBO productOptionBO;
 	
+	@Transactional
 	public void addOrderProduct(int orderId, int productId, int optionId, int count, String state) {
 		orderProductMapper.insertOrderProduct(orderId, productId, optionId, count, state);
 	}
@@ -35,10 +37,12 @@ public class OrderProductBO {
 		return orderProductMapper.selectOrderProductList();
 	}
 	
+	@Transactional
 	public int updateStateByOrderProductId(String state, int orderProductId) {
 		return orderProductMapper.updateStateByOrderProductId(state, orderProductId);
 	}
 	
+	@Transactional
 	public void updateOptionCountByOrderProductId(int orderProductId, String color, String size,
 			String originColor, String originSize, int originCount) {
 		// orderProduct 의 optionId 변경
@@ -54,10 +58,12 @@ public class OrderProductBO {
 		productOptionBO.updateStockByProductOptionId(originProductOption.getId(), originProductOption.getStock()+originCount);
 	}
 	
+	@Transactional
 	public void updateOptionIdByOrderProductId(int orderProductId, int optionId) {
 		orderProductMapper.updateOptionIdByOrderProductId(orderProductId, optionId);
 	}
 	
+	@Transactional
 	public void updateStateByOrderId(int orderId) {
 		List<OrderProduct> orderProductList = getOrderProductListByOrderId(orderId);
 		for(OrderProduct orderProduct : orderProductList) {

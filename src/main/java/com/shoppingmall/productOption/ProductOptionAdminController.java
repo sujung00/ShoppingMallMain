@@ -24,6 +24,12 @@ public class ProductOptionAdminController {
 	@Autowired
 	private ProductOptionAdminBO poaBO;
 
+	/**
+	 * ADMIN - 상품 옵션 생성 화면
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/create_view")
 	public String createView(
 			@RequestParam("productId") int productId,
@@ -37,6 +43,13 @@ public class ProductOptionAdminController {
 		return "template/layout";
 	}
 	
+	/**
+	 * ADMIN - 상품 옵션 수정 화면
+	 * @param productOptionId
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/update_view")
 	public String updateView(
 			@RequestParam("productoptionId") int productOptionId,

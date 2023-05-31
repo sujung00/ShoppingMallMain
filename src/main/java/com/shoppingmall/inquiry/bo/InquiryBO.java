@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.inquiry.dao.InquiryMapper;
 import com.shoppingmall.inquiry.model.Answer;
@@ -20,6 +21,7 @@ public class InquiryBO {
 	@Autowired
 	private AnswerBO answerBO;
 	
+	@Transactional
 	public int addInquiry(int userId, int orderId, String subject, String content) {
 		return inquiryMapper.insertInquiry(userId, orderId, subject, content);
 	}

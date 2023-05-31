@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingmall.common.FileManagerService;
@@ -19,6 +20,7 @@ public class ProductImageBO {
 	@Autowired
 	private ProductImageMapper productImageMapper;
 
+	@Transactional
 	public void addProductImage(int productId, String productName, MultipartFile productImage) {
 
 		String imagePath = null;
@@ -34,6 +36,7 @@ public class ProductImageBO {
 		return productImageMapper.selectProductImageList(productId);
 	}
 
+	@Transactional
 	public void updateProductImage(int productId, String productName, MultipartFile productImage) {
 
 		String imagePath = null;

@@ -55,7 +55,7 @@
 				<option>취소</option>
 				<option>환불</option>
 			</select>
-			<button id="cancelRefundBtn" class="btn btn-dark ml-3" data-order-product-id="${order.orderProduct.id}">취소/환불</button>
+			<button id="cancelRefundBtn" class="btn btn-dark ml-3" data-order-product-id="${order.orderProduct.id}" data-user-id="${order.user.id}">취소/환불</button>
 			</c:if>
 			<c:if test="${not empty order.cancelRefund}">
 			<div>취소/환불 : ${order.cancelRefund.state}</div>
@@ -78,6 +78,30 @@
 
 <script>
 $(document).ready(function(){
+	function cancelPay(data){
+		jQuery.ajax({
+			// 예: http://www.myservice.com/payments/cancel
+		    "url": "/order/cancel",
+		    "type": "POST",
+		    //"contentType": "application/json",
+		    "data": {
+		    "merchant_uid": data.orderId, // 예: ORD20180131-0000011
+		    "cancel_request_amount": data.cancelPrice, // 환불금액
+		    "reason": "주문 취소 및 환불" // 환불사유
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+		    //"refund_holder": "홍길동", 
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+		    //"refund_bank": "88" 
+		    // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+		    //"refund_account": "56211105948400" 
+		 	}
+		}).done(function(result){
+			alert("환불 성공");
+		}).fail(function(error){
+			alert("환불 실패")
+		});
+	}
+	
 	$(".state-update-btn").on("click", function(){
 		let state = $("#state option:selected").val();
 		let orderProductId = $(this).data("order-product-id");
@@ -111,6 +135,7 @@ $(document).ready(function(){
 		let orderProductId = $(this).data("order-product-id");
 		let reason = $("#reason").val().trim();
 		let state = $("#cancelRefundState option:selected").val();
+		let userId = $(this).data("user-id");
 		
 		if(!reason){
 			alert("취소/환불 이유를 작성해주세요");
@@ -124,12 +149,13 @@ $(document).ready(function(){
 		$.ajax({
 			type:"POST"
 			, url:"/order_admin/cancel_refund_create"
-			, data:{"orderProductId":orderProductId, "reason":reason, "state":state}
+			, data:{"orderProductId":orderProductId, "reason":reason, "state":state, "userId":userId}
 		
 			, success:function(data){
 				if(data.code == 1){
-					alert(data.result);
-					location.reload();
+					cancelPay(data);
+					//alert(data.result);
+					//location.reload();
 				} else {
 					alert(data.errorMessage);
 					return;
