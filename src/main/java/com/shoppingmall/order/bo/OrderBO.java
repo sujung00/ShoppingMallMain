@@ -108,6 +108,12 @@ public class OrderBO {
 		List<OrderProduct> orderProductList = orderProductBO.getOrderProductListByOrderId(orderId);
 		for(OrderProduct orderProduct : orderProductList) {
 			orderProductBO.updateStateByOrderProductId("주문취소", orderProduct.getId());
+			// 제품 옵션 재고 다시 올리기
+			int count = orderProduct.getCount();
+			ProductOption productOption = productOptionBO.getProductOptionByProductOptionId(orderProduct.getOptionId());
+		
+			productOptionBO.updateStockByProductOptionId(productOption.getId(), productOption.getStock() + count);
 		}
+		
 	}
 }

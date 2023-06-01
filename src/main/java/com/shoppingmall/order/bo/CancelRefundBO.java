@@ -11,6 +11,8 @@ import com.shoppingmall.order.model.CancelRefund;
 import com.shoppingmall.order.model.Order;
 import com.shoppingmall.order.model.OrderProduct;
 import com.shoppingmall.point.bo.PointBO;
+import com.shoppingmall.productOption.bo.ProductOptionBO;
+import com.shoppingmall.productOption.model.ProductOption;
 
 @Service
 public class CancelRefundBO {
@@ -26,6 +28,9 @@ public class CancelRefundBO {
 	
 	@Autowired
 	private PointBO pointBO;
+	
+	@Autowired
+	private ProductOptionBO productOptionBO;
 	
 	public CancelRefund getCancelRefundByOrderProductId(int orderProductId) {
 		return cancelRefundMapper.selectCancelRefundByOrderProductId(orderProductId);
@@ -43,6 +48,12 @@ public class CancelRefundBO {
 		for(OrderProduct orderProduct : orderProductList) {
 			orderProductBO.updateStateByOrderProductId("주문취소", orderProduct.getId());
 			cancelRefundMapper.insertCancelRefund(orderProductId, reason, state);
+			
+			// 제품 옵션 재고 다시 올리기
+			int count = orderProduct.getCount();
+			ProductOption productOption = productOptionBO.getProductOptionByProductOptionId(orderProduct.getOptionId());
+				
+			productOptionBO.updateStockByProductOptionId(productOption.getId(), productOption.getStock() + count);
 		}
 	}
 	

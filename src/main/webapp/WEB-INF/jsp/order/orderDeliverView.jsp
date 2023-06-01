@@ -35,6 +35,9 @@
 			<c:when test="${orderAdmin.orderProduct.state == '주문취소'}">
 				<div class="mt-2 font13">${orderAdmin.orderProduct.state}</div>
 			</c:when>
+			<c:when test="${orderAdmin.orderProduct.state == '결제대기'}">
+				<div class="mt-2 font14">${orderAdmin.orderProduct.state}</div>
+			</c:when>
 			<c:otherwise>
 				<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
 			</c:otherwise>

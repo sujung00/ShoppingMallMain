@@ -360,9 +360,12 @@
   	        	}
               })
           } else {
-        	  var msg = '결제에 실패하였습니다.';
-              msg += '에러내용 : ' + rsp.error_msg;
-              alert(msg);
+              $("#orderModal").modal();
+    		  $("#orderModal #modalBody").text('결제를 취소하셨습니다.\n 주문 상세 페이지에서 결제를 완료해주세요.');
+
+			  $('#orderModal').on('hidden.bs.modal', function(e) {
+	          	location.href="/order/order_deliver_view"
+			  });
           }
       });
     }

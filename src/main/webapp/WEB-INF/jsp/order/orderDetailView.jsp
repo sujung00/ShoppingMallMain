@@ -27,6 +27,18 @@
 				<c:when test="${orderAdmin.orderProduct.state eq '주문취소'}">
 					<div class="mt-2 font13">${orderAdmin.orderProduct.state}</div>
 				</c:when>
+				<c:when test="${orderAdmin.orderProduct.state eq '결제대기'}">
+					<div class="d-flex justify-content-between">
+						<div class="mt-2 font14">${orderAdmin.orderProduct.state}</div>
+						<!-- orderId, orderProductName, totalPay, user, address -->
+						<button id="payBtn" class="btn btn-warning font12"
+						data-order-id="${orderDetail.order.id}" data-total-pay="${orderDetail.order.totalPay}"
+						data-orderproduct-name="${orderDetail.orderProductName}" data-user-email="${orderDetail.user.email}"
+						data-user-name="${orderDetail.user.name}" data-user-phone="${orderDetail.user.phoneNumber}" 
+						data-address="${orderDetail.address.address}"
+						data-detailed-address="${orderDetail.address.detailedAddress}" data-postcode="${orderDetail.address.postcode}">결제하기</button>
+					</div>
+				</c:when>
 				<c:otherwise>
 					<div class="mt-2 font8">${orderAdmin.orderProduct.state}</div>
 				</c:otherwise>
@@ -249,6 +261,8 @@
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 포트원 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 function sample6_execDaumPostcode() {
     new daum.Postcode({
@@ -293,6 +307,81 @@ function sample6_execDaumPostcode() {
             document.getElementById("sample6_detailAddress").focus();
         }
     }).open();
+}
+
+function requestPay(orderId, orderProductName, totalPay, userEmail, userName, userPhoneNumber, address, postcode) {
+	var IMP = window.IMP; // 생략 가능
+	IMP.init("imp55413628"); // 예: imp00000000
+    //IMP.request_pay(param, callback) //결제창 호출
+  
+  IMP.request_pay({ // param
+      pg: "kcp.INIBillTst", //결제대행사 설정에 따라 다르며 공식문서 참고
+      pay_method: "card", //결제방법 설정에 따라 다르며 공식문서 참고
+      merchant_uid: orderId, //주문(db에서 불러옴) 고유번호
+      name: orderProductName,
+      amount: totalPay,
+      buyer_email: userEmail,
+      buyer_name: userName,
+      buyer_tel: userPhoneNumber,
+      buyer_addr: address,
+      buyer_postcode: postcode
+  }, function (rsp) { // callback
+      if (rsp.success) {
+    	  // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+          // jQuery로 HTTP 요청
+          jQuery.ajax({
+            url: "/order/verify/"+ rsp.imp_uid, 
+            method: "POST",
+          }).done(function (data) {
+        	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (iamport 서버검증)
+        	  if(rsp.paid_amount == data.response.amount){
+		        	succeedPay(rsp.imp_uid, rsp.merchant_uid);
+	        	} else {
+	        		alert("결제 검증 실패");
+	        	}
+          })
+      } else {
+          $("#orderDetailModal").modal();
+		  $("#orderDetailModal #modalBody").text('결제를 취소하셨습니다. 주문 상세 페이지에서 결제를 완료해주세요.');
+			
+		  $('#orderDetailModal').on('hidden.bs.modal', function(e) {
+	          	location.reload();
+		  });
+      }
+  });
+}
+
+function succeedPay(imp_uid, merchant_uid){
+	$.ajax({  
+		 url : '/order/succeed',
+		 type : 'POST',
+		 async : true,
+		 dataType : "Json", 
+		 data :{
+			imp_uid: imp_uid,            // 결제 고유번호
+            merchant_uid: merchant_uid   // 주문번호 
+		 },
+		 success : function(data){
+			 if(data.code == 1){
+				 $("#orderDetailModal").modal();
+				 $("#orderDetailModal #modalBody").text(data.result);
+					
+				 $('#orderDetailModal').on('hidden.bs.modal', function(e) {
+		               	location.href="/order/order_deliver_view"
+				 });
+            }else{
+				$("#orderDetailModal").modal();
+				$("#orderDetailModal #modalBody").text('결제가 완료되었으나 에러가 발생했습니다.');
+
+				$('#orderDetailModal').on('hidden.bs.modal', function(e) {
+	               	location.href="/order/order_deliver_view"
+				})
+		 	}
+		 }, 
+		 error : function (e){
+			 alert("에러")
+		 }
+	});
 }
 
 $(document).ready( function() {
@@ -602,5 +691,23 @@ $(document).ready( function() {
 			}
 		})
 	});
+	
+	$("#payBtn").on("click", function(){
+		let orderId = $(this).data("order-id");
+		let orderProductName = $(this).data("orderproduct-name");
+		let totalPay = $(this).data("total-pay");
+		let userEmail = $(this).data("user-email");
+		let userName = $(this).data("user-name");
+		let userPhoneNumber = $(this).data("user-phone");
+		let address = $(this).data("address");
+		let detailedAddress = $(this).data("detailed-address");
+		let postcode = $(this).data("postcode");
+		
+		let userAddress = address + detailedAddress;
+		
+		console.log(userAddress);
+		
+		requestPay(orderId, orderProductName, totalPay, userEmail, userName, userPhoneNumber, userAddress, postcode);
+	})
 });
 </script>

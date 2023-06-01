@@ -137,8 +137,9 @@ public class OrderServiceBO {
 			List<String> colorList = productOptionBO.getColorByProductId(orderProduct.getProductId());
 			orderAdminView.setColorList(colorList);
 			
+			
 			// 배송 완료된 상품이거나 주문 취소이면 false
-			if(orderProduct.getState().equals("배송완료") || orderProduct.getState().equals("주문취소")) {
+			if(orderProduct.getState().equals("배송완료") || orderProduct.getState().equals("주문취소") || orderProduct.getState().equals("결제대기")) {
 				deliveryCheck = false;
 			}
 			
@@ -147,8 +148,21 @@ public class OrderServiceBO {
 		}
 		orderDetailView.setOrderAdminViewList(orderAdminViewList);
 		
+		User user = userBO.getUserByUserId(order.getUserId());
+		orderDetailView.setUser(user);
+		
 		Address address = addressBO.getAddressByAddressId(order.getAddressId());
 		orderDetailView.setAddress(address);
+		
+		Product product = productBO.getProductByProductId(orderProductList.get(0).getProductId());
+		String orderProductName = null;
+		if(orderProductList.size() == 1) {
+			orderProductName = product.getName();
+		} else {
+			// ex) 미니멀 크롭 브이넥 가디건 외 2개 상품
+			orderProductName = product.getName() + " 외 " + String.valueOf(orderProductList.size()-1) + "개 상품";
+		}
+		orderDetailView.setOrderProductName(orderProductName);
 		
 		orderDetailView.setDeliveryCheck(deliveryCheck);
 		

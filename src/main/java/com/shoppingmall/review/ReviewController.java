@@ -29,9 +29,6 @@ import com.shoppingmall.review.model.WrittenReviewView;
 @RequestMapping("/review")
 @Controller
 public class ReviewController {
-
-	@Autowired
-	private ProductBO productBO;
 	
 	@Autowired
 	private OrderBO orderBO;
