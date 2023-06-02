@@ -29,7 +29,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// 비로그인 && /product 가 아닌 경우 => 로그인 페이지로 redirect, return false(기존 컨트롤러 수행 방지)
-		if(userId == null && !uri.startsWith("/product/") && !uri.startsWith("/images/") && !uri.startsWith("/user/sign_in") && !uri.startsWith("/user/sign_up") && !uri.startsWith("/user/kakao") && !uri.startsWith("/main")) {
+		if(userId == null && !uri.startsWith("/product/") && !uri.startsWith("/images/") && !uri.startsWith("/user/sign_in") && !uri.startsWith("/user/sign_up") && !uri.startsWith("/user/kakao") && !uri.startsWith("/main") && !uri.startsWith("/user/find")) {
 			response.sendRedirect("/user/sign_in_view");
 			return false; // controller 수행 안됨
 		}
@@ -40,6 +40,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		
+		// admin user && admin page 가 아닌 경우
 		if(userId != null && userLoginId.equals("admin") && !uri.startsWith("/inquiry_admin") && !uri.startsWith("/order_admin") && !uri.startsWith("/product_admin") && !uri.startsWith("/product_option") && !uri.startsWith("/user/sign_in") && !uri.startsWith("/user/sign_up") && !uri.startsWith("/main")) {
 			response.sendRedirect("/main/main_view");
 			return false;

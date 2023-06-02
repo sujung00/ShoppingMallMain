@@ -37,7 +37,7 @@ public class MailBO {
 		String pw = EncryptUtils.md5(str);
         int userId = userBO.getUserByLoginIdEmail(loginId, userEmail).getId();
         
-        userBO.updateUserPassword(userId, pw);
+        userBO.updatePWByUserId(pw, userId);
     }
 
 	// 랜덤 함수로 임시 비밀번호 구문 만들기

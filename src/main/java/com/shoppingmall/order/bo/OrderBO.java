@@ -70,7 +70,9 @@ public class OrderBO {
 		// 포인트 삭제 및 적립
 		int totalPoint = pointBO.getTotalPointByUserId(userId);
 		if(usePoint != null) {
-			pointBO.addPoint(userId, usePoint, "결제 시 포인트 사용", totalPoint-usePoint);
+			if(usePoint != 0) {
+				pointBO.addPoint(userId, usePoint, "결제 시 포인트 사용", totalPoint-usePoint);
+			}
 		}
 		pointBO.addPoint(userId, (int)(totalPay*0.01), "결제 적립", totalPoint-usePoint+(int)(totalPay*0.01));
 		

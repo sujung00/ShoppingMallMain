@@ -41,11 +41,6 @@ public class UserBO {
 	}
 	
 	@Transactional
-	public void updateUserPassword(int userId, String password) {
-		userMapper.updateUserPassword(userId, password);
-	}
-	
-	@Transactional
 	public int updateNamerByUserId(String name, int userId) {
 		return userMapper.updateNamerByUserId(name, userId);
 	}
