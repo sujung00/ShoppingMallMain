@@ -9,29 +9,25 @@ import com.shoppingmall.basket.model.Basket;
 
 @Service
 public class BasketBO {
-	
+
 	@Autowired
 	private BasketMapper basketMapper;
-	
+
 	@Transactional
 	public void addBasket(int userId) {
 		basketMapper.insertBasket(userId);
 	}
-	
+
 	public Basket getBasketByUserId(int userId) {
 		return basketMapper.selectBasketByUserId(userId);
 	}
-	
+
 	@Transactional
 	public void updateTotalPrice(int basketId, int totalPrice) {
 		basketMapper.updateTotalPrice(basketId, totalPrice);
 	}
-	
+
 	public Basket getBasketByBasketId(int basketId) {
 		return basketMapper.selectBasketByBasketId(basketId);
-	}
-	
-	public void deleteBasketByBasketId(int basketId) {
-		basketMapper.deleteBasketByBasketId(basketId);
 	}
 }
