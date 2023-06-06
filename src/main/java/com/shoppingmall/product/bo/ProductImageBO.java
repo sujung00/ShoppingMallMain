@@ -48,6 +48,7 @@ public class ProductImageBO {
 		productImageMapper.insertProductImage(productId, imagePath);
 	}
 
+	@Transactional
 	public void deleteProductImage(int productId) {
 		// 기존 상세 이미지 전부 제거
 		List<ProductImage> productImageList = getProductImageList(productId);

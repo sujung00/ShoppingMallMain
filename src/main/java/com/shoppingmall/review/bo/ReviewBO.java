@@ -47,6 +47,7 @@ public class ReviewBO {
 		return reviewMapper.selectReviewByOrderIdProductId(orderId, orderProductId);
 	}
 	
+	@Transactional
 	public List<ReviewView> generateReviewViewList(int userId, Order order) {
 		List<ReviewView> reviewViewList = new ArrayList<>();
 		
@@ -73,6 +74,7 @@ public class ReviewBO {
 		return reviewViewList;
 	}
 	
+	@Transactional
 	public ReviewView generateRevieView(int userId, int orderProductId) {
 		ReviewView reviewView = new ReviewView();
 		
@@ -110,6 +112,7 @@ public class ReviewBO {
 		return reviewMapper.selectReviewListByUserId(userId);
 	}
 	
+	@Transactional
 	public List<WrittenReviewView> generateWrittenReviewView(int userId){
 		List<WrittenReviewView> writtenReviewViewList = new ArrayList<>();
 		
@@ -133,6 +136,7 @@ public class ReviewBO {
 		return writtenReviewViewList;
 	}
 	
+	@Transactional
 	public int deleteReviewByReviewId(int reviewId) {
 		return reviewMapper.deleteReviewByReviewId(reviewId);
 	}

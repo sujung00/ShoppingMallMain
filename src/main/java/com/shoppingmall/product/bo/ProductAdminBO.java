@@ -35,6 +35,7 @@ public class ProductAdminBO {
 		return productBO.updateProductByproductId(productId, name, informaiton, price, mainImage, detailedInfo, gender, files);
 	}
 	
+	@Transactional
 	public int deleteProductByProductId(int productId) {
 		return productBO.deleteProductByProductId(productId);
 	}

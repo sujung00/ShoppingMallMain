@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.inquiry.dao.InquiryMapper;
 import com.shoppingmall.inquiry.model.Answer;
@@ -20,7 +21,8 @@ public class InquiryAdminBO {
 	@Autowired
 	private AnswerBO answerBO;
 	
-	public List<InquiryView> generateInQuiryView(){
+	@Transactional
+	public List<InquiryView> generateInquiryView(){
 		List<InquiryView> inquiryViewList = new ArrayList<>();
 		
 		List<Inquiry> inquirieList = getInquiryList();

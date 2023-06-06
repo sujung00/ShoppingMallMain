@@ -76,6 +76,7 @@ public class ProductBO {
 		return productMapper.updateProductByproductId(productId, name, informaiton, price, mainImgaePath, detailedInfo, gender);
 	}
 	
+	@Transactional
 	public int deleteProductByProductId(int productId) {
 		return productMapper.deleteProductByProductId(productId);
 	}

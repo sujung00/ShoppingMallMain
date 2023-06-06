@@ -81,6 +81,7 @@ public class BasketProductBO {
 		return basketProductMapper.selectBasketListByBasketId(basketId);
 	}
 	
+	@Transactional
 	public List<BasketView> generateBasket(int userId){
 		List<BasketView> basketViewList = new ArrayList<>();
 		
@@ -108,6 +109,7 @@ public class BasketProductBO {
 		return basketViewList;
 	}
 	
+	@Transactional
 	public int deleteBasketProductByBasketProductId(int userId, int basketId, int basketProductId) {
 		BasketProduct basketProduct = getBasketProductByBasketProductId(basketProductId);
 		Product product = productBO.getProductByProductId(basketProduct.getProductId());
@@ -126,6 +128,7 @@ public class BasketProductBO {
 		return basketProductMapper.selectBasketProductByBasketProductId(basketProductId);
 	}
 	
+	@Transactional
 	public void deleteBasketProductByBasketId(int basketId) {
 		basketProductMapper.deleteBasketProductByBasketId(basketId);
 	}

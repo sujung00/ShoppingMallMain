@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.address.bo.AddressBO;
 import com.shoppingmall.address.model.Address;
@@ -55,6 +56,7 @@ public class OrderServiceBO {
 	@Autowired
 	private ProductBO productBO;
 	
+	@Transactional
 	public OrderView generateOrderView(int basketId) {
 		OrderView orderView = new OrderView();
 		
@@ -82,6 +84,7 @@ public class OrderServiceBO {
 		return orderView;
 	}
 	
+	@Transactional
 	public List<OrderDetailView> generateOrderDetailListView(int userId){
 		List<OrderDetailView> orderDetailViewList = new ArrayList<>();
 		
@@ -114,6 +117,7 @@ public class OrderServiceBO {
 		return orderDetailViewList;
 	}
 	
+	@Transactional
 	public OrderDetailView generateOrderDetailView(int orderId) {
 		OrderDetailView orderDetailView = new OrderDetailView();
 		

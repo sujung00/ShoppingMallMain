@@ -20,6 +20,7 @@ public class ProductOptionBO {
 		return productOptionMapper.insertProductOption(productId, color, size, stock);
 	}
 	
+	@Transactional
 	public void deleteProductOptionByProductId(int productId) {
 		productOptionMapper.deleteProductOptionByProductId(productId);
 	}
@@ -41,6 +42,7 @@ public class ProductOptionBO {
 		return productOptionMapper.updateStockByProductOptionId(productOptionId, stock);
 	}
 	
+	@Transactional
 	public int deleteProductOptionByProductOptionId(int productOptionId) {
 		return productOptionMapper.deleteProductOptionByProductOptionId(productOptionId);
 	}

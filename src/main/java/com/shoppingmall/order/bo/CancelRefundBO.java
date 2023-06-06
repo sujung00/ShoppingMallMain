@@ -57,6 +57,7 @@ public class CancelRefundBO {
 		}
 	}
 	
+	@Transactional
 	public int deleteCancelRefund(int cancelRefundId) {
 		return cancelRefundMapper.deleteCancelRefund(cancelRefundId);
 	}

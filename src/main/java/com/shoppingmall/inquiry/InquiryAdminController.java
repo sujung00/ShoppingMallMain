@@ -24,7 +24,7 @@ public class InquiryAdminController {
 	 */
 	@RequestMapping("/inquiry_view")
 	public String inquiryView(Model model) {
-		List<InquiryView> inquiryViewList = inquiryAdminBO.generateInQuiryView();
+		List<InquiryView> inquiryViewList = inquiryAdminBO.generateInquiryView();
 		
 		model.addAttribute("inquiryViewList", inquiryViewList);
 		model.addAttribute("view", "/admin/inquiry/inquiryView");

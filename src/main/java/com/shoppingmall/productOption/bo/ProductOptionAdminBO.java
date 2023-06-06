@@ -19,6 +19,7 @@ public class ProductOptionAdminBO {
 		return productOptionBO.addProductOption(productId, color, size, stock);
 	}
 	
+	@Transactional
 	public void deleteProductOptionByProductId(int productId) {
 		productOptionBO.deleteProductOptionByProductId(productId);
 	}
@@ -36,6 +37,7 @@ public class ProductOptionAdminBO {
 		return productOptionBO.updateStockByProductOptionId(productOptionId, stock);
 	}
 	
+	@Transactional
 	public int deleteProductOptionByProductOptionId(int productOptionId) {
 		return productOptionBO.deleteProductOptionByProductOptionId(productOptionId);
 	}

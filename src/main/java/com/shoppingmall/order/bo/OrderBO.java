@@ -102,6 +102,7 @@ public class OrderBO {
 		return orderMapper.updateAddressIdByOrderId(orderId, addressId);
 	}
 	
+	@Transactional
 	public void deleteOrderByOrderIdUserId(int orderId, int userId, int totalPay) {
 		int totalPoint = pointBO.getTotalPointByUserId(userId);
 		// 포인트 다시 적립

@@ -26,6 +26,7 @@ public class InquiryBO {
 		return inquiryMapper.insertInquiry(userId, orderId, subject, content);
 	}
 	
+	@Transactional
 	public List<InquiryView> generateInquiryView(int userId){
 		List<InquiryView> inquiryViewList = new ArrayList<>();
 		
