@@ -40,4 +40,5 @@ public interface AddressMapper {
 	
 	public void insertNewAddress(Address address);
 	
+	public int deleteAddressByAddressId(int addressId);
 }

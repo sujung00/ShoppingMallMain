@@ -19,7 +19,7 @@
 							</button>
 						</form>
 						<div class="ml-4">
-							<div class="mytrend-font3">${basketView.product.name}</div>
+							<div class="mytrend-font3"><b>${basketView.product.name}</b></div>
 							<div class="mytrend-font3">${basketView.product.price}원</div>
 							<div class="mytrend-font3">색상 :
 								${basketView.productOption.color} / 사이즈 :

@@ -35,9 +35,9 @@
 				<c:if test="${empty defaultAddress}">
 					<div class="font5 m-3">기본 배송지가 없습니다.</div>
 				</c:if>
-				<c:if test="${not empty defualtAddress}">
+				<c:if test="${not empty defaultAddress}">
 				<form action="/address/address_update_view" method="post">
-				<input type="hidden" name="addressId" value="${defualtAddress.id}">
+				<input type="hidden" name="addressId" value="${defaultAddress.id}">
 				<button type="submit" class="address-div d-flex mb-3">
 					<div class="address-table">
 						<div>이름</div>
@@ -46,15 +46,15 @@
 						<div class="mt-1">주소</div>
 					</div>
 					<div class="address-data">
-						<div>${defualtAddress.name}</div>
-						<div class="mt-1">${defualtAddress.phoneNumber}</div>
-						<c:if test="${not empty defualtAddress.extraPhoneNumber}">
-							<div class="mt-1">${defualtAddress.extraPhoneNumber}</div>
+						<div>${defaultAddress.name}</div>
+						<div class="mt-1">${defaultAddress.phoneNumber}</div>
+						<c:if test="${not empty defaultAddress.extraPhoneNumber}">
+							<div class="mt-1">${defaultAddress.extraPhoneNumber}</div>
 						</c:if>
-						<c:if test="${empty defualtAddress.extraPhoneNumber}">
+						<c:if test="${empty defaultAddress.extraPhoneNumber}">
 							<div class="mt-1">추가 연락처가 없습니다.</div>
 						</c:if>
-						<div class="mt-1">${defualtAddress.address} ${defualtAddress.detailedAddress}</div>
+						<div class="mt-1">${defaultAddress.address} ${defaultAddress.detailedAddress}</div>
 					</div>
 				</button>
 				</form>

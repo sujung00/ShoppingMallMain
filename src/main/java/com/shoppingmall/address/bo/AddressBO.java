@@ -62,5 +62,10 @@ public class AddressBO {
 			String extraPhoneNumber, int postcode, String address, String detailedAddress, boolean defaultAddress) {
 		return addressMapper.updateAddressByAdderssId(addressId, name, phoneNumber, extraPhoneNumber, postcode, address, detailedAddress, defaultAddress);
 	}
+	
+	@Transactional
+	public int deleteAddressByAddressId(int addressId) {
+		return addressMapper.deleteAddressByAddressId(addressId);
+	}
 
 }

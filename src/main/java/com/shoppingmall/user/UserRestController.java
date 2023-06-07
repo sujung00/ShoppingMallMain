@@ -207,7 +207,7 @@ public class UserRestController {
 			mailBO.mailSend(mail);
 			
 			result.put("code", 1);
-			result.put("result", "등록된 이메일로 임시 비밀번호를 전송하였습니다.");
+			result.put("result", "회원가입 시 등록하신 이메일로 임시 비밀번호를 전송하였습니다.\n MYTRNED > 회원정보 에서 비밀번호를 변경해주시길 바랍니다.");
 		} else {
 			result.put("code", 300);
 			result.put("errorMessage", "존재하지 않는 계정입니다.");

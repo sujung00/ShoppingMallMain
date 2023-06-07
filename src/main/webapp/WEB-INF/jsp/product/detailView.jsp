@@ -4,7 +4,7 @@
 <div class="container pt-5">
 	<div class="d-flex justify-content-between">
 		<!-- 상품 대표 이미지 -->
-		<div>
+		<div class="d-flex align-items-center">
 			<img alt="상품 대표 이미지" src="${product.mainImagePath}" width="300px">
 		</div>
 		<!-- 상품 설명 및 상세 정보 -->
@@ -77,15 +77,15 @@
 			<div class="font1 ml-5">작성된 리뷰가 없습니다.</div>
 		</c:if>
 		<c:forEach items="${reviewList}" var="review">
-		<div class="ml-5 mt-4 review p-3 d-flex justify-content-between">
+		<div class="ml-5 mt-4 review p-2 d-flex justify-content-between">
 			<div class="d-flex align-items-center">
 				<!-- 리뷰 이미지가 있다면 -->
-				<c:if test="${not empty writtenReview.review.reviewImagePath}">
+				<c:if test="${not emptyreview.reviewImagePath}">
 				<div>
-					<img alt="리뷰 이미지" src="${writtenReview.review.reviewImagePath}" width="100px" height="100px">
+					<img alt="리뷰 이미지" src="${review.reviewImagePath}" width="100px" height="100px">
 				</div>
 				</c:if>
-				<c:if test="${empty writtenReview.review.reviewImagePath}">
+				<c:if test="${empty review.reviewImagePath}">
 				<div class="non-image font6 d-flex justify-content-center">(이미지 없음)</div>
 				</c:if>
 				<div class="d-flex align-items-center ml-3">

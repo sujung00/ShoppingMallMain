@@ -181,4 +181,22 @@ public class AddressRestController {
 		return result;
 	}
 	
+	@PostMapping("/address_delete")
+	public Map<String, Object> addressDelete(
+			@RequestParam("addressId") int addressId) {
+		// db delete
+		int rowCount = addressBO.deleteAddressByAddressId(addressId);
+		
+		Map<String, Object> result = new HashMap<>();
+		if(rowCount > 0) {
+			result.put("code", 1);
+			result.put("result", "배송지가 삭제되었습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "배송지를 삭제하지 못했습니다.");
+		}
+		
+		
+		return result;
+	}
 }

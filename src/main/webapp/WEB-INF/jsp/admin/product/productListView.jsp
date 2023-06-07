@@ -6,9 +6,9 @@
 	<div>
 		<a type="button" href="/product_admin/product_create_view" class="btn btn-warning">제품 등록</a>
 	</div>
-	<div class="mt-5 d-flex">
+	<div class="mt-5 flex-wrap d-flex justify-content-between">
 		<c:forEach items="${productList}" var="product">
-		<div class="ml-5">
+		<div class="ml-5 my-3">
 			<img alt="제품 이미지" src="${product.mainImagePath}" width="250px">
 			<div>제품명 : ${product.name}</div>
 			<div>가격 : ${product.price}</div>

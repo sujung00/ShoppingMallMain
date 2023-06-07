@@ -67,7 +67,7 @@ public class OrderProductBO {
 	public void updateStateByOrderId(int orderId) {
 		List<OrderProduct> orderProductList = getOrderProductListByOrderId(orderId);
 		for(OrderProduct orderProduct : orderProductList) {
-			updateStateByOrderProductId("결제 완료", orderProduct.getId());
+			updateStateByOrderProductId("결제완료", orderProduct.getId());
 		}
 	}
 }

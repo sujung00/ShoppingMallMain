@@ -41,7 +41,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		}
 		
 		// admin user && admin page 가 아닌 경우
-		if(userId != null && userLoginId.equals("admin") && !uri.startsWith("/inquiry_admin") && !uri.startsWith("/order_admin") && !uri.startsWith("/product_admin") && !uri.startsWith("/product_option") && !uri.startsWith("/user/sign_in") && !uri.startsWith("/user/sign_up") && !uri.startsWith("/main")) {
+		if(userId != null && userLoginId.equals("admin") && !uri.startsWith("/inquiry_admin") && !uri.startsWith("/order_admin") && !uri.startsWith("/product_admin") && !uri.startsWith("/product_option") && !uri.startsWith("/user/sign_in") && !uri.startsWith("/user/sign_up") && !uri.startsWith("/main") && !uri.startsWith("/images/")) {
 			response.sendRedirect("/main/main_view");
 			return false;
 		}

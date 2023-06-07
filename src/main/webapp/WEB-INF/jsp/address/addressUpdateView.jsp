@@ -58,6 +58,7 @@
 					<input type="button" id="cancelBtn" value="취소" class="mytrend-btn">
 					<input type="button" id="registerAddressBtn" value="수정 완료" class="mytrend-btn ml-2" data-address-id="${address.id}">
 				</div>
+				<button id="deleteBtn" class="review-btn2 mt-4 py-2" data-address-id="${address.id}">배송지 삭제</button>
 			</div>
 		</div>
 	</div>
@@ -197,5 +198,38 @@
 				}
 			})
     	});
+    	
+    	$("#deleteBtn").on("click", function(){
+    		let addressId = $(this).data("address-id");
+    		
+    		$.ajax({
+    			type:"POST"
+    			, url:"/address/address_delete"
+    			, data:{"addressId":addressId}
+    		
+    			, success:function(data){
+    				if(data.code == 1) {
+    					$("#addressUpdateModal").modal();
+						$("#modalBody").text(data.result);
+						
+						$('#addressUpdateModal').on('hidden.bs.modal', function (e) {
+						     location.href="/address/address_view";
+						})
+    				} else {
+						$("#addressUpdateModal").modal();
+						$("#modalBody").text(data.errorMessage);
+						
+						$('#addressUpdateModal').on('hidden.bs.modal', function (e) {
+						     location.reload();
+						})
+					}
+    			}
+    			, error : function(request, status, error) {
+					$("#addressModal").modal();
+					$("#modalBody").text("배송지 삭제에 실패했습니다.");
+					return;
+				}
+    		})
+    	})
     });
 </script>
