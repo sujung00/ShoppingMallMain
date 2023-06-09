@@ -80,7 +80,7 @@
 		<div class="ml-5 mt-4 review p-2 d-flex justify-content-between">
 			<div class="d-flex align-items-center">
 				<!-- 리뷰 이미지가 있다면 -->
-				<c:if test="${not emptyreview.reviewImagePath}">
+				<c:if test="${not empty review.reviewImagePath}">
 				<div>
 					<img alt="리뷰 이미지" src="${review.reviewImagePath}" width="100px" height="100px">
 				</div>
