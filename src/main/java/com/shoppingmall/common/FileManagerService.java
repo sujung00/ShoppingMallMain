@@ -17,7 +17,7 @@ public class FileManagerService {
 
 	// 실제 업로드 된 이미지가 저장될 경로(서버)
 	//public static final String FILE_UPLOAD_PATH = "C:\\SUJUNG\\shoppingmall\\images/";
-	public static final String FILE_UPLOAD_PATH = "";
+	public static final String FILE_UPLOAD_PATH = "/home/ec2-user/images";
 	
 	// input:MultipartFile(이미지파일), loginId
 	// output:image path(String)
