@@ -19,7 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
 		.addResourceHandler("/images/**")
-		.addResourceLocations("file:///" + FileManagerService.FILE_UPLOAD_PATH);
+		.addResourceLocations("file://" + FileManagerService.FILE_UPLOAD_PATH);
 	}
 	
 	// intercepter 설정 추가
