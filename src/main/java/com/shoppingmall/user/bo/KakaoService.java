@@ -49,7 +49,7 @@ public class KakaoService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=b71c314d289e413d19ed39d5aad1474e"); // TODO REST_API_KEY 입력
-            sb.append("&redirect_uri=http://localhost/user/kakao"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&redirect_uri=http://52.79.129.45:8080/user/kakao"); // TODO 인가코드 받은 redirect_uri 입력
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
 			bw.flush();
