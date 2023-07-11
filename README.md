@@ -8,7 +8,7 @@
 
 ## 🛒 Shoppingmall Project : Trend
 
-### 🔗  [http://52.79.129.45:8080/main/main_view](http://52.79.129.45:8080/main/main_view)
+### 🔗  [http://54.180.30.140:8080/main/main_view](http://54.180.30.140:8080/main/main_view)
 
 **👩🏻‍🔧 admin계정: admin/adminsujung**
 
