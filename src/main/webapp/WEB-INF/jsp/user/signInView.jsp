@@ -19,7 +19,7 @@
 			<button type="button" id="signInBtn" class="sign-in-btn mt-3">SIGN IN</button>
 		</div>
 		<div class="d-flex justify-content-center">
-			<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=b71c314d289e413d19ed39d5aad1474e&redirect_uri=http://54.180.30.140:8080/user/kakao">
+			<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=b71c314d289e413d19ed39d5aad1474e&redirect_uri=http://54.180.24.127:8080/user/kakao">
 	  			<img src="/static/img/kakao_login_medium_narrow.png"/>
 			</a>
 		</div>
